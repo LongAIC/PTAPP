@@ -65,7 +65,7 @@ export default function SerachScreen() {
     <>
       <Stack.Screen
         options={{
-          title: '搜索',
+          title: 'Tìm kiếm',
           headerBackTitleVisible: false,
         }}
       />

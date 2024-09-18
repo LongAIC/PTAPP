@@ -38,8 +38,8 @@ const Reviews = props => {
     <>
       <View className="px-3 py-3 space-y-4" id="_productReviews">
         <View className="flex flex-row items-center justify-between">
-          <Text className="">商品评价</Text>
-          <Text className="text-xs text-sky-500">{numReviews} 条评价</Text>
+          <Text className="">Đánh giá sản phẩm</Text>
+          <Text className="text-xs text-sky-500">{numReviews} đánh giá</Text>
         </View>
         <View className="mb-2">
           <Pressable
@@ -47,10 +47,10 @@ const Reviews = props => {
             className="flex flex-row justify-between items-center w-full"
           >
             <Icons.EvilIcons name="comment" size={24} className="icon" />
-            <Text className="text-sm text-black ml-2">写下您对该商品的评价</Text>
+            <Text className="text-sm text-black ml-2">Viết đánh giá của bạn cho sản phẩm này</Text>
             <Icons.MaterialIcons name="keyboard-arrow-right" size={24} className="ml-auto icon" />
           </Pressable>
-          <Text className="mt-6 text-xs text-gray-500">提交确认后，通过将赠送积分。</Text>
+          <Text className="mt-6 text-xs text-gray-500">Sau khi việc gửi được xác nhận, điểm sẽ được trao.</Text>
         </View>
         <ShowWrapper
           error={error}

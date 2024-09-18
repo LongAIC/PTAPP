@@ -85,7 +85,7 @@ const Filter = props => {
       <View className=" px-3">
         <Pressable className="flex flex-row items-center gap-x-1" onPress={filtersHandlers.open}>
           <Icons.Ionicons name="filter" size={16} className="text-neutral-600" />
-          <Text className="text-base text-neutral-600">筛选</Text>
+          <Text className="text-base text-neutral-600">Lọc</Text>
         </Pressable>
       </View>
       <Modal
@@ -100,19 +100,19 @@ const Filter = props => {
           style={{ paddingTop: insets.top }}
           className="flex flex-col h-[100vh] w-[80vw] px-5 ml-[15vw] bg-white"
         >
-          <Modal.Header onClose={filtersHandlers.close}>过滤器</Modal.Header>
+          <Modal.Header onClose={filtersHandlers.close}>Lọc</Modal.Header>
           <Modal.Body>
             <View className="flex justify-end ">
               <Pressable disabled={!canReset} onPress={handleResetFilters}>
                 <Text type="button" className="text-sm text-sky-500">
-                  删除过滤器
+                Xóa bộ lọc
                 </Text>
               </Pressable>
             </View>
 
             <View className="divide-y">
               <View className="flex flex-row justify-between items-center py-2.5">
-                <Text className="font-medium text-gray-700 w-3/4">仅限库存商品</Text>
+                <Text className="font-medium text-gray-700 w-3/4">Chỉ những mặt hàng có sẵn</Text>
                 <Switch
                   value={filters.inStock}
                   onValueChange={value =>
@@ -121,7 +121,7 @@ const Filter = props => {
                 />
               </View>
               <View className="flex flex-row justify-between items-center py-2.5">
-                <Text className="font-medium text-gray-700 w-3/4">仅限特价商品</Text>
+                <Text className="font-medium text-gray-700 w-3/4">Chỉ ưu đãi đặc biệt</Text>
                 <Switch
                   value={filters.discount}
                   onValueChange={value =>
@@ -131,9 +131,9 @@ const Filter = props => {
               </View>
 
               <View className="py-4">
-                <Text className="font-medium text-gray-700">价格范围</Text>
+                <Text className="font-medium text-gray-700">Phạm vi giá</Text>
                 <View className="flex flex-row items-center justify-between gap-x-1">
-                  <Text className="text-base">从</Text>
+                  <Text className="text-base">Từ</Text>
 
                   <TextInput
                     className="w-3/4 px-1 text-xl text-left border-b border-gray-200 outline-none"
@@ -142,10 +142,10 @@ const Filter = props => {
                     name="minPrice"
                     onChangeText={value => handlefilter({ name: 'minPrice', type: 'input', value })}
                   />
-                  <Text className="w-6 h-6">¥</Text>
+                  <Text className="w-6 h-6">VNĐ</Text>
                 </View>
                 <View className="flex flex-row items-center justify-between mt-2 mb-4 gap-x-1">
-                  <Text className="text-base">到</Text>
+                  <Text className="text-base">đến</Text>
 
                   <TextInput
                     className="w-3/4 px-1 text-xl text-left border-b border-gray-200 outline-none"
@@ -155,7 +155,7 @@ const Filter = props => {
                     onChangeText={value => handlefilter({ name: 'maxPrice', type: 'input', value })}
                   />
 
-                  <Text className="w-6 h-6">¥</Text>
+                  <Text className="w-6 h-6">VNĐ</Text>
                 </View>
               </View>
             </View>

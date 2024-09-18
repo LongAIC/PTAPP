@@ -28,7 +28,7 @@ export default function PaymentScreen() {
   const { userInfo } = useUserInfo()
 
   //? States
-  const [paymentMethod, setPaymentMethod] = useState('在线支付')
+  const [paymentMethod, setPaymentMethod] = useState('Thanh toán trực tuyến')
 
   //? Store
   const { cartItems, totalItems, totalDiscount, totalPrice } = useAppSelector(state => state.cart)
@@ -47,7 +47,7 @@ export default function PaymentScreen() {
     )
       return Toast.show({
         type: 'error',
-        text2: '请填写您的地址',
+        text2: 'Vui lòng điền địa chỉ của bạn',
       })
     else
       postData({
@@ -91,7 +91,7 @@ export default function PaymentScreen() {
     <>
       <Stack.Screen
         options={{
-          title: `填写订单`,
+          title: `Điền vào đơn đặt hàng`,
           headerBackTitleVisible: false,
         }}
       />
@@ -122,7 +122,7 @@ export default function PaymentScreen() {
                         size={18}
                         className="text-red-300 icon"
                       />
-                      <Text className="font-normal text-red-300">购物车</Text>
+                      <Text className="font-normal text-red-300">Giỏ hàng</Text>
                     </Pressable>
                   </Link>
 
@@ -133,7 +133,7 @@ export default function PaymentScreen() {
                       size={16}
                       className="w-6 h-6 text-red-500 icon"
                     />
-                    <Text className="text-base font-normal text-red-500">付款方式</Text>
+                    <Text className="text-base font-normal text-red-500">Phương thức thanh toán</Text>
                   </View>
                 </View>
               </View>
@@ -149,7 +149,7 @@ export default function PaymentScreen() {
                     <Text className="text-sm text-neutral-600">{userInfo?.name}</Text>
                   </View>
                 ) : (
-                  <Text className="text-black">填写地址</Text>
+                  <Text className="text-black">Điền địa chỉ</Text>
                 )}
                 <ChangeAddress />
               </View>
@@ -166,11 +166,11 @@ export default function PaymentScreen() {
                     alt="icon"
                   />
                   <View>
-                    <Text className="text-base text-black">正常发货</Text>
-                    <Text className="block text-neutral-600">有现货</Text>
+                    <Text className="text-base text-black">Giao hàng bình thường</Text>
+                    <Text className="block text-neutral-600">Còn hàng</Text>
                   </View>
                   <View className="inline-block px-2 py-1 ml-3 bg-gray-100 rounded-lg h-auto">
-                    <Text className="text-neutral-600">{formatNumber(totalItems)} 件商品</Text>
+                    <Text className="text-neutral-600">{formatNumber(totalItems)} sản phẩm</Text>
                   </View>
                 </View>
                 <View className="flex flex-row flex-wrap justify-start gap-x-8 gap-y-5">
@@ -204,7 +204,7 @@ export default function PaymentScreen() {
                 </View>
 
                 <Link href="/checkout/cart" className="inline-block mt-6 text-sm text-sky-500">
-                  返回购物车
+                Quay lại giỏ hàng
                 </Link>
               </View>
 
@@ -218,8 +218,8 @@ export default function PaymentScreen() {
                     onValueChange={value => setPaymentMethod(value)}
                     value={paymentMethod}
                   >
-                    <RadioButton.Item label="在线支付" value="在线支付" />
-                    <RadioButton.Item label="银行卡" value="银行卡" />
+                    <RadioButton.Item label="Thanh toán trực tuyến" value="Thanh toán trực tuyến" />
+                    <RadioButton.Item label="Thẻ ngân hàng" value="Thẻ ngân hàng" />
                   </RadioButton.Group>
                 </View>
               </View>
@@ -234,7 +234,7 @@ export default function PaymentScreen() {
               isLoading={isLoading}
               className="w-full max-w-5xl mx-auto"
             >
-              完成购买
+              Hoàn tất mua hàng
             </Button>
           </View>
         </View>

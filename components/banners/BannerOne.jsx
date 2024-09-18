@@ -9,7 +9,7 @@ export default function BannerOne(props) {
   //? Render(s)
   if (data.length === 0) return null
   return (
-    <FeedSectionContainer title="今日专题">
+    <FeedSectionContainer title="Chủ đề hôm nay">
       <View className="w-full flex flex-row flex-wrap">
         {data.map((item, index) => (
           <View

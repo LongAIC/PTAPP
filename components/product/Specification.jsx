@@ -21,7 +21,7 @@ const Specification = props => {
   return (
     <View className="px-4 pt-4">
       <View className="lg:max-w-3xl xl:max-w-5xl">
-        <Text className="mb-3 h-fit w-fit">规格</Text>
+        <Text className="mb-3 h-fit w-fit">Đặc điểm kỹ thuật</Text>
 
         <View className="l">
           <View className="space-y-4">

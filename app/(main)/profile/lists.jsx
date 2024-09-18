@@ -11,14 +11,14 @@ const ListsScreen = () => {
     <>
       <Stack.Screen
         options={{
-          title: '我的收藏',
+          title: 'Bộ sưu tập của tôi',
           headerBackTitleVisible: false,
         }}
       />
       <View className="py-20 bg-white h-full">
         <FavoritesListEmpty className="mx-auto h-52 w-52" />
-        <Text className="text-center">您的收藏夹列表为空</Text>
-        <Text className="block my-3 text-base text-center text-amber-500">（即将上线）</Text>
+        <Text className="text-center">Danh sách yêu thích của bạn trống</Text>
+        <Text className="block my-3 text-base text-center text-amber-500">（Sắp ra mắt）</Text>
       </View>
     </>
   )

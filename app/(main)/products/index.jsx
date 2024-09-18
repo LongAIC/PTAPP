@@ -106,10 +106,10 @@ export default function ProductsScreen() {
               </View>
 
               <View className="flex flex-row justify-between py-2">
-                <Text className="text-base text-neutral-600">所有商品</Text>
+                <Text className="text-base text-neutral-600">Tất cả sản phẩm</Text>
 
                 <Text className="text-base text-neutral-600">
-                  {data?.data?.productsLength} 件商品
+                  {data?.data?.productsLength} sản phẩm 
                 </Text>
               </View>
             </View>
@@ -124,7 +124,7 @@ export default function ProductsScreen() {
                 estimatedItemSize={200}
               />
             ) : (
-              <Text className="text-center text-red-500">没有找到商品</Text>
+              <Text className="text-center text-red-500">Không tìm thấy sản phẩm</Text>
             )}
           </View>
         </View>

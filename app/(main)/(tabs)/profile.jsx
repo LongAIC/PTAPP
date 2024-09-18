@@ -12,37 +12,37 @@ export default function ProfileScreen() {
 
   const profilePaths = [
     {
-      name: '我的订单',
+      name: 'Đơn hàng của tôi',
       Icon: Icons.SimpleLineIcons,
       IconName: 'handbag',
       path: '/profile/orders',
     },
     {
-      name: '我的收藏',
+      name: 'Bộ sưu tập của tôi',
       Icon: Icons.Feather,
       IconName: 'heart',
       path: '/profile/lists',
     },
     {
-      name: '我的评价',
+      name: 'Đánh giá của tôi',
       Icon: Icons.FontAwesome5,
       IconName: 'comment',
       path: '/profile/reviews',
     },
     {
-      name: '地址管理',
+      name: 'Quản lý địa chỉ',
       Icon: Icons.MaterialIcons,
       IconName: 'location-city',
       path: '/profile/addresses',
     },
     {
-      name: '最近访问',
+      name: 'Lượt truy cập gần đây',
       Icon: Icons.AntDesign,
       IconName: 'clockcircleo',
       path: '/profile/user-history',
     },
     {
-      name: '账户信息',
+      name: 'Thông tin tài khoản',
       Icon: Icons.AntDesign,
       IconName: 'user',
       path: '/profile/personal-info',
@@ -57,7 +57,7 @@ export default function ProfileScreen() {
           headerShown: false,
         }}
       />
-      <AuthWrapper tips="享受购物">
+      <AuthWrapper tips="Tận hưởng mua sắm">
         <ScrollView className="bg-white">
           <View style={{ paddingTop: insets.top + 60 }} className="flex bg-white">
             <View className="flex flex-row items-center px-4">

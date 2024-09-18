@@ -52,7 +52,7 @@ export default function RegisterScreen() {
     <>
       <Stack.Screen
         options={{
-          title: '注册',
+          title: 'Đăng ký',
           headerBackTitleVisible: false,
         }}
       />
@@ -62,24 +62,24 @@ export default function RegisterScreen() {
           isError={isError}
           isSuccess={isSuccess}
           error={error?.data?.message}
-          message="注册成功"
+          message="Đăng ký thành công"
           onSuccess={onSuccess}
         />
       )}
       <ScrollView className="h-[100%] bg-white pt-10">
         <View className="w-[100vw] px-8 py-6 space-y-4">
           <Logo className="mx-auto w-40 h-16" />
-          <Text className=" mt-56">注册</Text>
+          <Text className=" mt-56">Đăng ký</Text>
           <View className="space-y-0">
             <TextField
               errors={formErrors.name}
-              placeholder="请输入您的账户名称"
+              placeholder="Vui lòng nhập tên tài khoản của bạn"
               name="name"
               control={control}
             />
             <TextField
               errors={formErrors.email}
-              placeholder="请输入您的账户邮箱"
+              placeholder="Vui lòng nhập email tài khoản của bạn"
               name="email"
               keyboardType="email-address"
               autoCapitalize="none"
@@ -89,7 +89,7 @@ export default function RegisterScreen() {
             <TextField
               errors={formErrors.password}
               secureTextEntry
-              placeholder="请输入您的账户密码"
+              placeholder="Vui lòng nhập mật khẩu tài khoản của bạn"
               name="password"
               control={control}
             />
@@ -97,17 +97,17 @@ export default function RegisterScreen() {
               control={control}
               errors={formErrors.confirmPassword}
               secureTextEntry
-              placeholder="确认密码，请再次输入"
+              placeholder="Xác nhận mật khẩu, vui lòng nhập lại"
               name="confirmPassword"
             />
             <Button isLoading={isLoading} onPress={handleSubmit(onSubmit)}>
-              注册
+              Đăng ký
             </Button>
           </View>
           <View className="flex flex-row">
-            <Text className="inline mr-2 text-gray-800 text-xs">我已经有账户了</Text>
+            <Text className="inline mr-2 text-gray-800 text-xs">Tôi đã có tài khoản</Text>
             <Link replace href="/login" className="text-blue-400 text-xs">
-              去登录
+              Đi đến đăng nhập
             </Link>
           </View>
         </View>

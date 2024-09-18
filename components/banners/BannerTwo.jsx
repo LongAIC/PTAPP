@@ -11,7 +11,7 @@ export default function BannerTwo(props) {
   if (data.length === 0) return null
 
   return (
-    <FeedSectionContainer title="推荐专题">
+    <FeedSectionContainer title="Chủ đề được đề xuất">
       <FlashList
         data={data}
         renderItem={({ item, index }) => (

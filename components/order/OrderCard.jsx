@@ -41,7 +41,7 @@ const OrderCard = props => {
             <Text className="text-black">
               {formatNumber(order.totalPrice - order.totalDiscount)}
             </Text>
-            <Text className="">¥</Text>
+            <Text className="">VNĐ</Text>
           </View>
         </View>
         <View className="flex flex-row flex-wrap py-5 gap-x-5 gap-y-3 lg:border-t lg:border-gray-200 lg:px-3">

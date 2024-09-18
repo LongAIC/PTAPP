@@ -35,7 +35,7 @@ export default function CartScreen() {
             <View className=" h-full space-y-3 bg-white">
               <View className="py-20">
                 <EmptyCart className="mx-auto h-52 w-52" />
-                <Text className="text-base font-bold text-center">您的购物车是空的！</Text>
+                <Text className="text-base font-bold text-center">Bạn không có sản phẩm trong giỏ hàng！</Text>
               </View>
             </View>
           </>
@@ -47,9 +47,9 @@ export default function CartScreen() {
                 <View className="h-fit">
                   <View className="flex flex-row justify-between px-4">
                     <View>
-                      <Text className="mb-2 text-sm font-bold">您的购物车</Text>
+                      <Text className="mb-2 text-sm font-bold">Giỏ hàng của bạn</Text>
                     </View>
-                    <Text className="">{formatNumber(totalItems)} 件商品</Text>
+                    <Text className="">{formatNumber(totalItems)} Sản phẩm</Text>
                   </View>
 
                   {/* carts */}
@@ -71,14 +71,14 @@ export default function CartScreen() {
             {/* to Shipping */}
             <View className="fixed bottom-0 left-0 right-0 z-10 flex flex-row items-center justify-between px-3 py-3 bg-white border-t border-gray-300 shadow-3xl lg:hidden">
               <View>
-                <Text className="font-light">总计购物车</Text>
+                <Text className="font-light">Tổng số sản phẩm</Text>
                 <View className="flex flex-row items-center">
                   <Text className="text-sm">{formatNumber(totalPrice - totalDiscount)}</Text>
-                  <Text className="ml-1">¥</Text>
+                  <Text className="ml-1">VNĐ</Text>
                 </View>
               </View>
               <Button className="w-1/2" onPress={handleRoute}>
-                继续
+                Tiếp tục
               </Button>
             </View>
           </>

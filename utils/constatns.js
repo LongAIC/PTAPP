@@ -1,25 +1,25 @@
 export const sorts = [
   {
-    name: '最新的',
+    name: 'Mới nhất',
     value: 1,
   },
   {
-    name: '最畅销',
+    name: 'Bán chạy nhất',
     value: 2,
   },
   {
-    name: '最便宜的',
+    name: 'Giá tốt nhất',
     value: 3,
   },
   {
-    name: '最重磅的',
+    name: 'Sản phẩm hot',
     value: 4,
   },
 ]
 
-export const ratingStatus = ['', '最糟糕的', '糟糕的', '一般', '很好', '非常好']
+export const ratingStatus = ['', 'Kém', 'Khá', 'Bình thường', 'Tốt', 'Rất tốt']
 
-export const siteTitle = '精选好物'
+export const siteTitle = 'Lựa chọn tốt nhất'
 export const enSiteTitle = 'C-Shopping'
 
-export const siteDescription = `从${siteTitle}以最优惠的价格购买您需要的一切！ 最新款手机、笔记本电脑、衣服、化妆品、书籍、家电、汽车等，轻松换货 | ✓免费送货 ✓当场付款 ✓退货保证 - 点击购买！`
+export const siteDescription = `Từ${siteTitle}Nhận mọi thứ bạn cần với giá tốt nhất! Điện thoại di động, máy tính xách tay, quần áo, mỹ phẩm, sách, đồ gia dụng, ô tô mới nhất và nhiều thứ khác dễ dàng trao đổi ✓ Giao hàng miễn phí ✓ Thanh toán ngay tại chỗ ✓ Đảm bảo hoàn trả - Bấm để mua!`

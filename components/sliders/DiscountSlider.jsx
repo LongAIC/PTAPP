@@ -36,7 +36,7 @@ export default function DiscountSlider(props) {
 
   //? Render(s)
   return (
-    <FeedSectionContainer title="折扣商品" showMore onJumptoMore={handleJumptoMore}>
+    <FeedSectionContainer title="Đang giảm giá" showMore onJumptoMore={handleJumptoMore}>
       {isLoading ? (
         <FlashList
           data={Array(10).fill('_')}

@@ -38,7 +38,7 @@ const AddToCartOperation = props => {
       if (product.inStock === 0)
         return Toast.show({
           type: 'error',
-          text2: '此商品缺货',
+          text2: 'Sản phẩm này đã hết hàng',
         })
 
       dispatch(

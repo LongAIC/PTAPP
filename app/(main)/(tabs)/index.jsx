@@ -54,9 +54,9 @@ export default function FeedScreen() {
       >
         <ScrollView className="bg-white flex h-full px-3">
           <>
-            <MainSlider data={sliders} />
+            <MainSlider data={sliders} /> 
             <Categories
-              childCategories={{ categories: childCategories, title: '所有分类' }}
+              childCategories={{ categories: childCategories, title: 'Tất cả danh mục' }}
               color={currentCategory?.colors?.start}
               name={currentCategory?.name}
               homePage

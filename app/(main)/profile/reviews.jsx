@@ -39,7 +39,7 @@ const ReviewsScreen = () => {
     <>
       <Stack.Screen
         options={{
-          title: '我的评论',
+          title: 'Bình luận của tôi',
           headerBackTitleVisible: false,
         }}
       />

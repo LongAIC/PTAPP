@@ -12,7 +12,7 @@ export default function Categories(props) {
   //? Re-Renders
   if (childCategories.categories.length > 0 && color && name) {
     return (
-      <FeedSectionContainer title="分类">
+      <FeedSectionContainer title="Danh mục sản phẩm">
         <FlashList
           data={childCategories.categories}
           horizontal

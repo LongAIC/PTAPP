@@ -37,7 +37,7 @@ export default function BestSellsSlider(props) {
   //? Render(s)
 
   return (
-    <FeedSectionContainer title="畅销商品">
+    <FeedSectionContainer title="Bán chạy nhất">
       {isLoading ? (
         Array(2)
           .fill('_')

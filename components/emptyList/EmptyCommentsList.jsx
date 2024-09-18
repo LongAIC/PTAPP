@@ -7,7 +7,7 @@ export default function EmptyCommentsList() {
     <View className="py-20">
       <OrderEmpty className="mx-auto h-52 w-52" />
 
-      <Text className="text-center">评论为空</Text>
+      <Text className="text-center">Bình luận trống</Text>
     </View>
   )
 }

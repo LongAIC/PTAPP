@@ -15,7 +15,7 @@ const BasicAddresses = ({ addressModalProps }) => {
     <>
       <Stack.Screen
         options={{
-          title: '地址管理',
+          title: 'Quản lý địa chỉ',
           headerBackTitleVisible: false,
         }}
       />
@@ -87,13 +87,13 @@ const BasicAddresses = ({ addressModalProps }) => {
         ) : (
           <View className="flex flex-col items-center py-20 gap-y-4">
             <Address className="h-52 w-52" />
-            <Text>您尚未填写地址</Text>
+            <Text>Bạn chưa điền địa chỉ của mình</Text>
             <Pressable
               className="flex flex-row items-center px-3 py-2 text-red-600 border-2 border-red-600 rounded-lg gap-x-3"
               onPress={openAddressModal}
             >
               <Icons.Entypo name="location" size={16} className="text-gray-500 icon" />
-              <Text>新增地址</Text>
+              <Text>Thêm địa chỉ</Text>
             </Pressable>
           </View>
         )}

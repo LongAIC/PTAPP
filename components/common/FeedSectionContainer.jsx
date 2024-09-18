@@ -20,7 +20,7 @@ const FeedSectionContainer = props => {
             onPress={handleJumpMore}
             className="flex flex-row items-center space-x-1"
           >
-            <Text className="text-neutral-400 text-base">更多</Text>
+            <Text className="text-neutral-400 text-base">Xem thêm</Text>
             <AntDesign name="arrowright" size={14} color="rgb(163 163 163)" />
           </TouchableOpacity>
         )}

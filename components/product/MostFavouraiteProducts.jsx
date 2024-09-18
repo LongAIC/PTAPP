@@ -29,7 +29,7 @@ export default function MostFavouraiteProducts(props) {
 
   //? Render(s)
   return (
-    <FeedSectionContainer title="热销商品">
+    <FeedSectionContainer title="Sản phẩm hot">
       <View className="w-full flex flex-row flex-wrap">
         {isLoading
           ? Array(10)
