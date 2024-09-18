@@ -19,6 +19,7 @@
     "@react-native-picker/picker": "2.4.10",
     "@reduxjs/toolkit": "^2.1.0",
     "@shopify/flash-list": "1.4.3",
+    "axios": "^1.7.7",
     "china-citys": "^0.0.1",
     "expo": "^49.0.22",
     "expo-constants": "~14.4.2",

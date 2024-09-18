@@ -9,6 +9,7 @@ import filtersReducer from './slices/filters.slice'
 import userReducer from './slices/user.slice'
 
 import apiSlice from '@/services/api'
+import apiFtechSlice from '@/serviceFTECH/api'
 
 const persistConfig = {
   key: 'root',
@@ -30,11 +31,14 @@ export const store = configureStore({
     cart: cartPersistedReducer,
     filters: filtersReducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
+    [apiFtechSlice.reducerPath]: apiFtechSlice.reducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }).concat(apiSlice.middleware),
+    })
+      .concat(apiSlice.middleware)
+      .concat(apiFtechSlice.middleware),
 })
 
 setupListeners(store.dispatch)

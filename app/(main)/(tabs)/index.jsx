@@ -1,6 +1,6 @@
+
 import { Stack } from 'expo-router'
 import { ScrollView } from 'react-native'
-
 import {
   BannerOne,
   BannerTwo,
@@ -12,12 +12,15 @@ import {
   FeedHeader,
   ShowWrapper,
 } from '@/components'
+
 import { useGetFeedInfoQuery } from '@/services'
+import { useGetHomeInfoQuery  } from '@/serviceFTECH';
+import { useEffect , useState} from 'react'
 
 export default function FeedScreen() {
   //? Assets
+  const [data, setData] = useState(null);
 
-  //? Get Feeds Query
   const {
     data: { childCategories, currentCategory, sliders, bannerOneType, bannerTwoType },
     isLoading,
@@ -35,6 +38,8 @@ export default function FeedScreen() {
       }),
     }
   )
+
+
 
   //? Render(s)
   return (
@@ -54,6 +59,8 @@ export default function FeedScreen() {
       >
         <ScrollView className="bg-white flex h-full px-3">
           <>
+
+          
             <MainSlider data={sliders} /> 
             <Categories
               childCategories={{ categories: childCategories, title: 'Tất cả danh mục' }}
@@ -66,6 +73,8 @@ export default function FeedScreen() {
             <BestSellsSlider categorySlug={currentCategory?.slug} />
             <BannerTwo data={bannerTwoType} />
             <MostFavouraiteProducts categorySlug={currentCategory?.slug} />
+
+
           </>
         </ScrollView>
       </ShowWrapper>
