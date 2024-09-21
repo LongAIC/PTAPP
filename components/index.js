@@ -41,13 +41,17 @@ export { default as EmptySearchList } from './emptyList/EmptySearchList'
 //* SLIDER COMPONENTS
 export { default as Slider } from './sliders/Slider'
 export { default as DiscountSlider } from './sliders/DiscountSlider'
+export { default as FtechDiscountSlider } from './sliders/FtechDiscoutSlider'
 export { default as BestSellsSlider } from './sliders/BestSellsSlider'
+export { default as BestSellsSliderFtech} from './sliders/BestSellsSliderFtech'
 export { default as SmilarProductsSlider } from './sliders/SmilarProductsSlider'
 export { default as OrderSkeleton } from './skeleton/OrderSkeleton'
 
 //* BANNER COMPONENTS
 export { default as BannerOne } from './banners/BannerOne'
 export { default as BannerTwo } from './banners/BannerTwo'
+export { default as BannerOneFtech} from './banners/BannerOneFtech'
+export {default as BannerTwoFtech} from './banners/BannerTwoFtech'
 
 //* PRODUCT COMPONENTS
 export { default as MostFavouraiteProducts } from './product/MostFavouraiteProducts'
@@ -65,6 +69,7 @@ export { default as OutOfStock } from './product/OutOfStock'
 export { default as Info } from './product/Info'
 export { default as Description } from './product/Description'
 export { default as Specification } from './product/Specification'
+export { default as MostFavoriteProductsFtech} from './product/MostFavoriteProductsFtech'
 
 //* CART COMPONENTS
 export { default as AddToCartOperation } from './cart/AddToCartOperation'
