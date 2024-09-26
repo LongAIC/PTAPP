@@ -1,10 +1,10 @@
 import { FlashList } from "@shopify/flash-list";
 import { Link } from "expo-router";
-import { View, Image, TouchableOpacity } from "react-native";
 
 import FeedSectionContainer from "../common/FeedSectionContainer";
 import DiscountProduct from "../product/DiscountProduct";
 import ProductPrice from "../product/ProductPrice";
+import { View, Image, TouchableOpacity, Text } from "react-native";
 
 export default function FtechDiscountSlider(props) {
   //? Props
@@ -26,22 +26,32 @@ export default function FtechDiscountSlider(props) {
         data={products}
         renderItem={({ item }) => (
           <Link
+            className="w-[200px] mx-1"
             href={{
               pathname: `/products/${item.id}`,
             }}
             key={item.id}
             asChild
           >
-            <TouchableOpacity className="w-fit h-fit bg-white mx-0.5 py-3">
+            <TouchableOpacity className="overflow-hidden  p-2 border-[1px] rounded-lg border-[#F0F1F1]">
               <Image
                 source={{
                   uri: item?.product_image,
                 }}
-                className="w-32 h-32"
+                className="w-[100%] h-[212px] object-cover  z-50 rounded-lg"
               />
-              <View className="flex flex-row px-2 mt-1.5 justify-evenly items-start gap-x-2 ">
-                <DiscountProduct discount={15} />
-                <ProductPrice inStock={15} discount={15} price={15} />
+              <View className="py-3 border-b-[1px] border-[#F0F1F1]">
+                <Text
+                  numberOfLines={2}
+                  className="text-[16px] font-[500] leading-5"
+                >
+                  {item?.product_name}
+                </Text>
+              </View>
+              <View className="py-3">
+                <Text className="text-[14px] font-[400] leading-5 text-[#FF4405]">
+                  {item?.donvicungcap}
+                </Text>
               </View>
             </TouchableOpacity>
           </Link>

@@ -13,9 +13,11 @@ import {
   FtechDiscountSlider,
 } from "@/components";
 
+import { Link } from "expo-router";
 import { useGetFeedInfoQuery } from "@/services";
 import { useGetHomeInfoQuery } from "@/serviceFTECH";
 import { useEffect, useState } from "react";
+import { FlashList } from "@shopify/flash-list";
 
 export default function FeedScreen() {
   //? Assets
@@ -111,7 +113,7 @@ export default function FeedScreen() {
               name={currentCategory?.name}
               homePage
             />
-            <DiscountSlider currentCategory={currentCategory} />
+            <DiscountSlider currentCategory={currentCategory} /> 
             <BannerOne data={bannerOneType} />
             <BestSellsSlider categorySlug={currentCategory?.slug} />
             <BannerTwo data={bannerTwoType} />
@@ -134,7 +136,7 @@ export default function FeedScreen() {
                   ?.data[0]?.dataChude
               }
             />
-             <MostFavoriteProductsFtech products={normal.dataproduct} />
+            <MostFavoriteProductsFtech products={normal.dataproduct} />
           </>
         </ScrollView>
       </ShowWrapper>
