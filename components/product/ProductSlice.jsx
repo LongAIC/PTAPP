@@ -42,7 +42,7 @@ export default function ProductSlice(props) {
               />
               <View className="py-3 border-b-[1px] border-[#F0F1F1]">
                 <Text
-                  numberOfLines={2}
+                  numberOfLines={1}
                   className="text-[16px] font-[500] leading-5"
                 >
                   {item?.title}

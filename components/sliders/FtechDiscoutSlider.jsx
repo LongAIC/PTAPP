@@ -40,10 +40,10 @@ export default function FtechDiscountSlider(props) {
                 }}
                 className="w-[100%] h-[212px] object-cover  z-50 rounded-lg"
               />
-              <View className="py-3 border-b-[1px] border-[#F0F1F1]">
+              <View className="py-3 border-b-[1px] border-[#F0F1F1] h-[50px] my-3">
                 <Text
                   numberOfLines={2}
-                  className="text-[16px] font-[500] leading-5"
+                  className="text-[16px] font-[500] leading-5 "
                 >
                   {item?.product_name}
                 </Text>

@@ -1,5 +1,4 @@
-import { Text, View, TouchableOpacity } from "react-native";
-import { ResponsiveImage } from "..";
+import { Text, View, TouchableOpacity, Image } from "react-native";
 
 const StoreCard = (props) => {
   const { data } = props;
@@ -7,12 +6,11 @@ const StoreCard = (props) => {
   return (
     <View className="flex-row items-center p-2 rounded-lg bg-white py-5">
       {/* Store Image */}
-      <ResponsiveImage
+      <Image
         source={{
           uri: data.feature_image,
         }}
         className="h-[20vw] w-[20vw] rounded-full"
-        imageStyles="h-[20vw] w-[20vw] rounded-full"
       />
 
       {/* Store Information */}

@@ -37,8 +37,8 @@ export default function SingleProductScreen() {
   const { totalItems } = useAppSelector((state) => state.cart);
 
   //? Get Feeds Query
-  const dataProduct = ({
-    data,
+  const {
+    data: productData,
     isLoading,
     isSuccess,
     isFetching,
@@ -53,9 +53,18 @@ export default function SingleProductScreen() {
         ...args,
       }),
     }
-  ));
-  const product = dataProduct.data;
-  
+  );
+
+  const product = productData || {};
+  const {
+    name,
+    feature_image,
+    gallery_image,
+    description,
+    numReviews,
+    unit,
+    product_related,
+  } = product;
 
   return (
     <>
@@ -73,7 +82,7 @@ export default function SingleProductScreen() {
                   />
                   {formatNumber(totalItems) && (
                     <Pressable className="absolute outline outline-2 bottom-3.5 left-5 bg-red-500 rounded-md w-5 h-5 p-0.5">
-                      <Text className=" text-center text-xs text-white">
+                      <Text className="text-center text-xs text-white">
                         {formatNumber(totalItems)}
                       </Text>
                     </Pressable>
@@ -93,6 +102,7 @@ export default function SingleProductScreen() {
           headerBackTitleVisible: false,
         }}
       />
+
       <ShowWrapper
         error={error}
         isError={isError}
@@ -102,41 +112,52 @@ export default function SingleProductScreen() {
         type="detail"
       >
         <View className="h-full bg-gray relative">
-          <ScrollView className="">
+          <ScrollView>
             <View className="py-4 flex gap-y-2">
               <View className="h-fit bg-white rounded-xl px-2">
-                {/* <InitialStore product={product} /> */}
-                {/* banner  */}
+                {/* Product Banner */}
                 <ResponsiveImage
                   className="h-[100vw] w-full rounded-lg"
                   imageStyles="h-[100vw] w-full rounded-lg"
-                  source={product.feature_image}
-                  alt={product.name}
+                  source={feature_image}
+                  alt={name}
                 />
-                <ImageGalleryFtech images={product.gallery_image} />
-                <Text className="mr-auto text-lg font-bold">
-                  {product.name}
-                </Text>
+                <ImageGalleryFtech images={gallery_image} />
+                <Text className="mr-auto text-lg font-bold">{name}</Text>
                 <View className="lg:col-span-4 ">
-                  {/* title */}
+                  {/* Product Title */}
                   <Text className="p-4 text-base font-semibold leading-8 tracking-wide text-black/80 ">
                     {product.title}
                   </Text>
                 </View>
               </View>
-              <View className=" bg-white rounded-xl px-2">
-                <StoreCard data={product.unit} />
+
+              <View className="bg-white rounded-xl px-2">
+                <StoreCard data={unit} />
               </View>
 
-              <View className=" bg-white rounded-xl px-2">
-                <Description description={product.description} />
+              <View className="bg-white rounded-xl px-2">
+                <Description description={description} />
                 <Reviews
-                  numReviews={product.numReviews}
-                  prdouctID={product._id}
+                  numReviews={numReviews}
+                  productID={product._id}
                   productTitle={product.title}
                 />
-                <ProductSlice products={product?.unit?.products} title="Sản phẩm của cửa hàng" />
-                <ProductSlice products={product?.product_related} title="Sản phẩm liên quan" />
+
+                <ProductSlice
+                  products={unit?.products?.map((p) => ({
+                    ...p,
+                    unit_name: unit.name,
+                  }))}
+                  title="Sản phẩm của cửa hàng"
+                />
+
+                <ProductSlice
+                  products={product_related}
+                  title="Sản phẩm liên quan"
+                />
+
+                {/* Add to Cart Operation */}
                 <View
                   className="fixed left-0 right-0 z-20"
                   style={{ bottom: insets.bottom }}
