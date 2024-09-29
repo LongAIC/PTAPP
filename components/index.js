@@ -70,6 +70,9 @@ export { default as Info } from './product/Info'
 export { default as Description } from './product/Description'
 export { default as Specification } from './product/Specification'
 export { default as MostFavoriteProductsFtech} from './product/MostFavoriteProductsFtech'
+export { default as ImageGalleryFtech} from './product/ImageGalleryFtech'
+export { default as StoreCard} from './product/StoreCard'
+export { default as ProductSlice} from './product/ProductSlice'
 
 //* CART COMPONENTS
 export { default as AddToCartOperation } from './cart/AddToCartOperation'

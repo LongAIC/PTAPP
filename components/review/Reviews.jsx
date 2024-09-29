@@ -38,7 +38,7 @@ const Reviews = props => {
     <>
       <View className="px-3 py-3 space-y-4" id="_productReviews">
         <View className="flex flex-row items-center justify-between">
-          <Text className="">Đánh giá sản phẩm</Text>
+          <Text className="text-lg font-semibold">Đánh giá sản phẩm</Text>
           <Text className="text-xs text-sky-500">{numReviews} đánh giá</Text>
         </View>
         <View className="mb-2">

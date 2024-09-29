@@ -122,7 +122,7 @@ export default function FeedScreen() {
             {/* ------------------------------------------------------------------------------------- */}
 
             <MainSlider data={sliders} />
-            <FtechDiscountSlider products={onSale} />
+            <FtechDiscountSlider products={onSale} title="Đang giảm giá" />
             <BannerOneFtech
               data={
                 topic.filter((item) => item.data[0].layout == "slide")[0]

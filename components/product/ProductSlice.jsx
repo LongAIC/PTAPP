@@ -6,7 +6,7 @@ import DiscountProduct from "../product/DiscountProduct";
 import ProductPrice from "../product/ProductPrice";
 import { View, Image, TouchableOpacity, Text } from "react-native";
 
-export default function FtechDiscountSlider(props) {
+export default function ProductSlice(props) {
   //? Props
   const { products, title } = props;
 
@@ -14,7 +14,7 @@ export default function FtechDiscountSlider(props) {
   const handleJumptoMore = () => {
     console.log("more");
   };
-
+  if (!products) return null
   //? Render(s)
   return (
     <FeedSectionContainer
@@ -24,19 +24,19 @@ export default function FtechDiscountSlider(props) {
     >
       <FlashList
         data={products}
-        renderItem={({ item }) => (
+        renderItem={({ item, index }) => (
           <Link
             className="w-[200px] mx-1"
             href={{
-              pathname: `/products/${item.ID}`,
+              pathname: ``,
             }}
-            key={item.id}
+            key={index}
             asChild
           >
             <TouchableOpacity className="overflow-hidden  p-2 border-[1px] rounded-lg border-[#F0F1F1]">
               <Image
                 source={{
-                  uri: item?.product_image,
+                  uri: item?.thumbnail_url,
                 }}
                 className="w-[100%] h-[212px] object-cover  z-50 rounded-lg"
               />
@@ -45,12 +45,12 @@ export default function FtechDiscountSlider(props) {
                   numberOfLines={2}
                   className="text-[16px] font-[500] leading-5"
                 >
-                  {item?.product_name}
+                  {item?.title}
                 </Text>
               </View>
               <View className="py-3">
                 <Text className="text-[14px] font-[400] leading-5 text-[#FF4405]">
-                  {item?.donvicungcap}
+                  {item?.unit_name}
                 </Text>
               </View>
             </TouchableOpacity>

@@ -16,7 +16,7 @@ const Description = props => {
   return (
     <Pressable>
       <View className="px-3">
-        <Text className="mb-3 lg:border-b-2 lg:border-red-500 w-fit">Giới thiệu</Text>
+        <Text className=" text-lg font-semibold">Mô tả sản phẩm</Text>
         <Text className="text-sm leading-6 tracking-wider text-gray-600 lg:text-sm lg:leading-8">
           {isShowDesc ? description : truncate(description, 300)}
         </Text>
