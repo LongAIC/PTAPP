@@ -113,7 +113,7 @@ export default function FeedScreen() {
               name={currentCategory?.name}
               homePage
             />
-            <DiscountSlider currentCategory={currentCategory} /> 
+            <DiscountSlider currentCategory={currentCategory} />
             <BannerOne data={bannerOneType} />
             <BestSellsSlider categorySlug={currentCategory?.slug} />
             <BannerTwo data={bannerTwoType} />
@@ -122,6 +122,15 @@ export default function FeedScreen() {
             {/* ------------------------------------------------------------------------------------- */}
 
             <MainSlider data={sliders} />
+            <Categories
+              childCategories={{
+                categories: childCategories,
+                title: "Tất cả danh mục",
+              }}
+              color={currentCategory?.colors?.start}
+              name={currentCategory?.name}
+              homePage
+            />
             <FtechDiscountSlider products={onSale} />
             <BannerOneFtech
               data={
