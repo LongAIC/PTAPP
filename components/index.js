@@ -22,6 +22,7 @@ export { default as Modal } from './common/Modal'
 export { default as WithAddressModal } from './common/WithAddressModal'
 export { default as Combobox } from './common/Combobox'
 export * from './common/Buttons'
+export {default as CategorySelector } from './common/Selector'
 
 //* LOADING
 export { default as Loading } from './loading/Loading'
@@ -73,6 +74,7 @@ export { default as MostFavoriteProductsFtech} from './product/MostFavoriteProdu
 export { default as ImageGalleryFtech} from './product/ImageGalleryFtech'
 export { default as StoreCard} from './product/StoreCard'
 export { default as ProductSlice} from './product/ProductSlice'
+export {default as ProductDetailSlider} from './product/ProductDetailSlider'
 
 //* CART COMPONENTS
 export { default as AddToCartOperation } from './cart/AddToCartOperation'

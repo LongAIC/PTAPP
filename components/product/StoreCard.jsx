@@ -2,6 +2,7 @@ import { Text, View, TouchableOpacity, Image } from "react-native";
 
 const StoreCard = (props) => {
   const { data } = props;
+  console.log(data)
 
   return (
     <View className="flex-row items-center p-2 rounded-lg bg-white py-5">
@@ -15,7 +16,8 @@ const StoreCard = (props) => {
 
       {/* Store Information */}
       <View className="ml-4 flex-1">
-        <Text className="text-sm font-medium">{data.name}</Text>
+        <Text className="text-base font-medium">{data.name}</Text>
+        <Text className="text-slate-500 ">{data.product_number} sản phẩm</Text>
       </View>
 
       {/* View Store Button */}

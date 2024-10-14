@@ -12,7 +12,6 @@ import { useGetProductsQuery } from "@/services";
 export default function MostFavoriteProductsFtech(props) {
   //? Props
   const { products } = props;
-
   //? Get Products Query
 
   //? Render(s)
@@ -23,7 +22,7 @@ export default function MostFavoriteProductsFtech(props) {
           <Link
             className="w-[48%] mx-1 my-1"
             href={{
-              pathname: ``,
+              pathname: `/products/${product.ID}`,
             }}
             key={product.ID}
             asChild

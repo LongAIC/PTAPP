@@ -21,6 +21,8 @@ import {
   ShowWrapper,
   SmilarProductsSlider,
   Specification,
+  ProductDetailSlider,
+  Button
 } from "@/components";
 import { useAppSelector } from "@/hooks";
 import { useGetSingleProductDetailQuery } from "@/serviceFTECH";
@@ -113,23 +115,11 @@ export default function SingleProductScreen() {
       >
         <View className="h-full bg-gray relative">
           <ScrollView>
-            <View className="py-4 flex gap-y-2">
-              <View className="h-fit bg-white rounded-xl px-2">
-                {/* Product Banner */}
-                <ResponsiveImage
-                  className="h-[100vw] w-full rounded-lg"
-                  imageStyles="h-[100vw] w-full rounded-lg"
-                  source={feature_image}
-                  alt={name}
-                />
-                <ImageGalleryFtech images={gallery_image} />
-                <Text className="mr-auto text-lg font-bold">{name}</Text>
-                <View className="lg:col-span-4 ">
-                  {/* Product Title */}
-                  <Text className="p-4 text-base font-semibold leading-8 tracking-wide text-black/80 ">
-                    {product.title}
-                  </Text>
-                </View>
+            <View className="py-2 flex gap-y-2">
+              <View className=" bg-white rounded-xl px-2">
+                <ProductDetailSlider imagesData={gallery_image} />
+
+                <Text className="mr-auto text-lg font-bold my-3">{name}</Text>
               </View>
 
               <View className="bg-white rounded-xl px-2">
@@ -162,7 +152,13 @@ export default function SingleProductScreen() {
                   className="fixed left-0 right-0 z-20"
                   style={{ bottom: insets.bottom }}
                 >
-                  <AddToCartOperation product={product} />
+                  <View className="flex items-center justify-between p-3 bg-white border-t border-gray-300 shadow-3xl">
+                    <Button
+                      className="px-12 text-sm btn"
+                    >
+                      Liên hệ với người bán
+                    </Button>
+                  </View>
                 </View>
               </View>
             </View>
