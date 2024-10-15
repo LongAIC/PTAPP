@@ -12,9 +12,9 @@ const FeedSectionContainer = props => {
 
   //? Render(s)
   return (
-    <View style={style} className="mt-6 ">
+    <View style={style} className="">
       <View className="flex flex-row justify-between items-center mb-3">
-        <Text className="mr-auto text-base font-bold">{title}</Text>
+        {title && <Text className="mr-auto text-base font-bold">{title}</Text>}
         {showMore && (
           <TouchableOpacity
             onPress={handleJumpMore}

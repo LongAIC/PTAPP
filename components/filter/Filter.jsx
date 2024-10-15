@@ -7,12 +7,12 @@ import {
   View,
   TouchableOpacity,
 } from "react-native";
-import { Switch } from "react-native-paper";
+
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import Icons from "../common/Icons";
 import Modal from "../common/Modal";
-import { Button } from "..";
+
 
 import {
   useAppDispatch,
@@ -21,7 +21,7 @@ import {
   useDisclosure,
 } from "@/hooks";
 import { loadFilters, resetFilter, updateFilter } from "@/store";
-import { CategorySelector } from "..";
+import  CategorySelector  from "../common/Selector";
 import { ScrollView } from "react-native-gesture-handler";
 
 const Filter = (props) => {

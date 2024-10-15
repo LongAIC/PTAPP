@@ -26,7 +26,7 @@ import {
 } from "@/components";
 import { useAppSelector } from "@/hooks";
 import { useGetSingleProductDetailQuery } from "@/serviceFTECH";
-import { ResponsiveImage } from "@/components";
+
 import { formatNumber } from "@/utils";
 
 export default function SingleProductScreen() {
@@ -67,7 +67,7 @@ export default function SingleProductScreen() {
     unit,
     product_related,
   } = product;
-
+  console.log(product_related)
   return (
     <>
       <Stack.Screen
@@ -123,7 +123,7 @@ export default function SingleProductScreen() {
               </View>
 
               <View className="bg-white rounded-xl px-2">
-                <StoreCard data={unit} />
+                <StoreCard data={unit} btn />
               </View>
 
               <View className="bg-white rounded-xl px-2">

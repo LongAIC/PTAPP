@@ -16,7 +16,7 @@ import { useLoginMutation } from "@/services";
 import { userLogin } from "@/store";
 import { logInSchema } from "@/utils";
 
-export default function LoginScreen() {
+export default function ForgetPasswordScreen() {
   //? Assets
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -59,7 +59,7 @@ export default function LoginScreen() {
     <>
       <Stack.Screen
         options={{
-          title: "Đăng nhập",
+          title: "Quên mật khẩu",
           headerBackTitleVisible: true,
         }}
       />
@@ -86,73 +86,33 @@ export default function LoginScreen() {
             />
           </View>
 
-          <View className=" w-[100%]">
+          <View className=" w-[100%] ">
+            <Text className="text-slate-600 mb-10">
+              Nhập email của bạn cho quá trình xác minh. Chúng tôi sẽ gửi mã OTP
+              vào email của bạn
+            </Text>
             <TextField
               errors={formErrors.email}
               placeholder="Nhập email của bạn"
               name="email"
               keyboardType="email-address"
-              styleInput="w-[100%] bg-white border-slate-200 border rounded p-4 text-sm"
+              styleInput="w-[100%] bg-white border-slate-200 border rounded p-4 text-sm mb-10"
               autoCapitalize="none"
               control={control}
               label={"Email"}
               styleLabel="text-lg"
+              
             />
-            <TextField
-              errors={formErrors.password}
-              secureTextEntry
-              placeholder="Nhập mật khẩu"
-              name="password"
-              styleInput="w-[100%] bg-white border-slate-200 border rounded p-4 text-sm"
-              control={control}
-              label={"Mật khẩu"}
-              styleLabel="text-lg"
-            />
-          </View>
-          <View className="flex-row mb-4">
-            <Text>Quên mật khẩu? </Text>
-            <Link href="/forgetPassword" className="text-blue-400 ">
-              Đặt lại mật khẩu
-            </Link>
-          </View>
-          <View className=" mt-10">
-            <Button isLoading={isLoading} onPress={handleSubmit(onSubmit)}>
-              Đăng nhập
-            </Button>
-          </View>
-          <View className="flex-row items-center justify-center  ">
-            <View className="flex-1 h-px bg-slate-300"></View>
-            <Text className="mx-5 text-gray-500">Hoặc</Text>
-            <View className="flex-1 h-px bg-slate-300"></View>
           </View>
 
-          <View className="space-y-3">
-            <TouchableOpacity className="border p-3 rounded-lg justify-center items-center flex-row border-slate-300">
-              <Image
-                className="w-8 h-8"
-                source={require("@/assets/app_images/google_icon.jpg")}
-              />
-              <Text>Đăng nhập bằng Google</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              className=" p-3 rounded-lg justify-center items-center flex-row "
-              style={{ backgroundColor: "#1877F2" }}
-            >
-              <Image
-                className="w-7 h-7 mr-3"
-                source={require("@/assets/app_images/facebook_icon.png")}
-              />
-              <Text className="text-white">Đăng nhập bằng Facebook</Text>
-            </TouchableOpacity>
+          <View className="">
+            <Button isLoading={isLoading} onPress={handleSubmit(onSubmit)}>
+              Gửi mã OTP
+            </Button>
           </View>
-          <View className="flex-1 justify-center ">
-            <View className="absolute bottom-0  mb-5 justify-center items-center flex-row  w-full  ">
-              <Text>Bạn chưa có tài khoản? </Text>
-              <Link href="/register" className="text-blue-400 ">
-                Đăng ký ngay
-              </Link>
-            </View>
-          </View>
+          
+
+          
         </View>
       </View>
     </>

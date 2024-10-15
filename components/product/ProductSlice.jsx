@@ -8,25 +8,25 @@ import { View, Image, TouchableOpacity, Text } from "react-native";
 
 export default function ProductSlice(props) {
   //? Props
-  const { products, title } = props;
+  const { products, title="", slide = true } = props;
 
   //? handlers
-  const handleJumptoMore = () => {
-    console.log("more");
-  };
+
   if (!products) return null
   //? Render(s)
   return (
     <FeedSectionContainer
       title={title}
-      showMore
-      onJumptoMore={handleJumptoMore}
+      className="flex-1"
     >
       <FlashList
         data={products}
+        horizontal={slide}
+        numColumns={slide ? 1 : 2}
+        className="flex-1"
         renderItem={({ item, index }) => (
           <Link
-            className="w-[200px] mx-1"
+            className="w-[190px] mx-1"
             href={{
               pathname: ``,
             }}
@@ -56,7 +56,6 @@ export default function ProductSlice(props) {
             </TouchableOpacity>
           </Link>
         )}
-        horizontal
         estimatedItemSize={200}
       />
     </FeedSectionContainer>

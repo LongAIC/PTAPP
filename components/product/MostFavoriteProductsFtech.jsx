@@ -20,7 +20,7 @@ export default function MostFavoriteProductsFtech(props) {
       <View className="w-full flex flex-row flex-wrap">
         {products?.map((product, index) => (
           <Link
-            className="w-[48%] mx-1 my-1"
+            className="w-[47%] mx-1 my-1"
             href={{
               pathname: `/products/${product.ID}`,
             }}

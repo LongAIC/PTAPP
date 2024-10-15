@@ -1,12 +1,11 @@
 import { Text, View, TouchableOpacity, Image } from "react-native";
-
+import { Link } from "expo-router";
+import  Icons  from "../common/Icons";
 const StoreCard = (props) => {
-  const { data } = props;
-  console.log(data)
+  const { data, btn = false } = props;
 
   return (
     <View className="flex-row items-center p-2 rounded-lg bg-white py-5">
-      {/* Store Image */}
       <Image
         source={{
           uri: data.feature_image,
@@ -21,9 +20,29 @@ const StoreCard = (props) => {
       </View>
 
       {/* View Store Button */}
-      <TouchableOpacity className="ml-4 px-4 py-2 border border-orange-500 rounded-lg">
-        <Text className="text-orange-500 text-xs">Xem gian hàng</Text>
-      </TouchableOpacity>
+      {btn ? (
+        <Link
+          href={`/units/${data.id}`}
+          className="ml-4 px-4 py-2 border border-orange-500 rounded-lg active:opacity-5"
+        >
+          <Text className="text-orange-500 text-xs">Xem gian hàng</Text>
+        </Link>
+      ) : (
+        <>
+          <Icons.Feather
+            name="heart"
+            size={20}
+            color="#1F2937"
+            className="px-2 py-1"
+          />
+          <Icons.FontAwesome5
+            name="share"
+            size={20}
+            color="#1F2937"
+            className="px-2 py-1"
+          />
+        </>
+      )}
     </View>
   );
 };
