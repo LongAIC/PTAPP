@@ -14,20 +14,29 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true, 
+     
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      }, 
+     
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "scheme": "shoppig-rn-scheme",
-    "plugins": ["expo-router"]
+    "plugins": [
+      "expo-router",
+      "expo-build-properties",
+      "@react-native-firebase/app", 
+      "@react-native-firebase/auth"
+    ]
   }
 }

@@ -41,7 +41,7 @@ export default function TextField(props) {
         className={
           styleInput
             ? styleInput
-            : "w-full px-3 py-2.5 transition-colors border border-gray-200 rounded-md outline-none bg-zinc-50/30 focus:border-blue-600 leading-none"
+            : "w-full px-3 transition-colors border border-gray-200 rounded-md outline-none bg-zinc-50/30 focus:border-blue-600 leading-none"
         }
         id={name}
         value={field?.value}
@@ -50,9 +50,12 @@ export default function TextField(props) {
         onChangeText={onChangeHandler}
         ref={field.ref}
         {...inputProps}
-      
       />
-      <DisplayError errors={errors} />
+      {errors ? (
+        <DisplayError errors={errors} />
+      ) : (
+        <View className="h-4"></View>
+      )}
     </View>
   );
 }

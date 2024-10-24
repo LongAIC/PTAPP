@@ -12,9 +12,9 @@ import {
   ResponsiveImage,
 } from "@/components";
 import { useAppDispatch } from "@/hooks";
-import { useLoginMutation } from "@/services";
-import { userLogin } from "@/store";
+import { useLoginMutation } from "@/serviceFTECH";
 import { logInSchema } from "@/utils";
+import { userLogin } from "@/store";
 
 export default function LoginScreen() {
   //? Assets
@@ -43,16 +43,29 @@ export default function LoginScreen() {
 
   //? Handlers
   const onSubmit = ({ email, password }) => {
+    console.log(email, password);
     if (email && password) {
       login({
-        body: { email, password },
+        email,
+        password,
       });
     }
   };
 
   const onSuccess = () => {
-    dispatch(userLogin(data.data.token));
-    router.back();
+    if (isSuccess && data) {
+      const userInfo = {
+        id: data.data.ID,
+        displayName: data.data.display_name,
+        email: data.data.user_email,
+        eventRegisted: data.data.eventRegisted,
+        phoneNumber: data.data.phoneNumber,
+      };
+  
+      dispatch(userLogin({ userInfo }));
+      
+      router.back();
+    }
   };
 
   return (
@@ -63,12 +76,11 @@ export default function LoginScreen() {
           headerBackTitleVisible: true,
         }}
       />
-      {/*  Handle Login Response */}
       {(isSuccess || isError) && (
         <HandleResponse
           isError={isError}
           isSuccess={isSuccess}
-          error={error?.data?.message || "发生异常"}
+          error={error?.data?.message || "Xảy ra lỗi"}
           message={data?.message}
           onSuccess={onSuccess}
         />
@@ -120,31 +132,7 @@ export default function LoginScreen() {
               Đăng nhập
             </Button>
           </View>
-          <View className="flex-row items-center justify-center  ">
-            <View className="flex-1 h-px bg-slate-300"></View>
-            <Text className="mx-5 text-gray-500">Hoặc</Text>
-            <View className="flex-1 h-px bg-slate-300"></View>
-          </View>
 
-          <View className="space-y-3">
-            <TouchableOpacity className="border p-3 rounded-lg justify-center items-center flex-row border-slate-300">
-              <Image
-                className="w-8 h-8"
-                source={require("@/assets/app_images/google_icon.jpg")}
-              />
-              <Text>Đăng nhập bằng Google</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              className=" p-3 rounded-lg justify-center items-center flex-row "
-              style={{ backgroundColor: "#1877F2" }}
-            >
-              <Image
-                className="w-7 h-7 mr-3"
-                source={require("@/assets/app_images/facebook_icon.png")}
-              />
-              <Text className="text-white">Đăng nhập bằng Facebook</Text>
-            </TouchableOpacity>
-          </View>
           <View className="flex-1 justify-center ">
             <View className="absolute bottom-0  mb-5 justify-center items-center flex-row  w-full  ">
               <Text>Bạn chưa có tài khoản? </Text>

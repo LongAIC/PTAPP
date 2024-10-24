@@ -18,11 +18,11 @@ import { useGetFeedInfoQuery } from "@/services";
 import { useGetHomeInfoQuery } from "@/serviceFTECH";
 import { useEffect, useState } from "react";
 import { FlashList } from "@shopify/flash-list";
+import { useSelector } from 'react-redux';
 
 export default function FeedScreen() {
   //? Assets
   const [data, setData] = useState(null);
-
   const dataHomePage = ({
     data: {},
     isLoading,

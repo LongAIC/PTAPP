@@ -23,6 +23,10 @@ export { default as WithAddressModal } from './common/WithAddressModal'
 export { default as Combobox } from './common/Combobox'
 export * from './common/Buttons'
 export {default as CategorySelector } from './common/Selector'
+export {default as OTPInput } from './common/OTPInput'
+export {default as ErrorMessage} from './common/ErrorMessage'
+export {default as Message} from './common/Message'
+export {default as Popup} from './common/PopUp'
 
 //* LOADING
 export { default as Loading } from './loading/Loading'

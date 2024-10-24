@@ -1,22 +1,23 @@
-import { yupResolver } from '@hookform/resolvers/yup'
-import { Link, Stack, useRouter } from 'expo-router'
-import { useEffect } from 'react'
-import { useForm } from 'react-hook-form'
-import { ScrollView, Text, View, Image, TouchableOpacity } from 'react-native'
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Link, Stack, useRouter } from "expo-router";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { ScrollView, Text, View, Image, TouchableOpacity } from "react-native";
 
-import { Button, HandleResponse, Logo, TextField } from '@/components'
-import { useAppDispatch } from '@/hooks'
-import { useCreateUserMutation } from '@/services'
-import { userLogin } from '@/store'
-import { registerSchema } from '@/utils'
+import { Button, HandleResponse, Logo, TextField } from "@/components";
+import { useAppDispatch } from "@/hooks";
+import { useCreateUserMutation } from "@/services";
+import { userLogin } from "@/store";
+import { registerSchema } from "@/utils";
 
 export default function RegisterScreen() {
   //? Assets
-  const dispatch = useAppDispatch()
-  const router = useRouter()
+  const dispatch = useAppDispatch();
+  const router = useRouter();
 
   //? Create User
-  const [createUser, { data, isSuccess, isError, isLoading, error }] = useCreateUserMutation()
+  const [createUser, { data, isSuccess, isError, isLoading, error }] =
+    useCreateUserMutation();
 
   //? Form Hook
   const {
@@ -26,27 +27,40 @@ export default function RegisterScreen() {
     control,
   } = useForm({
     resolver: yupResolver(registerSchema),
-    defaultValues: { name: '', email: '', password: '', confirmPassword: '' },
-  })
+    defaultValues: {
+      name: "",
+      email: "",
+      phone: "",
+      password: "",
+      confirmPassword: "",
+    },
+  });
 
   //? Focus On Mount
   useEffect(() => {
-    setFocus('name')
-  }, [])
+    setFocus("name");
+  }, []);
 
   //? Handlers
   const onSubmit = ({ name, email, password }) => {
     if (name && email && password) {
-      createUser({
-        body: { name, email, password },
-      })
+      router.push({
+        pathname: "/otp",
+        params: {
+          type: "signUp",
+          email,
+          name,
+          password,
+          
+        },
+      });
     }
-  }
+  };
 
   const onSuccess = () => {
-    dispatch(userLogin(data.data.token))
-    router.back()
-  }
+    dispatch(userLogin(data.data.token));
+    router.back();
+  };
 
   return (
     <>
@@ -66,8 +80,8 @@ export default function RegisterScreen() {
           onSuccess={onSuccess}
         />
       )}
-      <ScrollView className="h-[100%]  bg-white">
-        <View className="w-[100%] h-[100%] px-8  space-y-4 ">
+      <ScrollView className="  bg-white">
+        <View className="w-[100%]  px-8  ">
           <View>
             <Image
               source={require("@/assets/app_images/Ellipse1.png")}
@@ -79,29 +93,23 @@ export default function RegisterScreen() {
             />
           </View>
 
-          <View className=" w-[100%]">
-          <TextField
+          <View className=" mt-9">
+            <TextField
               errors={formErrors.name}
               placeholder="Nhập họ và tên của bạn"
               name="name"
               control={control}
               label={"Họ và tên"}
               styleLabel="text-lg"
+              styleInput="w-[100%] bg-white border-slate-200 border rounded p-4 text-base "
             />
-            <TextField
-              errors={formErrors.name}
-              placeholder="Nhập số điện thoại của bạn"
-              name="phone"
-              control={control}
-              label={"Số điện thoại"}
-              styleLabel="text-lg"
-            />
+
             <TextField
               errors={formErrors.email}
               placeholder="Nhập email của bạn"
               name="email"
               keyboardType="email-address"
-              styleInput="w-[100%] bg-white border-slate-200 border rounded p-4 text-sm"
+              styleInput="w-[100%] bg-white border-slate-200 border rounded p-4 text-base"
               autoCapitalize="none"
               control={control}
               label={"Email"}
@@ -112,55 +120,34 @@ export default function RegisterScreen() {
               secureTextEntry
               placeholder="Nhập mật khẩu"
               name="password"
-              styleInput="w-[100%] bg-white border-slate-200 border rounded p-4 text-sm"
+              styleInput="w-[100%] bg-white border-slate-200 border rounded p-4 text-base"
               control={control}
               label={"Mật khẩu"}
               styleLabel="text-lg"
             />
             <TextField
-              errors={formErrors.password}
+              errors={formErrors.confirmPassword}
               secureTextEntry
               placeholder="Xác nhận mật khẩu"
-              name="password"
-              styleInput="w-[100%] bg-white border-slate-200 border rounded p-4 text-sm"
+              name="confirmPassword"
+              styleInput="w-[100%] bg-white border-slate-200 border rounded p-4 text-base"
               control={control}
               label={"Xác nhận mật khẩu"}
               styleLabel="text-lg"
             />
           </View>
-          <View className="flex-row mb-4">
-            <Text>Bằng việc đăng ký, bạn đã đồng ý với Điều khoản, Chính sách bảo mật và Sử dụng Cookie </Text>
+          <View className="flex-row mb-4 mt-5">
+            <Text>
+              Bằng việc đăng ký, bạn đã đồng ý với Điều khoản, Chính sách bảo
+              mật và Sử dụng Cookie{" "}
+            </Text>
           </View>
-          <View className=" mt-10">
+          <View className=" mt-10 mb-7">
             <Button isLoading={isLoading} onPress={handleSubmit(onSubmit)}>
               Đăng ký tài khoản
             </Button>
           </View>
-          <View className="flex-row items-center justify-center  ">
-            <View className="flex-1 h-px bg-slate-300"></View>
-            <Text className="mx-5 text-gray-500">Hoặc</Text>
-            <View className="flex-1 h-px bg-slate-300"></View>
-          </View>
 
-          <View className="space-y-3 mb-10">
-            <TouchableOpacity className="border p-3 rounded-lg justify-center items-center flex-row border-slate-300">
-              <Image
-                className="w-8 h-8"
-                source={require("@/assets/app_images/google_icon.jpg")}
-              />
-              <Text>Đăng nhập bằng Google</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              className=" p-3 rounded-lg justify-center items-center flex-row "
-              style={{ backgroundColor: "#1877F2" }}
-            >
-              <Image
-                className="w-7 h-7 mr-3"
-                source={require("@/assets/app_images/facebook_icon.png")}
-              />
-              <Text className="text-white">Đăng nhập bằng Facebook</Text>
-            </TouchableOpacity>
-          </View>
           <View className="justify-center ">
             <View className=" bottom-0  mb-5 justify-center items-center flex-row  w-full  ">
               <Text>Bạn đã có tài khoản? </Text>
@@ -172,5 +159,5 @@ export default function RegisterScreen() {
         </View>
       </ScrollView>
     </>
-  )
+  );
 }
