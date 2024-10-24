@@ -1,18 +1,18 @@
-import { Link } from 'expo-router'
-import { Pressable, Text, View } from 'react-native'
+import { Link } from "expo-router";
+import { Pressable, Text, View } from "react-native";
 
-import Depot from './Depot'
-import DiscountProduct from './DiscountProduct'
-import ProductPrice from './ProductPrice'
-import SpecialSell from './SpecialSell'
-import Icons from '../common/Icons'
-import ResponsiveImage from '../common/ResponsiveImage'
+import Depot from "./Depot";
+import DiscountProduct from "./DiscountProduct";
+import ProductPrice from "./ProductPrice";
+import SpecialSell from "./SpecialSell";
+import Icons from "../common/Icons";
+import ResponsiveImage from "../common/ResponsiveImage";
 
-import { truncate } from '@/utils'
+import { truncate } from "@/utils";
 
-const ProductCard = props => {
+const ProductCard = (props) => {
   //? Props
-  const { product } = props
+  const { product } = props;
 
   //? Render(s)
   return (
@@ -27,16 +27,16 @@ const ProductCard = props => {
             <ResponsiveImage
               dimensions="h-[28vw] w-[26vw] mb-8"
               imageStyles="h-[28vw] w-[26vw]"
-              source={product.images[0].url}
+              source={""}
               alt={product.title}
             />
-
+            {/* product.images[0].url */}
             <View className="p-2 flex flex-row gap-1.5 items-end">
               {product.colors &&
                 product.inStock !== 0 &&
                 product.colors
                   .slice(0, 3)
-                  .map(color => (
+                  .map((color) => (
                     <View
                       key={color.id}
                       className="inline-block w-2.5 h-2.5 rounded-xl border-gray-300 shadow border "
@@ -57,8 +57,14 @@ const ProductCard = props => {
                 <Depot inStock={product.inStock} />
               </View>
               <View className="flex flex-row items-center gap-x-1">
-                <Text className=" text-neutral-500">{product.rating.toFixed(1)}</Text>
-                <Icons.AntDesign name="star" size={16} className="text-amber-400" />
+                <Text className=" text-neutral-500">
+                  {product.rating.toFixed(1)}
+                </Text>
+                <Icons.AntDesign
+                  name="star"
+                  size={16}
+                  className="text-amber-400"
+                />
               </View>
             </View>
             <View className="flex flex-row justify-between">
@@ -81,7 +87,7 @@ const ProductCard = props => {
         </View>
       </Pressable>
     </Link>
-  )
-}
+  );
+};
 
-export default ProductCard
+export default ProductCard;

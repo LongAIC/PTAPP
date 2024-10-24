@@ -1,6 +1,6 @@
-import { Link, Stack, useLocalSearchParams, useRouter } from 'expo-router'
-import { View, Text, ScrollView, Pressable } from 'react-native'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { Link, Stack, useLocalSearchParams, useRouter } from "expo-router";
+import { View, Text, ScrollView, Pressable } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import {
   AddToCartOperation,
@@ -17,19 +17,19 @@ import {
   ShowWrapper,
   SmilarProductsSlider,
   Specification,
-} from '@/components'
-import { useAppSelector } from '@/hooks'
-import { useGetSingleProductDetailQuery } from '@/services'
-import { formatNumber } from '@/utils'
+} from "@/components";
+import { useAppSelector } from "@/hooks";
+import { useGetSingleProductDetailQuery } from "@/services";
+import { formatNumber } from "@/utils";
 
 export default function SingleProductScreen() {
   //? Assets
-  const router = useRouter()
-  const { id } = useLocalSearchParams()
-  const insets = useSafeAreaInsets()
+  const router = useRouter();
+  const { id } = useLocalSearchParams();
+  const insets = useSafeAreaInsets();
 
   //? Store
-  const { totalItems } = useAppSelector(state => state.cart)
+  const { totalItems } = useAppSelector((state) => state.cart);
 
   //? Get Feeds Query
   const {
@@ -48,7 +48,7 @@ export default function SingleProductScreen() {
         ...args,
       }),
     }
-  )
+  );
 
   return (
     <>
@@ -74,10 +74,15 @@ export default function SingleProductScreen() {
                 </Pressable>
               </Link>
 
-              <Icons.Feather name="heart" size={20} color="#1F2937" className="px-2 py-1" />
+              <Icons.Feather
+                name="heart"
+                size={20}
+                color="#1F2937"
+                className="px-2 py-1"
+              />
             </>
           ),
-          title: product?.title || '',
+          title: product?.title || "",
           headerBackTitleVisible: false,
         }}
       />
@@ -141,12 +146,15 @@ export default function SingleProductScreen() {
             </View>
           </ScrollView>
           {product.inStock > 0 && (
-            <View className="fixed left-0 right-0 z-20" style={{ bottom: insets.bottom }}>
+            <View
+              className="fixed left-0 right-0 z-20"
+              style={{ bottom: insets.bottom }}
+            >
               <AddToCartOperation product={product} />
             </View>
           )}
         </View>
       </ShowWrapper>
     </>
-  )
+  );
 }

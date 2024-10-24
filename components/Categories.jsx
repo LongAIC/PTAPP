@@ -1,13 +1,13 @@
-import { FlashList } from '@shopify/flash-list'
-import { Link } from 'expo-router'
-import React from 'react'
-import { Image, Pressable, Text, View } from 'react-native'
+import { FlashList } from "@shopify/flash-list";
+import { Link } from "expo-router";
+import React from "react";
+import { Image, Pressable, Text, View } from "react-native";
 
-import FeedSectionContainer from './common/FeedSectionContainer'
+import FeedSectionContainer from "./common/FeedSectionContainer";
 
 export default function Categories(props) {
   //? Props
-  const { childCategories, color, name } = props
+  const { childCategories, color, name } = props;
 
   //? Re-Renders
   if (childCategories.categories.length > 0 && color && name) {
@@ -20,7 +20,7 @@ export default function Categories(props) {
             <Link
               key={item._id}
               href={{
-                pathname: '/products',
+                pathname: "/products",
                 params: { category: item.slug },
               }}
               asChild
@@ -42,7 +42,7 @@ export default function Categories(props) {
           estimatedItemSize={400}
         />
       </FeedSectionContainer>
-    )
+    );
   }
-  return null
+  return null;
 }

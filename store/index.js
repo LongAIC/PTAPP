@@ -1,29 +1,29 @@
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { configureStore } from '@reduxjs/toolkit'
-import { setupListeners } from '@reduxjs/toolkit/query'
-import { persistReducer } from 'redux-persist'
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { configureStore } from "@reduxjs/toolkit";
+import { setupListeners } from "@reduxjs/toolkit/query";
+import { persistReducer } from "redux-persist";
 
 //? Reducers
-import cartReducer from './slices/cart.slice'
-import filtersReducer from './slices/filters.slice'
-import userReducer from './slices/user.slice'
+import cartReducer from "./slices/cart.slice";
+import filtersReducer from "./slices/filters.slice";
+import userReducer from "./slices/user.slice";
 
-import apiSlice from '@/services/api'
-import apiFtechSlice from '@/serviceFTECH/api'
+import apiSlice from "@/services/api";
+import apiFtechSlice from "@/serviceFTECH/api";
 
 const persistConfig = {
-  key: 'root',
+  key: "root",
   version: 1,
   storage: AsyncStorage,
-}
+};
 
-const cartPersistedReducer = persistReducer(persistConfig, cartReducer)
-const userPersistedReducer = persistReducer(persistConfig, userReducer)
+const cartPersistedReducer = persistReducer(persistConfig, cartReducer);
+const userPersistedReducer = persistReducer(persistConfig, userReducer);
 
 //? Actions
-export * from './slices/user.slice'
-export * from './slices/cart.slice'
-export * from './slices/filters.slice'
+export * from "./slices/user.slice";
+export * from "./slices/cart.slice";
+export * from "./slices/filters.slice";
 
 export const store = configureStore({
   reducer: {
@@ -33,12 +33,12 @@ export const store = configureStore({
     [apiSlice.reducerPath]: apiSlice.reducer,
     [apiFtechSlice.reducerPath]: apiFtechSlice.reducer,
   },
-  middleware: getDefaultMiddleware =>
+  middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
     })
       .concat(apiSlice.middleware)
       .concat(apiFtechSlice.middleware),
-})
+});
 
-setupListeners(store.dispatch)
+setupListeners(store.dispatch);
