@@ -11,46 +11,38 @@ import {
   SubCategories,
 } from "@/components";
 import { useChangeRoute } from "@/hooks";
-import { useGetCategoriesQuery, useGetProductsQuery } from "@/services";
+import { useGetProductscatQuery } from "@/serviceFTECH";
 
 export default function ProductsScreen() {
   const params = useLocalSearchParams();
 
-  const category = params?.category?.toString() ?? "";
-  const page_size = params?.page_size?.toString() ?? 10;
-  const page = params?.page?.toString() ?? 1;
-  const sort = params?.sort?.toString() ?? "";
-  const search = params?.search?.toString() ?? "";
-  const inStock = params?.inStock?.toString() ?? "";
-  const discount = params?.discount?.toString() ?? "";
-  const price = params?.price?.toString() ?? "";
-
-  //? Querirs
-  //*    Get Products Data
+  const id = params?.idCat?.toString() ?? "";
+  const limit = params?.limit?.toString() ?? 10;
+  const page = params?.page?.toString() ?? 0;
 
   const {
     data,
     hasNextPage,
+    count,
     isFetching: isFetchingProduct,
-  } = useGetProductsQuery(
+  } = useGetProductscatQuery(
     {
-      category,
-      page_size,
+      id,
+      limit,
       page,
-      sort,
-      search,
-      inStock,
-      discount,
-      price,
     },
     {
       selectFromResult: ({ data, ...args }) => ({
-        hasNextPage: data?.data?.pagination?.hasNextPage ?? false,
-        data,
+        hasNextPage: data?.hasNextPage ?? false,
+        data: data?.data,
+        count: data?.count ?? 0,
+        isFetchingProduct: data == undefined ? false : isFetching,
         ...args,
       }),
     }
   );
+
+  console.log(isFetchingProduct);
 
   //? Handlers
   const changeRoute = useChangeRoute();
@@ -65,27 +57,27 @@ export default function ProductsScreen() {
   const handleChangeRoute = (newQueries) => {
     changeRoute({
       ...params,
-      page: 1,
+      page: 0,
       ...newQueries,
     });
   };
 
   //*    Get childCategories Data
-  const {
-    isLoading: isLoadingCategories,
-    childCategories,
-    currentCategory,
-  } = useGetCategoriesQuery(undefined, {
-    selectFromResult: ({ isLoading, data }) => {
-      const currentCategory = data?.data?.categories.find(
-        (cat) => cat.slug === category
-      );
-      const childCategories = data?.data?.categories.filter(
-        (cat) => cat.parent === currentCategory?._id
-      );
-      return { childCategories, isLoading, currentCategory };
-    },
-  });
+  // const {
+  //   isLoading: isLoadingCategories,
+  //   childCategories,
+  //   currentCategory,
+  // } = useGetCategoriesQuery(undefined, {
+  //   selectFromResult: ({ isLoading, data }) => {
+  //     const currentCategory = data?.data?.data.find(
+  //       (cat) => cat.slug === category
+  //     );
+  //     const childCategories = data?.data?.data.filter(
+  //       (cat) => cat.parent === currentCategory?._id
+  //     );
+  //     return { childCategories, isLoading, currentCategory };
+  //   },
+  // });
 
   return (
     <>
@@ -100,7 +92,7 @@ export default function ProductsScreen() {
           name={currentCategory?.name}
           isLoading={isLoadingCategories}
         /> */}
-        <View className="px-1 flex-1">
+        <View className="px-0 flex-1">
           <View id="_products" className="w-full h-[100%] flex px-4 py-2 mt-2">
             {/* Filters & Sort */}
             <View className="divide-y-2 divide-neutral-200">
@@ -119,21 +111,23 @@ export default function ProductsScreen() {
                 </Text>
 
                 <Text className="text-base text-neutral-600">
-                  {data?.data?.productsLength} sản phẩm
+                  {count} sản phẩm
                 </Text>
               </View>
             </View>
             {/* Products */}
-            {isFetchingProduct && page === 1 && <ProductSkeleton />}
-            {data && data?.data?.products.length > 0 ? (
+            {isFetchingProduct && page == 0 && <ProductSkeleton />}
+            {data && data?.length > 0 ? (
               <FlashList
-                data={data?.data?.products}
+                data={data}
+                keyExtractor={(item) => item.ID.toString()}
                 renderItem={({ item, index }) => (
-                  <ProductCard product={item} key={item._id} />
+                  <ProductCard product={item} key={item.ID} />
                 )}
                 onEndReached={onEndReachedThreshold}
                 onEndReachedThreshold={0}
                 estimatedItemSize={200}
+                numColumns={2}
               />
             ) : (
               <Text className="text-center text-red-500">

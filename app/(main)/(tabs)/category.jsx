@@ -302,6 +302,7 @@ export default function CategoryScreen(props) {
                                     pathname: "/products",
                                     params: {
                                       category: levelThreeCategory.name,
+                                      idCat: levelThreeCategory._id,
                                     },
                                   }}
                                   asChild
@@ -338,6 +339,7 @@ export default function CategoryScreen(props) {
                             pathname: "/products",
                             params: {
                               category: levelTwoCategory.name,
+                              idCat: levelTwoCategory._id,
                             },
                           }}
                           asChild

@@ -10,7 +10,7 @@ const apiFtechSlice = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Homepage", "CategoryFTECH"],
+  tagTypes: ["Homepage", "CategoryFTECH", "Productcat2"],
   endpoints: (builder) => ({}),
 });
 
