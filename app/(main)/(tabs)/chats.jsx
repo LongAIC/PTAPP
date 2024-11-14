@@ -10,7 +10,7 @@ import {
   Text,
 } from "react-native";
 import { WebView } from "react-native-webview";
-import { Stack, useLocalSearchParams, useRouter } from "expo-router";
+import { Stack, useLocalSearchParams, useRouter, router } from "expo-router";
 import {
   FontAwesome,
   Entypo,
@@ -18,6 +18,17 @@ import {
   Feather,
   AntDesign,
 } from "@expo/vector-icons";
+
+const goToChat = (name) => {
+  router.push({
+    params: {
+      url: "https://tawk.to/chat/645384864247f20fefef4ad5/1gvj3rc63",
+      brandName: name,
+    },
+    pathname: "/chats/chatBrand",
+  });
+};
+
 const stores = [
   {
     id: 1,
@@ -85,82 +96,65 @@ const ChatScreen = () => {
 
   return (
     <View style={{ flex: 1 }}>
-      {url ? (
-        <View style={{ flex: 1 }}>
-          <WebView
-            source={{
-              uri: url,
-            }}
-            onLoadStart={() => setLoading(true)} // Hiển thị loading khi bắt đầu tải
-            onLoadEnd={() => setLoading(false)} // Tắt loading khi tải xong
-            renderLoading={LoadingIndicator} // Render component loading
-            startInLoadingState={true} // Bắt đầu ở trạng thái loading
-          />
-          {loading && <LoadingIndicator />}{" "}
-          {/* Hiển thị loading nếu đang tải */}
-        </View>
-      ) : (
-        <View>
-          <View className="bg-white rounded-xl shadow-lg max-w-lg mx-auto w-[100%] h-[100%]">
-            <View className="p-4 bg-gradient-to-r from-blue-500 to-purple-500">
-              <View className="relative">
-                <FontAwesome
-                  name="search"
-                  size={18}
-                  color="gray"
-                  className="absolute left-3 top-6"
-                />
-                <TextInput
-                  placeholder="Search stores..."
-                  className="w-full pl-10 pr-4 py-2 rounded-lg bg-white/90 backdrop-blur focus:ring-2 focus:ring-purple-300"
-                />
-              </View>
+      <View>
+        <View className="bg-white rounded-xl shadow-lg max-w-lg mx-auto w-[100%] h-[100%]">
+          <View className="p-4 bg-gradient-to-r from-blue-500 to-purple-500">
+            <View className="relative">
+              <FontAwesome
+                name="search"
+                size={18}
+                color="gray"
+                className="absolute left-3 top-6"
+              />
+              <TextInput
+                placeholder="Search stores..."
+                className="w-full pl-10 pr-4 py-2 rounded-lg bg-white/90 backdrop-blur focus:ring-2 focus:ring-purple-300"
+              />
             </View>
-            <FlatList
-              data={filteredStores}
-              keyExtractor={(item) => item.id.toString()}
-              ItemSeparatorComponent={() => (
-                <View className="h-px bg-gray-100" />
-              )}
-              renderItem={({ item: store }) => (
-                <TouchableOpacity className="flex-row items-center p-4 hover:bg-gray-50">
-                  <View className="relative">
-                    <Image
-                      source={{ uri: store.image }}
-                      className="w-16 h-16 rounded-full object-cover shadow-md"
-                      onError={({ nativeEvent: { currentTarget } }) => {
-                        currentTarget.source = {
-                          uri: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3",
-                        };
-                      }}
-                    />
-                    {store.unread > 0 && (
-                      <View className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center animate-pulse">
-                        <Text className="text-white text-xs font-bold">
-                          {store.unread}
-                        </Text>
-                      </View>
-                    )}
-                  </View>
-                  <View className="ml-4 flex-1">
-                    <View className="flex-row items-center justify-between">
-                      <Text className="text-lg font-semibold text-gray-900">
-                        {store.name}
-                      </Text>
-                      <Text className="text-sm text-gray-500">
-                        {store.time}
+          </View>
+          <FlatList
+            data={filteredStores}
+            keyExtractor={(item) => item.id.toString()}
+            ItemSeparatorComponent={() => <View className="h-px bg-gray-100" />}
+            renderItem={({ item: store }) => (
+              <TouchableOpacity
+                onPress={() => goToChat(store.name)}
+                className="flex-row items-center p-4 hover:bg-gray-50"
+              >
+                <View className="relative">
+                  <Image
+                    source={{ uri: store.image }}
+                    className="w-16 h-16 rounded-full object-cover shadow-md"
+                    onError={({ nativeEvent: { currentTarget } }) => {
+                      currentTarget.source = {
+                        uri: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3",
+                      };
+                    }}
+                  />
+                  {store.unread > 0 && (
+                    <View className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center animate-pulse">
+                      <Text className="text-white text-xs font-bold">
+                        {store.unread}
                       </Text>
                     </View>
-                    <Text className="text-gray-600 text-sm truncate">
-                      {store.lastMessage}
+                  )}
+                </View>
+                <View className="ml-4 flex-1">
+                  <View className="flex-row items-center justify-between">
+                    <Text className="text-lg font-semibold text-gray-900">
+                      {store.name}
                     </Text>
+                    <Text className="text-sm text-gray-500">{store.time}</Text>
                   </View>
-                </TouchableOpacity>
-              )}
-            />
-          </View>
+                  <Text className="text-gray-600 text-sm truncate">
+                    {store.lastMessage}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            )}
+          />
         </View>
-      )}
+      </View>
     </View>
   );
 };

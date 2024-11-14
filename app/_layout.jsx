@@ -30,6 +30,14 @@ export default function RootLayout() {
                 headerShown: true,
               }}
             />
+            <Stack.Screen
+              name="(main)/chats/chatBrand"
+              getId={({ params }) => params.brandName}
+              options={{
+                title: "Đoạn chat",
+                headerShown: true,
+              }}
+            />
           </Stack>
           <Toast />
         </SafeAreaProvider>
