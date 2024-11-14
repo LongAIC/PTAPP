@@ -52,9 +52,9 @@ const Header = props => {
   //? Render(s)
   return (
     <View className="flex flex-row items-center justify-between pb-2 border-b-2 border-gray-200 mb-2">
-      <Text className="text-sm">{children}</Text>
-      <Pressable onPress={onClose} className="p-1">
-        <Icons.AntDesign name="close" size={16} className="icon" />
+      <Text className="text-lg font-medium">{children}</Text>
+      <Pressable onPress={onClose} className="">
+        <Icons.AntDesign name="close" size={20} className="icon" />
       </Pressable>
     </View>
   )

@@ -69,7 +69,7 @@ const AddToCartOperation = props => {
         </View>
       ) : (
         <Button onPress={handleAddItem} className="px-12 text-sm btn">
-          添加到购物车
+          Thêm vào giỏ hàng
         </Button>
       )}
 

@@ -8,7 +8,7 @@ import { View, Image, TouchableOpacity, Text, Dimensions } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 export default function FtechDiscountSlider(props) {
   //? Props
-  const { products, title } = props;
+  const { products, title, showMore = false } = props;
   const { width } = Dimensions.get("window"); // Lấy chiều rộng của màn hình
   const numColumns2 = 2; // Số lượng sản phẩm muốn hiển thị
   const itemWidth2 = width / numColumns2; // Chiều rộng của mỗi item
@@ -22,8 +22,9 @@ export default function FtechDiscountSlider(props) {
   return (
     <FeedSectionContainer
       title={title}
-      showMore
+      showMore={showMore}
       onJumptoMore={handleJumptoMore}
+      className="mb-3"
     >
       <FlashList
         data={products}
@@ -65,7 +66,7 @@ export default function FtechDiscountSlider(props) {
               </View>
               <View className="mt-3 pt-1 border-t-[1px] border-[#F0F1F1] ">
                 <Text className="text-[14px] font-[400] leading-5 text-[#FF4405] font-bold">
-                  {item?.donvicungcap}
+                  {item?.donvicungcap ? item?.donvicungcap : "FTECH"}
                 </Text>
                 <Text className="text-[#808080]">38 sản phẩm </Text>
               </View>

@@ -10,7 +10,7 @@ export const Button = props => {
   return (
     <TouchableOpacity
       disabled={isLoading}
-      className={`py-3 px-8 flex items-center outline-none rounded-md active:scale-[.98] bg-red-500 button ${isRounded ? 'rounded-3xl' : ''} ${className}
+      className={`py-4 px-8 flex items-center outline-none rounded-md active:scale-[.98] bg-red-500 button ${isRounded ? 'rounded-3xl' : ''} ${className}
     `}
       {...restPropps}
     >

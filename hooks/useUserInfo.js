@@ -1,37 +1,32 @@
-import { router } from 'expo-router'
+import { router } from "expo-router";
 
-import { useAppDispatch } from './useRedux'
-import useVerify from './useVerify'
+import { useAppDispatch, useAppSelector } from "./useRedux";
+import useVerify from "./useVerify";
 
-import { useGetUserInfoQuery } from '@/services'
-import { userLogout } from '@/store'
+import { useGetUserInfoQuery } from "@/services";
+import { userLogout } from "@/store";
 
 export default function useUserInfo() {
-  const dispatch = useAppDispatch()
-  const isVerify = useVerify()
+  const dispatch = useAppDispatch();
+  const isVerify = useVerify();
 
-  const { data, isLoading, error, isError } = useGetUserInfoQuery(undefined, {
-    skip: !isVerify,
-  })
+  const userInfo = useAppSelector((state) => state.user.userInfo);
 
-  const isLoginVerify = !isVerify ? false : isLoading ? false : !!data?.data
+  // const isLoginVerify = !isVerify ? false : isLoading ? false : !!data?.data
 
-  const mustAuthAction = nextAction => {
-    if (!isLoginVerify) {
-      return router.push('/login')
-    }
-    nextAction()
-  }
+  // const mustAuthAction = nextAction => {
+  //   if (!isLoginVerify) {
+  //     return router.push('/login')
+  //   }
+  //   nextAction()
+  // }
 
-  if (isError) dispatch(userLogout())
+  // if (isError) dispatch(userLogout())
 
   return {
-    userInfo: data?.data,
-    isVerify,
-    isLoginVerify,
-    mustAuthAction,
-    isLoading,
-    error,
-    isError,
-  }
+    userInfo: userInfo,
+    // isVerify,
+    // isLoginVerify,
+    // mustAuthAction,
+  };
 }

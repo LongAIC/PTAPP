@@ -1,23 +1,23 @@
-import { Text, TouchableOpacity } from 'react-native'
-import Toast from 'react-native-toast-message'
+import { Text, TouchableOpacity } from "react-native";
+import Toast from "react-native-toast-message";
 
-import Icons from './common/Icons'
+import Icons from "./common/Icons";
 
-import { useAppDispatch } from '@/hooks'
-import { userLogout } from '@/store'
+import { useAppDispatch } from "@/hooks";
+import { userLogout } from "@/store";
 
 export default function Logout() {
   //? Assets
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
   //? Handlers
   const handleLogout = () => {
-    dispatch(userLogout())
+    dispatch(userLogout());
     Toast.show({
-      type: 'success',
-      text2: 'Đã đăng xuất',
-    })
-  }
+      type: "success",
+      text2: "Đã đăng xuất",
+    });
+  };
 
   //? Render(s)
   return (
@@ -25,8 +25,8 @@ export default function Logout() {
       className="flex flex-row justify-between items-center transition-colors py-4 text-xs text-gray-700 w-full"
       onPress={handleLogout}
     >
-      <Text className="text-gray-700">Đăng xuất</Text>
+      <Text className="text-red-400 font-bold text-[15px]">Đăng xuất</Text>
       <Icons.MaterialIcons name="logout" size={24} className="text-gray-700" />
     </TouchableOpacity>
-  )
+  );
 }

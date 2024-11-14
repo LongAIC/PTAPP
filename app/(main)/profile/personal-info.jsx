@@ -1,16 +1,23 @@
-import { Stack } from 'expo-router'
-import { Text, View } from 'react-native'
+import { Stack } from "expo-router";
+import { Text, View } from "react-native";
 
-import { Icons, Skeleton, UserMobileModal, UserNameModal } from '@/components'
-import { useDisclosure, useUserInfo } from '@/hooks'
+import {
+  Icons,
+  Skeleton,
+  UserMobileModal,
+  UserNameModal,
+  UserEmailModal,
+} from "@/components";
+import { useDisclosure, useUserInfo } from "@/hooks";
 
 const PersonalInfoScreen = () => {
   //? Assets
-  const [isShowNameModal, nameModalHandlers] = useDisclosure()
-  const [isShowPhoneModal, phoneModalHandlers] = useDisclosure()
+  const [isShowNameModal, nameModalHandlers] = useDisclosure();
+  const [isShowPhoneModal, phoneModalHandlers] = useDisclosure();
+  const [isShowEmailModal, emailModalHandlers] = useDisclosure();
 
   //? Get User Data
-  const { userInfo, isLoading } = useUserInfo()
+  const { userInfo, isLoading } = useUserInfo();
 
   //? Local Component
   const InfoField = ({ label, info, editHandler, isLoading }) => (
@@ -41,14 +48,14 @@ const PersonalInfoScreen = () => {
         )}
       </View>
     </View>
-  )
+  );
 
   //? Render(s)
   return (
     <>
       <Stack.Screen
         options={{
-          title: 'Thông tin cá nhân',
+          title: "Thông tin cá nhân",
           headerBackTitleVisible: false,
         }}
       />
@@ -64,24 +71,38 @@ const PersonalInfoScreen = () => {
             onClose={phoneModalHandlers.close}
             editedData={userInfo.mobile}
           />
+          <UserEmailModal
+            isShow={isShowEmailModal}
+            onClose={emailModalHandlers.close}
+            editedData={userInfo.mobile}
+          />
         </>
       )}
       <View className="h-full bg-white">
         <InfoField
           label="Họ và tên"
-          info={userInfo?.name}
+          info={userInfo?.displayName}
+          id={userInfo?.id}
           editHandler={nameModalHandlers.open}
           isLoading={isLoading}
         />
         <InfoField
           label="Số điện thoại"
-          info={userInfo?.mobile}
+          info={userInfo?.phoneNumber}
+          id={userInfo?.id}
           editHandler={phoneModalHandlers.open}
           isLoading={isLoading}
         />
+        {/* <InfoField
+          label="Email"
+          info={userInfo?.email}
+          id={userInfo?.id}
+          editHandler={emailModalHandlers.open}
+          isLoading={isLoading}
+        /> */}
       </View>
     </>
-  )
-}
+  );
+};
 
-export default PersonalInfoScreen
+export default PersonalInfoScreen;

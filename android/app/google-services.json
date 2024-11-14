@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "960460194514",
+    "project_id": "ptcococ",
+    "storage_bucket": "ptcococ.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:960460194514:android:acf17b4fa637d585f1230b",
+        "android_client_info": {
+          "package_name": "com.ptcoco"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1fSBOQYGAL95H908d0wLWGe9TpGWW_vM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

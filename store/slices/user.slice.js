@@ -1,35 +1,60 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  token: '',
-  lastSeen: [],
-}
+  userInfo: null,
+};
 
 const userSlice = createSlice({
-  name: 'user',
+  name: "user",
   initialState,
   reducers: {
-    userLogout: state => {
-      state.token = ''
+    userLogout: (state) => {
+      state.userInfo = null;
     },
 
     userLogin: (state, action) => {
-      state.token = action.payload
+      state.userInfo = action.payload.userInfo;
+    },
+
+    updateUserPhone: (state, action) => {
+      if (state.userInfo) {
+        state.userInfo = {
+          ...state.userInfo,
+          phoneNumber: action.payload,
+        };
+      }
+    },
+
+    updateUserName: (state, action) => {
+      if (state.userInfo) {
+        state.userInfo = {
+          ...state.userInfo,
+          displayName: action.payload,
+        };
+      }
     },
 
     addToLastSeen: (state, action) => {
-      const isItemExist = state.lastSeen.find(item => item.productID === action.payload.productID)
+      const isItemExist = state.lastSeen.find(
+        (item) => item.productID === action.payload.productID
+      );
 
       if (!isItemExist) {
         if (state.lastSeen.length === 15) {
-          state.lastSeen.splice(14, 1)
+          state.lastSeen.splice(14, 1);
         }
-        state.lastSeen.unshift(action.payload)
+        state.lastSeen.unshift(action.payload);
       }
     },
   },
-})
+});
 
-export const { userLogout, userLogin, addToLastSeen } = userSlice.actions
+export const {
+  userLogout,
+  userLogin,
+  addToLastSeen,
+  updateUserPhone,
+  updateUserName,
+} = userSlice.actions;
 
-export default userSlice.reducer
+export default userSlice.reducer;

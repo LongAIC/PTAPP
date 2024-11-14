@@ -1,7 +1,20 @@
 import apiFtechSlice from "./api";
 
-export const productApiSliceFTECH = apiFtechSlice.injectEndpoints({
+export const productApiSlice = apiFtechSlice.injectEndpoints({
   endpoints: (builder) => ({
+    getSingleProductDetail: builder.query({
+      query: ({ id }) => ({
+        url: `detailproduct?id=${id}`,
+        method: "GET",
+      }),
+    }),
+    getProduct: builder.query({
+      query: ({ key }) => ({
+        url: "searchevent",
+        method: "GET",
+        params: { key },
+      }),
+    }),
     getProductscat: builder.query({
       query: ({ id, limit, page }) => {
         return {
@@ -49,4 +62,7 @@ export const productApiSliceFTECH = apiFtechSlice.injectEndpoints({
   }),
 });
 
-export const { useGetProductscatQuery } = productApiSliceFTECH;
+export const { useGetSingleProductDetailQuery, useGetProductQuery, useGetProductscatQuery } =
+  productApiSlice;
+
+

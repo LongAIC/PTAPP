@@ -10,24 +10,44 @@
       "tsconfigPaths": true
     },
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/app_images/logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "runtimeVersion": {
+        "policy": "appVersion"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "runtimeVersion": "1.0.0"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "scheme": "shoppig-rn-scheme",
-    "plugins": ["expo-router"]
+    "plugins": [
+      "expo-router",
+      "expo-build-properties"
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "c5c0a35d-b598-4320-b326-cf8cc208ac08"
+      }
+    },
+    "updates": {
+      "url": "https://u.expo.dev/c5c0a35d-b598-4320-b326-cf8cc208ac08"
+    }
   }
 }

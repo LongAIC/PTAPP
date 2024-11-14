@@ -1,169 +1,204 @@
-import { useLocalSearchParams } from 'expo-router'
-import { useEffect } from 'react'
-import { Pressable, Text, TextInput, View } from 'react-native'
-import { Switch } from 'react-native-paper'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { useLocalSearchParams } from "expo-router";
+import { useEffect } from "react";
+import {
+  Pressable,
+  Text,
+  TextInput,
+  View,
+  TouchableOpacity,
+} from "react-native";
 
-import Icons from '../common/Icons'
-import Modal from '../common/Modal'
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { useAppDispatch, useAppSelector, useDebounce, useDisclosure } from '@/hooks'
-import { loadFilters, resetFilter, updateFilter } from '@/store'
+import Icons from "../common/Icons";
+import Modal from "../common/Modal";
 
-const Filter = props => {
+import {
+  useAppDispatch,
+  useAppSelector,
+  useDebounce,
+  useDisclosure,
+} from "@/hooks";
+import { loadFilters, resetFilter, updateFilter } from "@/store";
+import CategorySelector from "../common/Selector";
+import {
+  ScrollView,
+  GestureHandlerRootView,
+} from "react-native-gesture-handler";
+
+const Filter = (props) => {
   //? Props
-  const { mainMinPrice, mainMaxPrice, handleChangeRoute } = props
+  const { mainMinPrice, mainMaxPrice, handleChangeRoute } = props;
 
   //? Assets
-  const dispatch = useAppDispatch()
-  const [isFilters, filtersHandlers] = useDisclosure()
-  const params = useLocalSearchParams()
-  const insets = useSafeAreaInsets()
+  const dispatch = useAppDispatch();
+  const [isFilters, filtersHandlers] = useDisclosure();
+  const params = useLocalSearchParams();
+  const insets = useSafeAreaInsets();
 
   //? State
-  const filters = useAppSelector(state => state.filters)
+  const filters = useAppSelector((state) => state.filters);
 
   //? Debounced Values
-  const debouncedMinPrice = useDebounce(filters.minPrice, 1200)
-  const debouncedMaxPrice = useDebounce(filters.maxPrice, 1200)
+  const debouncedMinPrice = useDebounce(filters.minPrice, 1200);
+  const debouncedMaxPrice = useDebounce(filters.maxPrice, 1200);
   //? Handlers
-  const handlefilter = props => {
-    const { name, value, type } = props
-    const filterValue = value
-    dispatch(updateFilter({ name, value: filterValue }))
+  const handlefilter = (props) => {
+    const { name, value, type } = props;
+    const filterValue = value;
+    dispatch(updateFilter({ name, value: filterValue }));
 
-    if (type === 'checkbox') handleChangeRoute({ [name]: filterValue })
-  }
+    if (type === "checkbox") handleChangeRoute({ [name]: filterValue });
+  };
 
   const handleResetFilters = () => {
-    handleChangeRoute({ inStock: '', discount: '', price: '' })
-    dispatch(resetFilter({ maxPrice: String(mainMaxPrice), minPrice: String(mainMinPrice) }))
-    if (filtersHandlers.close) filtersHandlers.close()
-  }
+    handleChangeRoute({ inStock: "", discount: "", price: "" });
+    dispatch(
+      resetFilter({
+        maxPrice: String(mainMaxPrice),
+        minPrice: String(mainMinPrice),
+      })
+    );
+    if (filtersHandlers.close) filtersHandlers.close();
+  };
 
   const canReset =
     !!params.inStock ||
     !!params.discount ||
     mainMinPrice !== debouncedMinPrice ||
-    mainMaxPrice !== debouncedMaxPrice
+    mainMaxPrice !== debouncedMaxPrice;
 
   //? Re-Renders
   //*   load Filters
   useEffect(() => {
     dispatch(
       loadFilters({
-        price: mainMaxPrice && mainMinPrice ? `${mainMinPrice}-${mainMaxPrice}` : '',
-        discount: 'false',
-        inStock: 'false',
+        price:
+          mainMaxPrice && mainMinPrice ? `${mainMinPrice}-${mainMaxPrice}` : "",
+        discount: "false",
+        inStock: "false",
         ...params,
       })
-    )
-  }, [params.category, mainMaxPrice, mainMinPrice, dispatch])
+    );
+  }, [params.category, mainMaxPrice, mainMinPrice, dispatch]);
   //*   Change Route After Debounce
   useEffect(() => {
     if (Number(debouncedMinPrice) && mainMinPrice !== Number(debouncedMinPrice))
       handleChangeRoute({
         price: `${debouncedMinPrice}-${debouncedMaxPrice}`,
-      })
-  }, [debouncedMinPrice])
+      });
+  }, [debouncedMinPrice]);
 
   useEffect(() => {
     if (Number(debouncedMaxPrice) && mainMaxPrice !== Number(debouncedMaxPrice))
       handleChangeRoute({
         price: `${debouncedMinPrice}-${debouncedMaxPrice}`,
-      })
-  }, [debouncedMaxPrice])
+      });
+  }, [debouncedMaxPrice]);
 
   //*   Close Modal on Change Filter
   useEffect(() => {
-    if (filtersHandlers.close) filtersHandlers.close()
-  }, [filters.discount, filters.inStock, debouncedMaxPrice, debouncedMinPrice])
+    if (filtersHandlers.close) filtersHandlers.close();
+  }, [filters.discount, filters.inStock, debouncedMaxPrice, debouncedMinPrice]);
 
   //? Render(s)
   return (
     <>
-      <View className=" px-3">
-        <Pressable className="flex flex-row items-center gap-x-1" onPress={filtersHandlers.open}>
-          <Icons.Ionicons name="filter" size={16} className="text-neutral-600" />
+      <View className="flex-1 px-3">
+        <Pressable
+          className="flex flex-row items-center gap-x-1"
+          onPress={filtersHandlers.open}
+        >
+          <Icons.Ionicons
+            name="filter"
+            size={16}
+            className="text-neutral-600"
+          />
           <Text className="text-base text-neutral-600">Lọc</Text>
         </Pressable>
       </View>
       <Modal
         isShow={isFilters}
         onClose={filtersHandlers.close}
-        animationIn="slideInRight"
-        animationOut="slideOutRight"
+        animationIn="slideInUp"
+        animationOut="slideOutDown"
         onBackdropPress={filtersHandlers.close}
+        className=" mt-40 flex-1 bg-red-500 ml-0"
       >
-        <Modal.Content
-          onClose={filtersHandlers.close}
-          style={{ paddingTop: insets.top }}
-          className="flex flex-col h-[100vh] w-[80vw] px-5 ml-[15vw] bg-white"
-        >
-          <Modal.Header onClose={filtersHandlers.close}>Lọc</Modal.Header>
-          <Modal.Body>
-            <View className="flex justify-end ">
-              <Pressable disabled={!canReset} onPress={handleResetFilters}>
-                <Text type="button" className="text-sm text-sky-500">
-                Xóa bộ lọc
-                </Text>
-              </Pressable>
-            </View>
-
-            <View className="divide-y">
-              <View className="flex flex-row justify-between items-center py-2.5">
-                <Text className="font-medium text-gray-700 w-3/4">Chỉ những mặt hàng có sẵn</Text>
-                <Switch
-                  value={filters.inStock}
-                  onValueChange={value =>
-                    handlefilter({ name: 'inStock', type: 'checkbox', value })
-                  }
-                />
-              </View>
-              <View className="flex flex-row justify-between items-center py-2.5">
-                <Text className="font-medium text-gray-700 w-3/4">Chỉ ưu đãi đặc biệt</Text>
-                <Switch
-                  value={filters.discount}
-                  onValueChange={value =>
-                    handlefilter({ name: 'discount', type: 'checkbox', value })
-                  }
-                />
-              </View>
-
-              <View className="py-4">
-                <Text className="font-medium text-gray-700">Phạm vi giá</Text>
-                <View className="flex flex-row items-center justify-between gap-x-1">
-                  <Text className="text-base">Từ</Text>
-
-                  <TextInput
-                    className="w-3/4 px-1 text-xl text-left border-b border-gray-200 outline-none"
-                    keyboardType="number-pad"
-                    value={filters.minPrice || 0}
-                    name="minPrice"
-                    onChangeText={value => handlefilter({ name: 'minPrice', type: 'input', value })}
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <Modal.Content
+            onClose={filtersHandlers.close}
+            style={{}}
+            className="flex flex-col h-[95vh] w-[105%] px-5 bg-white  pt-5 "
+          >
+            <Modal.Header onClose={filtersHandlers.close}>
+              Bộ lọc tìm kiếm
+            </Modal.Header>
+            <Modal.Body>
+              <View className="flex justify-end "></View>
+              <ScrollView
+                className=""
+                contentContainerStyle={{
+                  paddingBottom: insets.bottom + 100,
+                }}
+              >
+                <View className="flex flex-row justify-between items-center py-2.5">
+                  <CategorySelector
+                    title={"Theo danh mục"}
+                    categories={["Ghế", "Bàn", "Tủ", "Giường"]}
                   />
-                  <Text className="w-6 h-6">VNĐ</Text>
                 </View>
-                <View className="flex flex-row items-center justify-between mt-2 mb-4 gap-x-1">
-                  <Text className="text-base">đến</Text>
-
-                  <TextInput
-                    className="w-3/4 px-1 text-xl text-left border-b border-gray-200 outline-none"
-                    keyboardType="number-pad"
-                    value={filters.maxPrice || 0}
-                    name="maxPrice"
-                    onChangeText={value => handlefilter({ name: 'maxPrice', type: 'input', value })}
+                <View className="flex flex-row justify-between items-center py-2.5">
+                  <CategorySelector
+                    title={"Theo khu vực"}
+                    categories={[
+                      "Hà Nội",
+                      "TP. Hồ Chí Minh",
+                      "An Giang",
+                      "Bình Thuận",
+                      "Bà Rịa - Vũng Tàu",
+                      "Bình Dương",
+                    ]}
                   />
-
-                  <Text className="w-6 h-6">VNĐ</Text>
                 </View>
-              </View>
-            </View>
-          </Modal.Body>
-        </Modal.Content>
+                <View className="flex flex-row justify-between items-center py-2.5">
+                  <CategorySelector
+                    title={"Theo công ty"}
+                    categories={[
+                      "Công ty 1",
+                      "Công ty 2",
+                      "Công ty 3",
+                      "Công ty 4",
+                    ]}
+                  />
+                </View>
+                <View className="flex flex-row justify-between items-center py-2.5">
+                  <CategorySelector
+                    title={"Theo đánh giá"}
+                    categories={[
+                      "5 sao",
+                      "Từ 4 sao",
+                      "Từ 3 sao",
+                      "Từ 2 sao",
+                      "Từ 1 sao",
+                    ]}
+                  />
+                </View>
+                <View className="flex flex-row items-center justify-between p-3 bg-white border-t border-gray-300 shadow-3xl">
+                  <TouchableOpacity className="px-4 rounded-md border py-3 border-red-400">
+                    <Text className="text-red-400">Thiết lập lại</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity className="px-4 rounded-md py-3 bg-red-400">
+                    <Text className="text-white">Áp dụng bộ lọc</Text>
+                  </TouchableOpacity>
+                </View>
+              </ScrollView>
+            </Modal.Body>
+          </Modal.Content>
+        </GestureHandlerRootView>
       </Modal>
     </>
-  )
-}
+  );
+};
 
-export default Filter
+export default Filter;
