@@ -63,6 +63,15 @@ export default function SingleProductScreen() {
     product_related,
   } = product;
 
+  const goToChat = () => {
+    router.push({
+      params: {
+        url: "https://tawk.to/chat/645384864247f20fefef4ad5/1gvj3rc63",
+      },
+      pathname: "/chats",
+    });
+  };
+
   return (
     <>
       <Stack.Screen
@@ -238,6 +247,7 @@ export default function SingleProductScreen() {
                   </View>
                   <View>
                     <TouchableOpacity
+                      onPress={() => goToChat()}
                       style={{
                         flexDirection: "row",
                         alignItems: "center",
@@ -272,7 +282,7 @@ export default function SingleProductScreen() {
                           textAlign: "center",
                         }}
                       >
-                        Gửi file nhận báo nhá
+                        Chat với gian hàng
                       </Text>
                     </TouchableOpacity>
                   </View>

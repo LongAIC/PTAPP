@@ -1,7 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  userInfo: null,
+  userId: null,
+  userName: "",
+  status: "offline", // Trạng thái online/offline
 };
 
 const userSlice = createSlice({
@@ -46,6 +48,14 @@ const userSlice = createSlice({
         state.lastSeen.unshift(action.payload);
       }
     },
+
+    setUser: (state, action) => {
+      state.userId = action.payload.userId;
+      state.userName = action.payload.userName;
+    },
+    setStatus: (state, action) => {
+      state.status = action.payload.status;
+    },
   },
 });
 
@@ -55,6 +65,8 @@ export const {
   addToLastSeen,
   updateUserPhone,
   updateUserName,
+  setUser,
+  setStatus,
 } = userSlice.actions;
 
 export default userSlice.reducer;

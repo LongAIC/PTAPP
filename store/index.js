@@ -11,6 +11,9 @@ import userReducer from "./slices/user.slice";
 import apiSlice from "@/services/api";
 import apiFtechSlice from "@/serviceFTECH/api";
 
+//Chat Firebase Slide
+import chatReducer from "./slices/chat.slide";
+
 const persistConfig = {
   key: "root",
   version: 1,
@@ -30,6 +33,7 @@ export const store = configureStore({
     user: userPersistedReducer,
     cart: cartPersistedReducer,
     filters: filtersReducer,
+    chat: chatReducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
     [apiFtechSlice.reducerPath]: apiFtechSlice.reducer,
   },
