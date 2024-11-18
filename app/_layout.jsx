@@ -31,7 +31,7 @@ export default function RootLayout() {
               }}
             />
             <Stack.Screen
-              name="(main)/chats/chatBrand"
+              name="(main)/(chats)/chatBrand"
               getId={({ params }) => params.brandName}
               options={{
                 title: "Đoạn chat",
