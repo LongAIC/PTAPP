@@ -27,6 +27,7 @@ export { default as OTPInput } from "./common/OTPInput";
 export { default as ErrorMessage } from "./common/ErrorMessage";
 export { default as Message } from "./common/Message";
 export { default as Popup } from "./common/PopUp";
+export { default as RangeSlider } from "./common/RangeSlider";
 
 //* LOADING
 export { default as Loading } from "./loading/Loading";

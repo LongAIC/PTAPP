@@ -20,6 +20,14 @@ export default function ProductsScreen() {
   const id = params?.idCat?.toString() ?? "";
   const limit = params?.limit?.toString() ?? 10;
   const page = params?.page?.toString() ?? 0;
+  const provinceName = params?.provinceName?.toString();
+  const districtName = params?.districtName?.toString();
+  const wardName = params?.wardCode?.toString();
+  const minPrice = params?.minPrice
+  const maxPrice = params?.maxPrice
+  const rating = params?.rating?.toString();
+  
+  console.log('params', params)
 
   const { width } = Dimensions.get("window");
   // Chiều rộng của mỗi item khi hiển thị dạng list
@@ -35,13 +43,19 @@ export default function ProductsScreen() {
       id,
       limit,
       page,
+      provinceName,
+      districtName,
+      wardName,
+      minPrice,
+      maxPrice,
+      rating,
     },
     {
       selectFromResult: ({ data, ...args }) => ({
         hasNextPage: data?.hasNextPage ?? false,
         data: data?.data,
-        count: data?.count ?? 0,
-        isFetchingProduct: data == undefined ? false : isFetchingProduct,
+        count: data?.data?.length ?? 0,
+        // isFetchingProduct: data == undefined ? false : isFetchingProduct,
         ...args,
       }),
     }
@@ -62,6 +76,21 @@ export default function ProductsScreen() {
       ...params,
       page: 0,
       ...newQueries,
+      provinceName: newQueries.provinceName || undefined,
+      districtName: newQueries.districtName || undefined,
+      wardName: newQueries.wardName || undefined,
+    });
+  };
+
+  const handleResetFilters = () => {
+    changeRoute({
+      page: 0,
+      provinceCode: undefined,
+      districtCode: undefined,
+      wardCode: undefined,
+      inStock: undefined,
+      discount: undefined,
+      price: undefined,
     });
   };
 

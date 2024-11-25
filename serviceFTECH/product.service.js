@@ -16,11 +16,21 @@ export const productApiSlice = apiFtechSlice.injectEndpoints({
       }),
     }),
     getProductscat: builder.query({
-      query: ({ id, limit, page }) => {
+      query: (params) => {
         return {
           url: `/product_cat`,
           method: "GET",
-          params: { id, limit, page },
+          params: {
+            id: params.id,
+            limit: params.limit,
+            page: params.page,
+            tinhthanh: params.provinceName,
+            quanhuyen: params.districtName,
+            phuongxa: params.wardName,
+            minprice: params.minPrice,
+            maxprice: params.maxPrice,
+            thuhang: 'hang-' + params.rating,
+          },
         };
       },
       serializeQueryArgs: ({ queryArgs, ...rest }) => {
