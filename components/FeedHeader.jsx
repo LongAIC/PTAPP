@@ -23,14 +23,14 @@ export default function FeedHeader() {
 
   //? Render(s)
   return (
-    <View style={{ paddingTop: insets.top }} className="p-3 bg-white shadow-sm">
-      <View className="flex flex-row items-center justify-between">
+    <View
+      style={{ paddingTop: insets.top }}
+      className="p-3 bg-yellow-500 shadow-sm "
+    >
+      <View className="flex flex-row items-center justify-between gap-2 pt-2">
         {/* <Logo width={120} height={40} /> */}
-        <Image
-          source={require("@/assets/app_images/logo.png")}
-          className="mr-4  w-[150px] h-[50px] object-contain"
-        />
-        <View className="flex flex-row space-x-3 pr-1">
+        <Search className="flex-1" />
+        <View className="flex flex-row space-x-1 items-center">
           <TouchableOpacity
             onPress={() => {
               handleIconClick("/notice");
@@ -39,12 +39,23 @@ export default function FeedHeader() {
             <Icons.Ionicons
               name="notifications-outline"
               size={24}
-              color="black"
+              color="white"
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              handleIconClick("/chats");
+            }}
+          >
+            {/* Icon Chat */}
+            <Icons.Ionicons
+              name="chatbubble-ellipses-sharp"
+              size={24}
+              color="white"
             />
           </TouchableOpacity>
         </View>
       </View>
-      <Search />
     </View>
   );
 }

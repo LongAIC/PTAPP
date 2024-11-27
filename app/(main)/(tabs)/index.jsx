@@ -21,6 +21,7 @@ import {
   ShowWrapper,
   FtechDiscountSlider,
   CategoriesProduct,
+  Icons,
 } from "@/components";
 
 import { FlashList } from "@shopify/flash-list";
@@ -102,37 +103,137 @@ export default function FeedScreen() {
         isSuccess={isSuccess}
         type="detail"
       >
-        <ScrollView className="bg-white flex h-full px-3 ">
-          <MainSlider data={sliders} />
+        <ScrollView className="bg-[#f4f4f4] flex h-full">
+          <MainSlider data={sliders} className="bg-white " />
 
-          <CategoriesProduct data={dm_sp} />
+          {/* //List các dịnh vụ */}
 
-          <FtechDiscountSlider
+          <View className="pt-3 bg-white">
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={true}
+              contentContainerStyle={{ paddingBottom: 13 }}
+            >
+              <View className="flex flex-row px-4 space-x-8">
+                <View className="items-center">
+                  <View className="w-12 h-12 bg-gray-100 rounded-full items-center justify-center">
+                    <Image
+                      source={require("@/assets/images/live2.png")}
+                      className="w-6 h-6"
+                    />
+                  </View>
+                  <Text className="text-xs mt-1">Khuyến mãi</Text>
+                </View>
+
+                <View className="items-center">
+                  <View className="w-12 h-12 bg-gray-100 rounded-full items-center justify-center">
+                    <Image
+                      source={require("@/assets/images/live.png")}
+                      className="w-6 h-6"
+                    />
+                  </View>
+                  <Text className="text-xs mt-1">Mã giảm giá</Text>
+                </View>
+
+                <View className="items-center">
+                  <View className="w-12 h-12 bg-gray-100 rounded-full items-center justify-center">
+                    <Image
+                      source={require("@/assets/images/banhang.png")}
+                      className="w-6 h-6"
+                    />
+                  </View>
+                  <Text className="text-xs mt-1">Freeship</Text>
+                </View>
+
+                <View className="items-center">
+                  <View className="w-12 h-12 bg-gray-100 rounded-full items-center justify-center">
+                    <Image
+                      source={require("@/assets/images/pro.png")}
+                      className="w-6 h-6"
+                    />
+                  </View>
+                  <Text className="text-xs mt-1">Ưu đãi</Text>
+                </View>
+                <View className="items-center">
+                  <View className="w-12 h-12 bg-gray-100 rounded-full items-center justify-center">
+                    <Image
+                      source={require("@/assets/images/live2.png")}
+                      className="w-6 h-6"
+                    />
+                  </View>
+                  <Text className="text-xs mt-1">Khuyến mãi</Text>
+                </View>
+
+                <View className="items-center">
+                  <View className="w-12 h-12 bg-gray-100 rounded-full items-center justify-center">
+                    <Image
+                      source={require("@/assets/images/live.png")}
+                      className="w-6 h-6"
+                    />
+                  </View>
+                  <Text className="text-xs mt-1">Mã giảm giá</Text>
+                </View>
+
+                <View className="items-center">
+                  <View className="w-12 h-12 bg-gray-100 rounded-full items-center justify-center">
+                    <Image
+                      source={require("@/assets/images/banhang.png")}
+                      className="w-6 h-6"
+                    />
+                  </View>
+                  <Text className="text-xs mt-1">Freeship</Text>
+                </View>
+
+                <View className="items-center">
+                  <View className="w-12 h-12 bg-gray-100 rounded-full items-center justify-center">
+                    <Image
+                      source={require("@/assets/images/pro.png")}
+                      className="w-6 h-6"
+                    />
+                  </View>
+                  <Text className="text-xs mt-1">Ưu đãi</Text>
+                </View>
+              </View>
+            </ScrollView>
+          </View>
+
+          <View className="px-3 mt-2 bg-white">
+            <CategoriesProduct data={dm_sp} />
+          </View>
+
+          <View className="px-3 py-3 bg-white mt-2">
+            <BannerTwoFtech
+              className="mt-2 mb-2"
+              data={
+                topic.filter((item) => item.data[0].layout == "grid")[0]
+                  ?.data[0]?.dataChude
+              }
+            />
+          </View>
+
+          {/* <View className="px-3 py-3 bg-white mt-2">
+            <BannerOneFtech
+              className="mt-2 mb-2"
+              data={
+                topic.filter((item) => item.data[0].layout == "slide")[0]
+                  ?.data[0]?.dataChude
+              }
+            />
+          </View> */}
+
+          {/* <FtechDiscountSlider
             className="mt-2 mb-2"
             products={onSale}
             title="Đang giảm giá"
             showMore
-          />
-
-          <BannerOneFtech
-            className="mt-2 mb-2"
-            data={
-              topic.filter((item) => item.data[0].layout == "slide")[0]?.data[0]
-                ?.dataChude
-            }
-          />
-          <BestSellsSliderFtech data={hot.dataproduct} className="mt-2 mb-2" />
-          <BannerTwoFtech
-            className="mt-2 mb-2"
-            data={
-              topic.filter((item) => item.data[0].layout == "grid")[0]?.data[0]
-                ?.dataChude
-            }
-          />
-          <MostFavoriteProductsFtech
-            products={normal.dataproduct}
-            className="mt-2 mb-2"
-          />
+          /> */}
+          {/* <BestSellsSliderFtech data={hot.dataproduct} className="mt-2 mb-2" /> */}
+          <View className="px-3 py-3 bg-white mt-2">
+            <MostFavoriteProductsFtech
+              products={normal.dataproduct}
+              className="mt-2 mb-2"
+            />
+          </View>
         </ScrollView>
       </ShowWrapper>
     </>

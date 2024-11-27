@@ -1,49 +1,55 @@
-import { useLocalSearchParams } from 'expo-router'
-import { useState, useEffect } from 'react'
-import { Pressable, Text, View } from 'react-native'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { useLocalSearchParams } from "expo-router";
+import { useState, useEffect } from "react";
+import { Pressable, Text, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import Icons from './common/Icons'
-import Modal from './common/Modal'
+import Icons from "./common/Icons";
+import Modal from "./common/Modal";
 
-import { useDisclosure } from '@/hooks'
-import { sorts } from '@/utils'
+import { useDisclosure } from "@/hooks";
+import { sorts } from "@/utils";
 
 const Sort = ({ handleChangeRoute }) => {
   //? Assets
-  const [isSort, sortHandlers] = useDisclosure()
-  const params = useLocalSearchParams()
-  const insets = useSafeAreaInsets()
+  const [isSort, sortHandlers] = useDisclosure();
+  const params = useLocalSearchParams();
+  const insets = useSafeAreaInsets();
 
   //? State
-  const [sort, setSort] = useState(sorts[0])
+  const [sort, setSort] = useState(sorts[0]);
 
   //? Handlers
-  const handleSortChange = item => {
-    setSort(sorts[item.value - 1])
-    handleChangeRoute({ sort: item.value })
-    sortHandlers.close()
-  }
+  const handleSortChange = (item) => {
+    setSort(sorts[item.value - 1]);
+    handleChangeRoute({ sort: item.value });
+    sortHandlers.close();
+  };
 
   useEffect(() => {
     if (params.sort) {
-      setSort(sorts[+params.sort - 1])
+      setSort(sorts[+params.sort - 1]);
     } else {
-      setSort(sorts[0])
+      setSort(sorts[0]);
     }
-  }, [params])
+  }, [params]);
 
   useEffect(() => {
-    setSort(sorts[0])
-  }, [params.category])
+    setSort(sorts[0]);
+  }, [params.category]);
 
   //? Render(s)
   return (
     <>
-      <View className=" ">
-        <Pressable className="flex flex-row items-center gap-x-1" onPress={sortHandlers.open}>
-          <Icons.FontAwesome5 name="sort-amount-down-alt" size={16} className="text-neutral-600" />
-          <Text className="text-base text-neutral-600">{sort?.name}</Text>
+      <View className="ml-2">
+        <Pressable
+          className="flex flex-row items-center gap-x-1"
+          onPress={sortHandlers.open}
+        >
+          <Icons.FontAwesome5
+            name="sort-amount-down-alt"
+            size={16}
+            className="text-neutral-600"
+          />
         </Pressable>
         <Modal
           isShow={isSort}
@@ -66,11 +72,19 @@ const Sort = ({ handleChangeRoute }) => {
                     key={i}
                     className="flex flex-row items-center justify-between"
                   >
-                    <View className="block py-3 text-left text-gray-700" type="button" name="sort">
+                    <View
+                      className="block py-3 text-left text-gray-700"
+                      type="button"
+                      name="sort"
+                    >
                       <Text>{item.name}</Text>
                     </View>
                     {sort?.value === item.value && (
-                      <Icons.AntDesign name="checkcircleo" size={16} className="icon" />
+                      <Icons.AntDesign
+                        name="checkcircleo"
+                        size={16}
+                        className="icon"
+                      />
                     )}
                   </Pressable>
                 ))}
@@ -80,7 +94,7 @@ const Sort = ({ handleChangeRoute }) => {
         </Modal>
       </View>
     </>
-  )
-}
+  );
+};
 
-export default Sort
+export default Sort;
