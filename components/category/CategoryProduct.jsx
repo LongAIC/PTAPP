@@ -1,10 +1,17 @@
 import { FontAwesome } from "@expo/vector-icons";
 import { Link, useRouter } from "expo-router";
-import { View, Text, TouchableOpacity, Image, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  Dimensions,
+  ScrollView,
+} from "react-native";
 import { FlashList } from "@shopify/flash-list";
 
 const { width } = Dimensions.get("window");
-const numColumns = 3;
+const numColumns = 4;
 const itemWidth = width / numColumns;
 const gap = 2;
 
@@ -15,9 +22,9 @@ export default function CategoriesProduct(props) {
   const renderItem = ({ item }) => (
     <Link
       href={{
-        pathname: `/category`,
+        pathname: `/products`,
         params: {
-          idCurent: item.ID,
+          idCat: item.ID,
         },
       }}
       style={{ width: itemWidth - gap, marginBottom: 5 }}
@@ -29,12 +36,12 @@ export default function CategoriesProduct(props) {
               ? item.image
               : "https://ftechwebsite.com/PTCOCO/wp-content/uploads/2024/07/668517630fe24.png",
           }}
-          className="w-[50px] h-[50px] rounded-full"
+          className="w-[60px] h-[60px] rounded-lg"
         />
 
         <Text
-          className="text-center mt-2 text-16"
-          numberOfLines={1}
+          className="text-center mt-2 text-16 w-[80%]"
+          numberOfLines={2}
           ellipsizeMode="tail"
           style={{ textAlign: "center", width: itemWidth - 20 }}
         >
@@ -45,27 +52,40 @@ export default function CategoriesProduct(props) {
   );
 
   return (
-    <View className="mb-3">
-      <View className="flex-row justify-between mt-4 mb-8">
+    <View className="mb-3 ">
+      <View className="flex-row justify-between pt-1 pb-2">
         <View>
           <Text className="text-base font-bold">Danh mục sản phẩm</Text>
         </View>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() => {
             router.push("/category");
           }}
         >
           <Text className="text-13 underline">Xem tất cả</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
-      <View style={{ flex: 1, width: "100%" }}>
-        <FlashList
-          data={data}
-          renderItem={renderItem}
-          numColumns={numColumns}
-          estimatedItemSize={200}
-          keyExtractor={(item) => item.ID.toString()}
-        />
+      <View style={{ flex: 1, width: "100%", paddingTop: 10 }}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: 10 }}
+        >
+          <View className="flex flex-row space-x-4">
+            <View className="flex flex-col space-y-4">
+              <View className="flex flex-row space-x-4">
+                {data?.slice(0, 4).map((item, index) => {
+                  return renderItem({ item });
+                })}
+              </View>
+              <View className="flex flex-row space-x-4">
+                {data?.slice(4, 8).map((item, index) => {
+                  return renderItem({ item });
+                })}
+              </View>
+            </View>
+          </View>
+        </ScrollView>
       </View>
     </View>
   );

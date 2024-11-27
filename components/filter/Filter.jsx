@@ -65,7 +65,6 @@ const Filter = (props) => {
   const [maxValue, setMaxValue] = useState(MAX_DEFAULT);
 
   const [selectedRating, setSelectedRating] = useState(1);
-  
 
   const formatPrice = (price) => {
     return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -148,7 +147,6 @@ const Filter = (props) => {
       minPrice: 0,
       maxPrice: MAX_DEFAULT,
     });
-    
   };
 
   const canReset =
@@ -193,13 +191,12 @@ const Filter = (props) => {
     filtersHandlers.close();
   };
 
-
   //? Render(s)
   return (
     <>
-      <View className="flex-1 px-3">
+      <View>
         <Pressable
-          className="flex flex-row items-center gap-x-1"
+          className="flex flex-row items-center justify-start gap-x-1 ml-[-14px]"
           onPress={filtersHandlers.open}
         >
           <Icons.Ionicons
@@ -376,18 +373,25 @@ const Filter = (props) => {
                           setMinValue(range.min);
                           setMaxValue(range.max);
                         }}
+                        thumbTintColor="#000000"
+                        minimumTrackTintColor="#000000"
+                        maximumTrackTintColor="#000000"
                       />
                       <View className="flex-col justify-between mt-6">
                         <View className="mb-4">
                           <Text className="text-gray-600">Giá tối thiểu</Text>
                           <View className="border border-gray-300 rounded-lg p-2">
-                            <Text className="text-gray-600">{formatPrice(minValue)}đ</Text>
+                            <Text className="text-gray-600">
+                              {formatPrice(minValue)}đ
+                            </Text>
                           </View>
                         </View>
                         <View>
                           <Text className="text-gray-600">Giá tối đa</Text>
                           <View className="border border-gray-300 rounded-lg p-2">
-                            <Text className="text-gray-600">{formatPrice(maxValue)}đ</Text>
+                            <Text className="text-gray-600">
+                              {formatPrice(maxValue)}đ
+                            </Text>
                           </View>
                         </View>
                       </View>
@@ -404,16 +408,14 @@ const Filter = (props) => {
                           setSelectedRating(rating);
                         }}
                         className={`w-10 h-10 rounded-full items-center justify-center ${
-                          selectedRating === rating
-                            ? 'bg-blue-500'
-                            : 'bg-gray-200'
+                          selectedRating === rating ? "bg-black" : "bg-gray-200"
                         }`}
                       >
                         <Text
                           className={`font-medium ${
                             selectedRating === rating
-                              ? 'text-white'
-                              : 'text-gray-700'
+                              ? "text-white"
+                              : "text-gray-700"
                           }`}
                         >
                           {rating}
@@ -433,7 +435,7 @@ const Filter = (props) => {
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={handlefilter}
-                    className="flex-1 py-3 bg-blue-500 rounded-lg"
+                    className="flex-1 py-3 bg-black rounded-lg"
                   >
                     <Text className="text-center text-white font-medium">
                       Áp dụng bộ lọc

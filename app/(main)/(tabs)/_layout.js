@@ -6,12 +6,14 @@ import {
   AntDesign,
 } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
+import { Image } from "react-native";
 export default function TabsLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: "#000000",
+        tabBarActiveTintColor: "#ffba00",
       }}
     >
       <Tabs.Screen
@@ -26,37 +28,58 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="category"
         options={{
-          title: "Danh mục",
+          title: "Tin tưc",
           tabBarIcon: ({ color }) => (
-            <MaterialIcons name="category" size={24} color={color} />
+            <MaterialIcons name="fiber-new" size={24} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="update"
+        options={{
+          title: "",
+          tabBarIcon: ({ color }) => (
+            <Image
+              source={require("@/assets/images/live.png")}
+              style={{
+                width: 60,
+                height: 60,
+                objectFit: "contain",
+                borderRadius: 100,
+                backgroundColor: "#fff",
+                padding: 10,
+                borderWidth: 1,
+                borderColor: "#ffba00",
+              }}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="chats"
+        options={{
+          title: "Nhà cung cấp",
+          tabBarIcon: ({ color }) => (
+            <Entypo name="shopping-bag" size={24} color={color} />
           ),
         }}
       />
       {/* <Tabs.Screen
-        name="cart"
-        options={{
-          title: "Nhà cung cấp",
-          tabBarIcon: ({ color }) => (
-            <Feather name="shopping-cart" size={24} color={color} />
-          ),
-        }}
-      /> */}
-      <Tabs.Screen
-        name="chats"
-        options={{
-          headerShown: true,
-          title: "Đoạn chat",
-          tabBarIcon: ({ color }) => (
-            <AntDesign name="wechat" size={24} color={color} />
-          ),
-        }}
-      />
+          name="chats"
+          options={{
+            headerShown: true,
+            title: "Đoạn chat",
+            tabBarIcon: ({ color }) => (
+              <AntDesign name="wechat" size={24} color={color} />
+            ),
+          }}
+        /> */}
       <Tabs.Screen
         name="profile"
         options={{
           title: "Cài đặt",
           tabBarIcon: ({ color }) => (
-            <FontAwesome name="user" size={24} color={color} />
+            <AntDesign name="user" size={24} color={color} />
           ),
         }}
       />

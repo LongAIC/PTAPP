@@ -366,13 +366,13 @@ export default function SingleProductScreen() {
                   />
 
                   {/* Add to Cart Operation */}
-                  <View className="fixed left-0 right-0 z-20">
+                  {/* <View className="fixed left-0 right-0 z-20">
                     <View className="flex items-center justify-between p-3 bg-white border-t border-gray-300 shadow-3xl mt-1">
                       <Button className="px-12 text-sm btn">
                         Liên hệ với người bán
                       </Button>
                     </View>
-                  </View>
+                  </View> */}
                 </View>
               </View>
             </ScrollView>

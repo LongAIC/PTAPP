@@ -23,7 +23,7 @@ export default function MostFavoriteProductsFtech(props) {
       <View className="w-full flex flex-row flex-wrap">
         {products?.map((product, index) => (
           <Link
-            className="mx-1 mb-4"
+            className="mx-1 mb-2"
             style={{ width: itemWidth2 - gap2 }}
             href={{
               pathname: `/products/${product.ID}`,
@@ -31,16 +31,16 @@ export default function MostFavoriteProductsFtech(props) {
             key={product.id}
             asChild
           >
-            <TouchableOpacity className="overflow-hidden">
+            <TouchableOpacity className="overflow-hidden border border-[#F0F1F1] p-2">
               <Image
                 source={{
                   uri: product?.product_image,
                 }}
-                className="w-[100%] h-[212px] object-cover  z-50 rounded-lg"
+                className="w-[100%] h-[212px] object-cover  z-50"
               />
               <View className="h-[50px]">
                 <Text
-                  numberOfLines={1}
+                  numberOfLines={2}
                   className="text-[14px] font-[400] leading-5 pt-1"
                 >
                   {product?.product_name}
@@ -58,10 +58,12 @@ export default function MostFavoriteProductsFtech(props) {
                 </View>
               </View>
               <View className="mt-3 pt-1 border-t-[1px] border-[#F0F1F1] ">
-                <Text className="text-[14px] font-[400] leading-5 text-[#FF4405] font-bold">
+                <Text className="text-[13px] font-[400] leading-5 text-[#FF4405] font-[400]">
                   {product?.donvicungcap}
                 </Text>
-                <Text className="text-[#808080]">38 sản phẩm </Text>
+                <Text className="text-[#808080] text-[11px]">
+                  Đã bán 38 sản phẩm{" "}
+                </Text>
               </View>
             </TouchableOpacity>
           </Link>
