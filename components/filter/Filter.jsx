@@ -31,8 +31,9 @@ import Slider from "@react-native-community/slider";
 
 const Filter = (props) => {
   //? Props
-  const { mainMinPrice, mainMaxPrice, handleChangeRoute } = props;
+  const { province, ratings, minPrices, maxPrices, handleChangeRoute } = props;
 
+ 
   //? Assets
   const dispatch = useAppDispatch();
   const [isFilters, filtersHandlers] = useDisclosure();
@@ -56,6 +57,7 @@ const Filter = (props) => {
   const [wards, setWards] = useState([]);
 
   const [selectedProvince, setSelectedProvince] = useState(null);
+  
   const [selectedDistrict, setSelectedDistrict] = useState(null);
   const [selectedWard, setSelectedWard] = useState(null);
 
@@ -64,10 +66,12 @@ const Filter = (props) => {
   const [minValue, setMinValue] = useState(MIN_DEFAULT);
   const [maxValue, setMaxValue] = useState(MAX_DEFAULT);
 
+
+
   const [selectedRating, setSelectedRating] = useState(1);
 
   const formatPrice = (price) => {
-    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
 
   // Fetch provinces
@@ -85,48 +89,20 @@ const Filter = (props) => {
   }, []);
 
   useEffect(() => {
-    const fetchDistricts = async () => {
-      if (selectedProvince) {
-        try {
-          const response = await fetch(
-            `https://provinces.open-api.vn/api/p/${selectedProvince.code}?depth=2`
-          );
-          const data = await response.json();
-          setDistricts(data.districts);
-        } catch (error) {
-          console.error("Error fetching districts:", error);
-        }
-      }
-    };
-    fetchDistricts();
-  }, [selectedProvince]);
+    setSelectedProvince(province);
+    setMinValue(minPrices ? minPrices : MIN_DEFAULT );
+    setMaxValue(maxPrices ? maxPrices : MAX_DEFAULT);
+    setSelectedRating(ratings ? ratings : null);
+  }, [province, minPrices, maxPrices, ratings]);
 
-  // Fetch wards when district is selected
-  useEffect(() => {
-    const fetchWards = async () => {
-      if (selectedDistrict) {
-        try {
-          const response = await fetch(
-            `https://provinces.open-api.vn/api/d/${selectedDistrict.code}?depth=2`
-          );
-          const data = await response.json();
-          setWards(data.wards);
-        } catch (error) {
-          console.error("Error fetching wards:", error);
-        }
-      }
-    };
-    fetchWards();
-  }, [selectedDistrict]);
+
 
   //? Handlers
   const handlefilter = () => {
     handleChangeRoute({
-      provinceName: selectedProvince ? selectedProvince.name : undefined,
-      districtName: selectedDistrict ? selectedDistrict.name : undefined,
-      wardName: selectedWard ? selectedWard.name : undefined,
-      rating: selectedRating ? selectedRating.toString() : undefined,
-      minPrice: minValue,
+      provinceName: selectedProvince ? selectedProvince : null,
+      rating: selectedRating ? selectedRating : null,
+      minPrice: minValue ,
       maxPrice: maxValue,
     });
     if (filtersHandlers.close) filtersHandlers.close();
@@ -134,26 +110,20 @@ const Filter = (props) => {
 
   const handleResetFilters = () => {
     setSelectedProvince(null);
-    setSelectedDistrict(null);
-    setSelectedWard(null);
-    setSelectedRating(1);
+    setSelectedRating(null);
     setMinValue(MIN_DEFAULT);
     setMaxValue(MAX_DEFAULT);
     handleChangeRoute({
-      provinceName: undefined,
-      districtName: undefined,
-      wardName: undefined,
-      rating: undefined,
+      provinceName: null,
+      wardName: null,
+      rating: null,
       minPrice: 0,
       maxPrice: MAX_DEFAULT,
     });
+   
   };
 
-  const canReset =
-    !!params.inStock ||
-    !!params.discount ||
-    mainMinPrice !== debouncedMinPrice ||
-    mainMaxPrice !== debouncedMaxPrice;
+
 
   //? Re-Renders
   //*   load Filters
@@ -232,7 +202,7 @@ const Filter = (props) => {
                 }}
               >
                 <View className="flex-1">
-                  <View className="mb-6">
+                  <View className="">
                     <Text className="text-lg font-medium mb-3">Địa điểm</Text>
 
                     {/* Province Selector */}
@@ -243,7 +213,7 @@ const Filter = (props) => {
                       >
                         <Text className="text-gray-600">
                           {selectedProvince
-                            ? selectedProvince.name
+                            ? selectedProvince
                             : "Chọn tỉnh/thành phố"}
                         </Text>
                         <Icons.AntDesign
@@ -261,7 +231,7 @@ const Filter = (props) => {
                                 key={province.code}
                                 className="p-3 border-b border-gray-200"
                                 onPress={() => {
-                                  setSelectedProvince(province);
+                                  setSelectedProvince(province.name);
                                   setSelectedDistrict(null);
                                   setSelectedWard(null);
                                   setShowProvinces(false);
@@ -274,91 +244,8 @@ const Filter = (props) => {
                         </View>
                       )}
                     </View>
-
-                    <View className="mb-4">
-                      <TouchableOpacity
-                        className="border border-gray-300 rounded-lg p-3 pr-2 flex-row justify-between items-center"
-                        onPress={() =>
-                          selectedProvince && setShowDistricts(!showDistricts)
-                        }
-                        disabled={!selectedProvince}
-                      >
-                        <Text
-                          className={`${!selectedProvince ? "text-gray-400" : "text-gray-600"}`}
-                        >
-                          {selectedDistrict
-                            ? selectedDistrict.name
-                            : "Chọn quận/huyện"}
-                        </Text>
-                        <Icons.AntDesign
-                          name={showDistricts ? "up" : "down"}
-                          size={16}
-                          color="#666"
-                        />
-                      </TouchableOpacity>
-
-                      {showDistricts && (
-                        <View className="border border-gray-300 rounded-lg mt-1 max-h-60">
-                          <ScrollView>
-                            {districts.map((district) => (
-                              <TouchableOpacity
-                                key={district.code}
-                                className="p-3 border-b border-gray-200"
-                                onPress={() => {
-                                  setSelectedDistrict(district);
-                                  setSelectedWard(null);
-                                  setShowDistricts(false);
-                                }}
-                              >
-                                <Text>{district.name}</Text>
-                              </TouchableOpacity>
-                            ))}
-                          </ScrollView>
-                        </View>
-                      )}
-                    </View>
-
-                    {/* Ward Selector */}
-                    <View>
-                      <TouchableOpacity
-                        className="border border-gray-300 rounded-lg p-3 pr-2 flex-row justify-between items-center"
-                        onPress={() =>
-                          selectedDistrict && setShowWards(!showWards)
-                        }
-                        disabled={!selectedDistrict}
-                      >
-                        <Text
-                          className={`${!selectedDistrict ? "text-gray-400" : "text-gray-600"}`}
-                        >
-                          {selectedWard ? selectedWard.name : "Chọn phường/xã"}
-                        </Text>
-                        <Icons.AntDesign
-                          name={showWards ? "up" : "down"}
-                          size={16}
-                          color="#666"
-                        />
-                      </TouchableOpacity>
-
-                      {showWards && (
-                        <View className="border border-gray-300 rounded-lg mt-1 max-h-60">
-                          <ScrollView>
-                            {wards.map((ward) => (
-                              <TouchableOpacity
-                                key={ward.code}
-                                className="p-3 border-b border-gray-200"
-                                onPress={() => {
-                                  setSelectedWard(ward);
-                                  setShowWards(false);
-                                }}
-                              >
-                                <Text>{ward.name}</Text>
-                              </TouchableOpacity>
-                            ))}
-                          </ScrollView>
-                        </View>
-                      )}
-                    </View>
                   </View>
+
                   <View>
                     <Text className="text-lg font-medium ">Giá </Text>
                     <View className="px-2 py-4">

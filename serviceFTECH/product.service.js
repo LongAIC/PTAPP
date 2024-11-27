@@ -25,8 +25,6 @@ export const productApiSlice = apiFtechSlice.injectEndpoints({
             limit: params.limit,
             page: params.page,
             tinhthanh: params.provinceName,
-            quanhuyen: params.districtName,
-            phuongxa: params.wardName,
             minprice: params.minPrice,
             maxprice: params.maxPrice,
             thuhang: 'hang-' + params.rating,
