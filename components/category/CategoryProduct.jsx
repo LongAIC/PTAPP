@@ -17,6 +17,8 @@ const gap = 2;
 
 export default function CategoriesProduct(props) {
   const { data } = props;
+
+  console.log(data);
   const router = useRouter();
 
   const renderItem = ({ item }) => (
@@ -74,12 +76,12 @@ export default function CategoriesProduct(props) {
           <View className="flex flex-row space-x-4">
             <View className="flex flex-col space-y-4">
               <View className="flex flex-row space-x-4">
-                {data?.slice(0, 4).map((item, index) => {
+                {data?.[0]?.slice(0, 4).map((item) => {
                   return renderItem({ item });
                 })}
               </View>
               <View className="flex flex-row space-x-4">
-                {data?.slice(4, 8).map((item, index) => {
+                {data?.[0]?.slice(4).map((item) => {
                   return renderItem({ item });
                 })}
               </View>

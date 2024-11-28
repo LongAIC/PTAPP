@@ -1,18 +1,20 @@
-import { FlashList } from '@shopify/flash-list'
-import { View, Image } from 'react-native'
+import { FlashList } from "@shopify/flash-list";
+import { View, Image } from "react-native";
 
-import FeedSectionContainer from '../common/FeedSectionContainer'
+import FeedSectionContainer from "../common/FeedSectionContainer";
 
 export default function BannerTwoFtech(props) {
   //? Props
-  const { data } = props
+  const { data } = props;
+  const { nameSection } = props;
+
   //? Render(s)
-  if (data.length === 0) return null
+  if (data[0].dataChude.length === 0) return null;
 
   return (
-    <FeedSectionContainer title="Chủ đề được đề xuất">
+    <FeedSectionContainer title={nameSection}>
       <FlashList
-        data={data}
+        data={data[0].dataChude}
         renderItem={({ item, index }) => (
           <View className="h-[30vw] w-[70vw] mr-4" key={index}>
             <Image
@@ -28,5 +30,5 @@ export default function BannerTwoFtech(props) {
         estimatedItemSize={200}
       />
     </FeedSectionContainer>
-  )
+  );
 }

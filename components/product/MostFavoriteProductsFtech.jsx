@@ -12,6 +12,7 @@ import { useGetProductsQuery } from "@/services";
 export default function MostFavoriteProductsFtech(props) {
   //? Props
   const { products } = props;
+  const { nameSection } = props;
   //? Get Products Query
   const { width } = Dimensions.get("window"); // Lấy chiều rộng của màn hình
   const numColumns2 = 2; // Số lượng sản phẩm muốn hiển thị
@@ -19,9 +20,9 @@ export default function MostFavoriteProductsFtech(props) {
   const gap2 = 20; // Khoảng cách giữa các item
   //? Render(s)
   return (
-    <FeedSectionContainer title="Sản phẩm hot">
+    <FeedSectionContainer title={nameSection}>
       <View className="w-full flex flex-row flex-wrap">
-        {products?.map((product, index) => (
+        {products[0]?.dataproduct?.map((product, index) => (
           <Link
             className="mx-1 mb-2"
             style={{ width: itemWidth2 - gap2 }}

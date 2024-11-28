@@ -5,6 +5,8 @@ import { Text, TouchableOpacity } from "react-native";
 import Icons from "./common/Icons";
 
 export default function Search(props) {
+  const { category } = props;
+
   //? Handlers
   const handleSearch = () => {
     router.push("/search");
@@ -18,7 +20,7 @@ export default function Search(props) {
     >
       <Icons.EvilIcons name="search" size={24} color="#1F2937" />
       <Text className="flex-grow w-full py-1 px-3 text-left bg-transparent outline-none cursor-pointer text-gray-400 focus:border-none">
-        Tìm kiếm sản phẩm ...
+        {category ? "Danh mục: " + category : "Tìm kiếm sản phẩm ..."}
       </Text>
     </TouchableOpacity>
   );

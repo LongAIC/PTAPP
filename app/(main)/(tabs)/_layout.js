@@ -26,11 +26,12 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
-        name="category"
+        name="news"
         options={{
-          title: "Tin tưc",
+          title: "Tin tức",
+          headerShown: false,
           tabBarIcon: ({ color }) => (
-            <MaterialIcons name="fiber-new" size={24} color={color} />
+            <FontAwesome name="newspaper-o" size={24} color={color} />
           ),
         }}
       />

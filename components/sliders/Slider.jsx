@@ -19,17 +19,15 @@ export default function Slider(props) {
           bottom: 5,
         }}
       >
-        {data
-          .filter((item) => item.isPublic)
-          .map((item, index) => (
-            <Image
-              key={index}
-              source={{
-                uri: item.image.url,
-              }}
-              className="w-full h-[170px] object-contain"
-            />
-          ))}
+        {data.map((item, index) => (
+          <Image
+            key={index}
+            source={{
+              uri: item[0].anh_slide,
+            }}
+            className="w-full h-[170px] object-contain"
+          />
+        ))}
       </Swiper>
     </View>
   );

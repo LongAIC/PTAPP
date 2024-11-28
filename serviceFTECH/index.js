@@ -4,3 +4,4 @@ export * from "./unit.service";
 export * from "./user.service";
 export * from "./product.service";
 export * from "./chat.service";
+export * from "./post.service";
