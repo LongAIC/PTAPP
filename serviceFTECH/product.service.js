@@ -15,6 +15,12 @@ export const productApiSlice = apiFtechSlice.injectEndpoints({
         params: { key },
       }),
     }),
+    getChildCategory: builder.query({
+      query: ({ id }) => ({
+        url: `getCategoryChild?id=${id}`,
+        method: "GET",
+      }),
+    }),
     getProductscat: builder.query({
       query: (params) => {
         return {
@@ -25,11 +31,9 @@ export const productApiSlice = apiFtechSlice.injectEndpoints({
             limit: params.limit,
             page: params.page,
             tinhthanh: params.provinceName,
-            quanhuyen: params.districtName,
-            phuongxa: params.wardName,
             minprice: params.minPrice,
             maxprice: params.maxPrice,
-            thuhang: 'hang-' + params.rating,
+            thuhang: "hang-" + params.rating,
           },
         };
       },
@@ -72,7 +76,9 @@ export const productApiSlice = apiFtechSlice.injectEndpoints({
   }),
 });
 
-export const { useGetSingleProductDetailQuery, useGetProductQuery, useGetProductscatQuery } =
-  productApiSlice;
-
-
+export const {
+  useGetSingleProductDetailQuery,
+  useGetChildCategoryQuery,
+  useGetProductQuery,
+  useGetProductscatQuery,
+} = productApiSlice;
