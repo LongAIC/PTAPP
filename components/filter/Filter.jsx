@@ -201,7 +201,7 @@ const Filter = (props) => {
                         onPress={() => setShowProvinces(!showProvinces)}
                       >
                         <Text className="text-gray-600">
-                          {selectedProvince
+                          {selectedProvince !== 'null'
                             ? selectedProvince
                             : "Chọn tỉnh/thành phố"}
                         </Text>

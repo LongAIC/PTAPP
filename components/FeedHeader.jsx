@@ -33,7 +33,7 @@ export default function FeedHeader(prop) {
     >
       <View className="flex flex-row items-center justify-between gap-2 pt-2">
         {/* <Logo width={120} height={40} /> */}
-        {back != false ? (
+        {back ? (
           <TouchableOpacity onPress={() => router.back()} className="pr-1 mb-1">
             <Icons.Ionicons name="arrow-back" size={24} color="white" />
           </TouchableOpacity>

@@ -224,6 +224,12 @@ export default function FeedScreen() {
             showMore
           /> */}
           {/* <BestSellsSliderFtech data={hot.dataproduct} className="mt-2 mb-2" /> */}
+          <View className="px-3 py-3 bg-white mt-2">
+            <MostFavoriteProductsFtech
+              products={normal?.dataproduct}
+              className="mt-2 mb-2"
+            />
+          </View>
         </ScrollView>
       </ShowWrapper>
     </>
