@@ -9,9 +9,13 @@ import Logo from "./svgs/logo.svg";
 import { useAppSelector } from "@/hooks";
 import { formatNumber } from "@/utils";
 
-export default function FeedHeader() {
+export default function FeedHeader(prop) {
   //? Assets
   const insets = useSafeAreaInsets();
+
+  const { category } = prop;
+
+  const { back = false } = prop || {};
 
   //? Store
   const { totalItems } = useAppSelector((state) => state.cart);
@@ -29,7 +33,12 @@ export default function FeedHeader() {
     >
       <View className="flex flex-row items-center justify-between gap-2 pt-2">
         {/* <Logo width={120} height={40} /> */}
-        <Search className="flex-1" />
+        {back ? (
+          <TouchableOpacity onPress={() => router.back()} className="pr-1 mb-1">
+            <Icons.Ionicons name="arrow-back" size={24} color="white" />
+          </TouchableOpacity>
+        ) : null}
+        <Search category={category} />
         <View className="flex flex-row space-x-1 items-center">
           <TouchableOpacity
             onPress={() => {
