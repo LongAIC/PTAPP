@@ -52,8 +52,8 @@ export default function ProductsScreen() {
   const maxPrice = params?.maxPrice;
   const rating = params?.rating?.toString();
 
-  const [selectedProvince, setSelectedProvince] = useState("null");
-  const [selectedRating, setSelectedRating] = useState("null");
+  const [selectedProvince, setSelectedProvince] = useState('null');
+  const [selectedRating, setSelectedRating] = useState('null');
   const [minValue, setMinValue] = useState(MIN_DEFAULT);
   const [maxValue, setMaxValue] = useState(MAX_DEFAULT);
 
@@ -86,6 +86,10 @@ export default function ProductsScreen() {
       id,
       limit: 100,
       page,
+      provinceName,
+      minPrice,
+      maxPrice,
+      rating,
       provinceName,
       minPrice,
       maxPrice,
@@ -123,7 +127,7 @@ export default function ProductsScreen() {
     handleChangeRoute({
       provinceName: selectedProvince ? selectedProvince : null,
       rating: selectedRating ? selectedRating : null,
-      minPrice: minValue,
+      minPrice: minValue ,
       maxPrice: maxValue,
     });
     bottomSheetRef.current?.close();
@@ -172,6 +176,7 @@ export default function ProductsScreen() {
     };
 
     changeRoute(updatedQueries);
+    
 
     // Đóng bottom sheet sau khi áp dụng bộ lọc
     setIsBottomSheetVisible(false);
@@ -182,10 +187,10 @@ export default function ProductsScreen() {
     handleChangeRoute({
       provinceName: selectedProvince ? selectedProvince : null,
       rating: selectedRating ? selectedRating : null,
-      minPrice: minValue,
+      minPrice: minValue ,
       maxPrice: maxValue,
     });
-  }, [selectedProvince, selectedRating]);
+  }, [selectedProvince, selectedRating])
 
   //*    Get childCategories Data
   // const {
@@ -204,10 +209,11 @@ export default function ProductsScreen() {
   //   },
   // });
 
-  console.log("rate", selectedRating);
+  console.log('rate', selectedRating)
 
   // Thêm snapPoints cho Bottom Sheet
   const [snapPoints, setSnapPoints] = useState(["25%"]);
+
 
   return (
     <>
@@ -242,19 +248,17 @@ export default function ProductsScreen() {
                     <Text className="text-13 text-[#808080] mr-2">
                       Khu vực:
                     </Text>
-                    <TouchableOpacity
-                      className="flex-row items-center"
-                      onPress={() => {
-                        setIsOpenSheetLocation(true);
-                        setIsOpenSheetRating(false);
-                        setIsOpenSheetPrice(false);
-                        openSheet();
-                      }}
-                    >
-                      <Text className="text-13 mr-1">
-                        {selectedProvince !== undefined
-                          ? selectedProvince
-                          : "Toàn Quốc"}
+                    <View className="flex-row items-center">
+                      <Text
+                        onPress={() => {
+                          setIsOpenSheetLocation(true);
+                          setIsOpenSheetRating(false);
+                          setIsOpenSheetPrice(false);
+                          openSheet();
+                        }}
+                        className="text-13 mr-1"
+                      >
+                        {selectedProvince !== 'null' || !selectedProvince  ? selectedProvince :  "Toàn Quốc"}
                       </Text>
                       <Icons.Ionicons
                         name="chevron-down-sharp"
@@ -470,7 +474,7 @@ export default function ProductsScreen() {
                   }}
                 >
                   <Text className="text-gray-600">
-                    {selectedProvince == "null"
+                    {selectedProvince == 'null'
                       ? selectedProvince
                       : "Chọn tỉnh/thành phố"}
                   </Text>
@@ -516,7 +520,7 @@ export default function ProductsScreen() {
                       key={rating}
                       onPress={() => {
                         if (selectedRating === rating) {
-                          setSelectedRating("null");
+                          setSelectedRating('null');
                         } else {
                           setSelectedRating(rating);
                         }
