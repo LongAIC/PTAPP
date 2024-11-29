@@ -1,38 +1,26 @@
-import { Stack, useRouter } from "expo-router";
+import { ScrollView, View, Text, Image, RefreshControl } from "react-native";
 import {
-  ScrollView,
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Image,
-  FlatList,
-  Dimensions,
-  RefreshControl,
-} from "react-native";
-import {
-  BannerOneFtech,
   BannerTwoFtech,
-  BestSellsSliderFtech,
-  Categories,
-  DiscountSlider,
   Slider as MainSlider,
   MostFavoriteProductsFtech,
   FeedHeader,
   ShowWrapper,
-  FtechDiscountSlider,
   CategoriesProduct,
   Icons,
 } from "@/components";
 
-import { FlashList } from "@shopify/flash-list";
-import { Link } from "expo-router";
-import { useGetHomeInfoQuery } from "@/serviceFTECH";
+import { useLocalSearchParams, useRouter, Stack } from "expo-router";
+import { useGetHomeInfoQuery, useLoadmoreProductQuery } from "@/serviceFTECH";
 import { useState } from "react";
 
 export default function FeedScreen() {
   const router = useRouter();
   const [refreshing, setRefreshing] = useState(false);
+
+  const params = useLocalSearchParams();
+  const limit = params?.limit?.toString() ?? 10;
+  const page = params?.page?.toString() ?? 0;
+
   const {
     data: dataHomePage,
     error,
@@ -42,7 +30,39 @@ export default function FeedScreen() {
     refetch,
   } = useGetHomeInfoQuery();
 
-  console.log(dataHomePage);
+  const {
+    data: dataProduct,
+    hasNextPage,
+    isLoading: isLoadingProduct,
+    error: errorProduct,
+    isError: isErrorProduct,
+  } = useLoadmoreProductQuery(
+    {
+      limit,
+      page,
+    },
+    {
+      selectFromResult: ({ data, ...args }) => ({
+        hasNextPage: true,
+        data: data?.data,
+        ...args,
+      }),
+    }
+  );
+
+  console.log("dataProductaaa", dataProduct);
+
+  const changeRoute = (newParams) => {
+    const updatedParams = { ...params, ...newParams };
+    router.setParams(updatedParams);
+  };
+
+  const onEndReached = () => {
+    if (!hasNextPage) return;
+    changeRoute({
+      page: Number(page) + 1,
+    });
+  };
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -72,6 +92,18 @@ export default function FeedScreen() {
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
+          onScroll={({ nativeEvent }) => {
+            const { layoutMeasurement, contentOffset, contentSize } =
+              nativeEvent;
+            const paddingToBottom = 20;
+            if (
+              layoutMeasurement.height + contentOffset.y >=
+              contentSize.height - paddingToBottom
+            ) {
+              onEndReached();
+            }
+          }}
+          scrollEventThrottle={400}
         >
           {/* //List các dịnh vụ */}
 
@@ -79,17 +111,7 @@ export default function FeedScreen() {
             <View>
               {dataHomePage.data.map((item) => {
                 console.log(item.data);
-                if (item.layoutName === "sp_hot") {
-                  return (
-                    <View className="px-3 py-3 bg-white mt-2">
-                      <MostFavoriteProductsFtech
-                        products={item.data}
-                        nameSection={item.nameSection}
-                        className="mt-2 mb-2"
-                      />
-                    </View>
-                  );
-                } else if (item.layoutName === "chu_de_homnay") {
+                if (item.layoutName === "chu_de_homnay") {
                   return (
                     <View className="px-3 py-3 bg-white mt-2">
                       <BannerTwoFtech
@@ -206,30 +228,20 @@ export default function FeedScreen() {
               <Text>Không có dữ liệu</Text>
             </View>
           )}
-
-          {/* <View className="px-3 py-3 bg-white mt-2">
-            <BannerOneFtech
-              className="mt-2 mb-2"
-              data={
-                topic.filter((item) => item.data[0].layout == "slide")[0]
-                  ?.data[0]?.dataChude
-              }
-            />
-          </View> */}
-
-          {/* <FtechDiscountSlider
-            className="mt-2 mb-2"
-            products={onSale}
-            title="Đang giảm giá"
-            showMore
-          /> */}
-          {/* <BestSellsSliderFtech data={hot.dataproduct} className="mt-2 mb-2" /> */}
           <View className="px-3 py-3 bg-white mt-2">
-            <MostFavoriteProductsFtech
-              products={normal?.dataproduct}
-              className="mt-2 mb-2"
-            />
+            {dataProduct && (
+              <MostFavoriteProductsFtech
+                products={dataProduct}
+                nameSection={"Sản phẩm mới"}
+                className="mt-2 mb-2"
+              />
+            )}
           </View>
+          {isLoadingProduct && (
+            <View className="py-4">
+              <Text className="text-center">Đang tải thêm sản phẩm...</Text>
+            </View>
+          )}
         </ScrollView>
       </ShowWrapper>
     </>

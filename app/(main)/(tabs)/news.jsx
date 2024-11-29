@@ -43,40 +43,39 @@ export default function newsPage() {
         ) : (
           <View className="flex-row flex-wrap justify-between px-2 bg-white">
             {data?.data?.map((item) => (
-              <TouchableOpacity
-                key={item.id}
-                className="bg-white  mb-2 w-[49%] border border-gray-200 rounded-[8px]"
-              >
-                <View className="flex flex-col items-center">
-                  <Image
-                    source={{
-                      uri: item.image
-                        ? item.image
-                        : "https://ftechwebsite.com/PTCOCO/wp-content/uploads/2024/11/86004bd119e9d07e376413ebace4373b-2883913672886655493.jpg",
-                    }}
-                    className="w-full h-[100px] object-cover"
-                  />
-                  <View className="w-full p-2">
-                    <Text
-                      className="text-[13px] font-bold text-lef t"
-                      numberOfLines={2}
-                    >
-                      {item.title}
-                    </Text>
-                    <Text className="text-gray-500 text-[12px] mt-1 text-left">
-                      {item.date}
-                    </Text>
-                    <Text
-                      className="text-gray-600 text-[14px] mt-1 text-left"
-                      numberOfLines={2}
-                    >
-                      {item.description
-                        ? item.description
-                        : "Chưa có nội dung "}
-                    </Text>
+              <Link href={`/posts/${item.id}`} key={item.id} asChild>
+                <TouchableOpacity className="bg-white mb-2 w-[49%] border border-gray-200 rounded-[8px]">
+                  <View className="flex flex-col items-center">
+                    <Image
+                      source={{
+                        uri: item.image
+                          ? item.image
+                          : "https://ftechwebsite.com/PTCOCO/wp-content/uploads/2024/11/86004bd119e9d07e376413ebace4373b-2883913672886655493.jpg",
+                      }}
+                      className="w-full h-[100px] object-cover"
+                    />
+                    <View className="w-full p-2">
+                      <Text
+                        className="text-[13px] font-bold text-left"
+                        numberOfLines={2}
+                      >
+                        {item.title}
+                      </Text>
+                      <Text className="text-gray-500 text-[12px] mt-1 text-left">
+                        {item.date}
+                      </Text>
+                      <Text
+                        className="text-gray-600 text-[14px] mt-1 text-left"
+                        numberOfLines={2}
+                      >
+                        {item.description
+                          ? item.description
+                          : "Chưa có nội dung "}
+                      </Text>
+                    </View>
                   </View>
-                </View>
-              </TouchableOpacity>
+                </TouchableOpacity>
+              </Link>
             ))}
           </View>
         )}

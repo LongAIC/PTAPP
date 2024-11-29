@@ -59,6 +59,7 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="chats"
         options={{
+          headerShown: false,
           title: "Nhà cung cấp",
           tabBarIcon: ({ color }) => (
             <Entypo name="shopping-bag" size={24} color={color} />

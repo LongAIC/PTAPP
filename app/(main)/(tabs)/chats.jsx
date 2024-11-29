@@ -9,8 +9,16 @@ import {
   Image,
   Text,
 } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+
 import { WebView } from "react-native-webview";
-import { Stack, useLocalSearchParams, useRouter, router } from "expo-router";
+import {
+  Stack,
+  useLocalSearchParams,
+  useRouter,
+  router,
+  Link,
+} from "expo-router";
 import {
   FontAwesome,
   Entypo,
@@ -19,7 +27,7 @@ import {
   AntDesign,
 } from "@expo/vector-icons";
 import { AuthWrapper } from "@/components";
-
+import Icons from "@/components/common/Icons";
 import { useChatlistboxQuery } from "@/serviceFTECH";
 import { useUserInfo } from "@/hooks";
 
@@ -68,7 +76,7 @@ const ChatScreen = () => {
 
   const params = useLocalSearchParams();
   const url = params?.url;
-
+  const insets = useSafeAreaInsets();
   useFocusEffect(
     useCallback(() => {
       refetch();
@@ -86,6 +94,25 @@ const ChatScreen = () => {
           <>
             {filteredStores != "" ? (
               <View>
+                <View
+                  style={{ paddingTop: insets.top }}
+                  className="p-3 bg-yellow-500  "
+                >
+                  <View className="flex flex-row items-center justify-between gap-2 pt-2">
+                    <Link href="/">
+                      <View className="flex flex-row items-center">
+                        <Icons.Ionicons
+                          name="arrow-back"
+                          size={24}
+                          color="white"
+                        />
+                        <Text className="text-white text-[16px] font-bold ml-2">
+                          Nhà Cung Cấp
+                        </Text>
+                      </View>
+                    </Link>
+                  </View>
+                </View>
                 <View className="bg-white  rounded-xl shadow-lg max-w-lg mx-auto w-[100%] h-[100%]">
                   <View className="p-4 bg-gradient-to-r from-blue-500 to-purple-500">
                     <View className="relative">

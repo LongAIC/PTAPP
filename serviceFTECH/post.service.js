@@ -8,7 +8,13 @@ export const postApiSlice = apiFtechSlice.injectEndpoints({
         method: "GET",
       }),
     }),
+    getPostDetail: builder.query({
+      query: ({ id }) => ({
+        url: `getPostDetail?id=${id}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
-export const { useGetPostQuery } = postApiSlice;
+export const { useGetPostQuery, useGetPostDetailQuery } = postApiSlice;

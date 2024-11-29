@@ -52,8 +52,8 @@ export default function ProductsScreen() {
   const maxPrice = params?.maxPrice;
   const rating = params?.rating?.toString();
 
-  const [selectedProvince, setSelectedProvince] = useState('null');
-  const [selectedRating, setSelectedRating] = useState('null');
+  const [selectedProvince, setSelectedProvince] = useState("null");
+  const [selectedRating, setSelectedRating] = useState("null");
   const [minValue, setMinValue] = useState(MIN_DEFAULT);
   const [maxValue, setMaxValue] = useState(MAX_DEFAULT);
 
@@ -127,7 +127,7 @@ export default function ProductsScreen() {
     handleChangeRoute({
       provinceName: selectedProvince ? selectedProvince : null,
       rating: selectedRating ? selectedRating : null,
-      minPrice: minValue ,
+      minPrice: minValue,
       maxPrice: maxValue,
     });
     bottomSheetRef.current?.close();
@@ -176,7 +176,6 @@ export default function ProductsScreen() {
     };
 
     changeRoute(updatedQueries);
-    
 
     // Đóng bottom sheet sau khi áp dụng bộ lọc
     setIsBottomSheetVisible(false);
@@ -187,10 +186,10 @@ export default function ProductsScreen() {
     handleChangeRoute({
       provinceName: selectedProvince ? selectedProvince : null,
       rating: selectedRating ? selectedRating : null,
-      minPrice: minValue ,
+      minPrice: minValue,
       maxPrice: maxValue,
     });
-  }, [selectedProvince, selectedRating])
+  }, [selectedProvince, selectedRating]);
 
   //*    Get childCategories Data
   // const {
@@ -209,11 +208,10 @@ export default function ProductsScreen() {
   //   },
   // });
 
-  console.log('rate', selectedRating)
+  console.log("rate", selectedRating);
 
   // Thêm snapPoints cho Bottom Sheet
-  const [snapPoints, setSnapPoints] = useState(["25%"]);
-
+  const [snapPoints, setSnapPoints] = useState(["20%"]);
 
   return (
     <>
@@ -258,14 +256,16 @@ export default function ProductsScreen() {
                         }}
                         className="text-13 mr-1"
                       >
-                        {selectedProvince !== 'null' || !selectedProvince  ? selectedProvince :  "Toàn Quốc"}
+                        {selectedProvince !== "null" || !selectedProvince
+                          ? selectedProvince
+                          : "Toàn Quốc"}
                       </Text>
                       <Icons.Ionicons
                         name="chevron-down-sharp"
                         size={12}
                         color="black"
                       />
-                    </TouchableOpacity>
+                    </View>
                   </View>
                 </View>
               </TouchableOpacity>
@@ -312,16 +312,14 @@ export default function ProductsScreen() {
                 </TouchableOpacity>
                 <View
                   className={`flex-row justify-between items-center ${
-                    selectedRating !== undefined
+                    selectedRating !== "null"
                       ? "bg-[#fff4e0] border-[#f80] border"
                       : "bg-[#fff] border border-[#f4f4f4]"
                   } px-3 py-1 mr-2 rounded-full`}
                 >
                   <Text
                     className={`text-13 ${
-                      selectedRating !== undefined
-                        ? "text-[#f80]"
-                        : "text-[#000]"
+                      selectedRating !== "null" ? "text-[#f80]" : "text-[#000] "
                     }`}
                     onPress={() => {
                       setIsOpenSheetRating(true);
@@ -335,7 +333,7 @@ export default function ProductsScreen() {
                   <Icons.Ionicons
                     name="chevron-down-sharp"
                     size={12}
-                    color={selectedRating !== undefined ? "#f80" : "#808080"}
+                    color={selectedRating !== "null" ? "#f80" : "#808080"}
                     className="ml-1"
                   />
                 </View>
@@ -474,7 +472,7 @@ export default function ProductsScreen() {
                   }}
                 >
                   <Text className="text-gray-600">
-                    {selectedProvince == 'null'
+                    {selectedProvince == undefined
                       ? selectedProvince
                       : "Chọn tỉnh/thành phố"}
                   </Text>
@@ -520,7 +518,7 @@ export default function ProductsScreen() {
                       key={rating}
                       onPress={() => {
                         if (selectedRating === rating) {
-                          setSelectedRating('null');
+                          setSelectedRating("null");
                         } else {
                           setSelectedRating(rating);
                         }
