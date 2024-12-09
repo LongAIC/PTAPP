@@ -4,6 +4,8 @@ import { Link } from "expo-router";
 import FeedSectionContainer from "../common/FeedSectionContainer";
 import { View, Image, TouchableOpacity, Text, Dimensions } from "react-native";
 import { useChangeRoute } from "@/hooks";
+import Stars from "react-native-stars";
+import { Icons } from "@/components";
 
 export default function ListProducts(props) {
   //? Props
@@ -68,11 +70,42 @@ export default function ListProducts(props) {
               >
                 {item?.product_name}
               </Text>
-              <Text style={{ fontSize: 12, color: "#FF4405" }}>
-                Tư vấn trực tiếp
-              </Text>
-              <View style={{ flexDirection: "row", marginVertical: 5 }}>
-                <Text
+
+              {/* Đánh giá sao */}
+              <View>
+                <View className="flex-row items-center  mb-1 mt-1">
+                  <Stars
+                    default={item?.rating} // Giá trị đánh giá mặc định
+                    count={5} // Tổng số sao
+                    half={true} // Hỗ trợ đánh giá một nửa
+                    fullStar={
+                      <Icons.AntDesign
+                        name="star"
+                        style={{ color: "gold", fontSize: 14 }}
+                        className="text-[14px]"
+                      />
+                    }
+                    emptyStar={
+                      <Icons.AntDesign
+                        name="staro"
+                        style={{ color: "gold", fontSize: 14 }}
+                        className="text-[14px]"
+                      />
+                    }
+                    halfStar={
+                      <Icons.AntDesign
+                        name="staro"
+                        style={{ color: "gold", fontSize: 14 }}
+                        className="text-[14px]"
+                      />
+                    }
+                  />
+                  <Text className="text-[14px] ml-2">({item?.rating})</Text>
+                </View>
+              </View>
+
+              <View style={{ flexDirection: "row" }} className="mb-2">
+                {/* <Text
                   style={{
                     color: "#808080",
                     textDecorationLine: "line-through",
@@ -80,21 +113,46 @@ export default function ListProducts(props) {
                   }}
                 >
                   1.690.000 đ
-                </Text>
+                </Text> */}
                 <Text
                   style={{ color: "#FF4405", fontSize: 16, fontWeight: "bold" }}
                 >
-                  1.490.000 đ
+                  {item?.price != null
+                    ? item?.price
+                        ?.toString()
+                        ?.replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+                    : item?.price}
+                  đ
                 </Text>
               </View>
-              <Text
-                style={{ fontSize: 12, color: "#FF4405", fontWeight: "bold" }}
+
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Text
+                  style={{ fontSize: 12, color: "#FF4405", fontWeight: "bold" }}
+                >
+                  {item.donvicungcap !== "" ? item.donvicungcap : "Tên đơn vị"}
+                </Text>
+
+                <Text
+                  style={{
+                    fontSize: 12,
+                    color: "#808080",
+                    marginHorizontal: 4,
+                  }}
+                >
+                  •
+                </Text>
+
+                <Text style={{ fontSize: 12, color: "#808080" }}>
+                  {item?.product_count_donvi} sản phẩm
+                </Text>
+              </View>
+
+              <TouchableOpacity
+                style={{ position: "absolute", bottom: 0, right: 14 }}
               >
-                {item.donvicungcap !== "" ? item.donvicungcap : "Tên đơn vị"}
-              </Text>
-              <Text style={{ fontSize: 12, color: "#808080" }}>
-                38 sản phẩm
-              </Text>
+                <Icons.AntDesign name="message1" size={24} color="black" />
+              </TouchableOpacity>
             </View>
           </TouchableOpacity>
         </Link>

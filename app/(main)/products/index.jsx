@@ -57,6 +57,11 @@ export default function ProductsScreen() {
   const [minValue, setMinValue] = useState(MIN_DEFAULT);
   const [maxValue, setMaxValue] = useState(MAX_DEFAULT);
 
+  const [banchaySort, setBanchaySort] = useState(false);
+  const [moiSort, setMoiSort] = useState(false);
+  const [ratingSort, setRatingSort] = useState(false);
+  const [giaSort, setGiaSort] = useState(false);
+
   const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
 
   const bottomSheetRef = useRef(null);
@@ -233,7 +238,97 @@ export default function ProductsScreen() {
           className="bg-[#f4f4f4] h-full flex "
           style={{ opacity: isBottomSheetVisible ? 0.1 : 1 }}
         >
-          <View className="px-6 py-1 bg-white blur-3xl">
+          <View className="px-3  bg-white blur-3xl">
+            <View>
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                className="flex-row gap-x-1 py-2"
+              >
+                <TouchableOpacity
+                  className="flex-row justify-between items-center border bg-[#fff] border-[#f4f4f4] px-3 py-1 rounded-full mr-2"
+                  onPress={() => {
+                    setIsOpenSheetPrice(true);
+                    setIsOpenSheetLocation(false);
+                    setIsOpenSheetRating(false);
+                    openSheet();
+                  }}
+                >
+                  <Text
+                    className={`text-13 ${minValue == MIN_DEFAULT && maxValue == MAX_DEFAULT ? "text-[#000]" : " text-[#f80]"}`}
+                  >
+                    Bán chạy
+                  </Text>
+                </TouchableOpacity>
+                <View className="w-[1px] h-[14px] bg-[#e0e0e0] mx-3 mt-[7px]"></View>
+                <TouchableOpacity
+                  className={`flex-row justify-between items-center border ${
+                    minValue == MIN_DEFAULT && maxValue == MAX_DEFAULT
+                      ? "bg-[#fff] border border-[#f4f4f4]"
+                      : "bg-[#fff4e0] border-[#f80]"
+                  } px-3 py-1 rounded-full mr-2`}
+                  onPress={() => {
+                    setIsOpenSheetPrice(true);
+                    setIsOpenSheetLocation(false);
+                    setIsOpenSheetRating(false);
+                    openSheet();
+                  }}
+                >
+                  <Text
+                    className={`text-13 ${minValue == MIN_DEFAULT && maxValue == MAX_DEFAULT ? "text-[#000]" : " text-[#f80]"}`}
+                  >
+                    Mới nhất
+                  </Text>
+                </TouchableOpacity>
+                <View className="w-[1px] h-[14px] bg-[#e0e0e0] mx-3 mt-[7px]"></View>
+                <View
+                  className={`flex-row justify-between items-center ${
+                    selectedRating !== "null"
+                      ? "bg-[#fff4e0] border-[#f80] border"
+                      : "bg-[#fff] border border-[#f4f4f4]"
+                  } px-3 py-1 rounded-full mr-2`}
+                >
+                  <Text
+                    className={`text-13 ${
+                      selectedRating !== "null" ? "text-[#f80]" : "text-[#000] "
+                    }`}
+                    onPress={() => {
+                      setIsOpenSheetRating(true);
+                      setIsOpenSheetLocation(false);
+                      setIsOpenSheetPrice(false);
+                      openSheet();
+                    }}
+                  >
+                    Đánh giá cao
+                  </Text>
+                </View>
+                <View className="w-[1px] h-[14px] bg-[#e0e0e0] mx-3 mt-[7px]"></View>
+                <View
+                  className={`flex-row justify-between items-center ${
+                    selectedRating !== "null"
+                      ? "bg-[#fff4e0] border-[#f80] border"
+                      : "bg-[#fff] border border-[#f4f4f4]"
+                  } px-3 py-1 rounded-full mr-2`}
+                >
+                  <Text
+                    className={`text-13 ${
+                      selectedRating !== "null" ? "text-[#f80]" : "text-[#000] "
+                    }`}
+                    onPress={() => {
+                      setIsOpenSheetRating(true);
+                      setIsOpenSheetLocation(false);
+                      setIsOpenSheetPrice(false);
+                      openSheet();
+                    }}
+                  >
+                    Giá
+                  </Text>
+                </View>
+              </ScrollView>
+            </View>
+          </View>
+
+          <View className="px-6 py-1 bg-white blur-3xl mt-2">
             <View>
               <TouchableOpacity>
                 <View className="w-full items-center flex-row items-center justify-center">
@@ -409,7 +504,7 @@ export default function ProductsScreen() {
                     <Text className="text-base text-neutral-600">
                       {count} sản phẩm
                     </Text>
-                    <Sort handleChangeRoute={handleChangeRoute} className />
+                    {/* <Sort handleChangeRoute={handleChangeRoute} className /> */}
                   </View>
                 </View>
               </View>
