@@ -6,6 +6,12 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "android": {
+      "newArchEnabled": true
+    },
+    "ios": {
+      "newArchEnabled": true
+    },
     "experiments": {
       "tsconfigPaths": true
     },

@@ -73,12 +73,19 @@ export const productApiSlice = apiFtechSlice.injectEndpoints({
         return [...tags, "Productcat2"];
       },
     }),
+    getCategoryStoreRegister: builder.query({
+      query: () => ({
+        url: "getCategoryStoreRegister",
+        method: "GET",
+      }),
+    }),
   }),
 });
 
 export const {
   useGetSingleProductDetailQuery,
   useGetChildCategoryQuery,
+  useGetCategoryStoreRegisterQuery,
   useGetProductQuery,
   useGetProductscatQuery,
 } = productApiSlice;

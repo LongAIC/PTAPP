@@ -52,10 +52,6 @@ const ChatScreen = () => {
   const {
     data: stores,
     isLoading,
-    isSuccess,
-    isFetching,
-    error,
-    isError,
     refetch,
   } = useChatlistboxQuery(
     { user_id: userInfo?.id },
@@ -77,9 +73,12 @@ const ChatScreen = () => {
   const params = useLocalSearchParams();
   const url = params?.url;
   const insets = useSafeAreaInsets();
+
   useFocusEffect(
     useCallback(() => {
-      refetch();
+      if (userInfo?.id) {
+        refetch();
+      }
     }, [userInfo?.id])
   );
 
@@ -92,7 +91,7 @@ const ChatScreen = () => {
           </View>
         ) : (
           <>
-            {filteredStores != "" ? (
+            {filteredStores.length > 0 ? (
               <View>
                 <View
                   style={{ paddingTop: insets.top }}
