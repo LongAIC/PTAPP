@@ -89,7 +89,7 @@ export default function ProductsScreen() {
   } = useGetProductscatQuery(
     {
       id,
-      limit: 100,
+      limit,
       page,
       provinceName,
       minPrice,
@@ -109,6 +109,23 @@ export default function ProductsScreen() {
         ...args,
       }),
     }
+  );
+
+  console.log(
+    "ID:",
+    id,
+    "Limit:",
+    limit,
+    "Page:",
+    page,
+    "Province Name:",
+    provinceName,
+    "Min Price:",
+    minPrice,
+    "Max Price:",
+    maxPrice,
+    "Rating:",
+    rating
   );
 
   const { data: dataChildCategories, isFetching: isFetchingChildCategories } =
