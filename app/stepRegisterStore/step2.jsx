@@ -19,7 +19,6 @@ const step2 = () => {
     const fetchData = async () => {
       const data = await AsyncStorage.getItem("registerStoreData");
       setRegisterStoreData(data);
-      console.log(data);
     };
     fetchData();
   }, []);

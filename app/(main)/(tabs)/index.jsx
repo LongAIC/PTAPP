@@ -50,8 +50,6 @@ export default function FeedScreen() {
     }
   );
 
-  console.log("dataProductaaa", dataProduct);
-
   const changeRoute = (newParams) => {
     const updatedParams = { ...params, ...newParams };
     router.setParams(updatedParams);
@@ -110,7 +108,6 @@ export default function FeedScreen() {
           {dataHomePage?.data?.length > 0 ? (
             <View>
               {dataHomePage.data.map((item) => {
-                console.log(item.data);
                 if (item.layoutName === "chu_de_homnay") {
                   return (
                     <View className="px-3 py-3 bg-white mt-2">

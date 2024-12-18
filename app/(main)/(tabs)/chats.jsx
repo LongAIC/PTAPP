@@ -39,7 +39,6 @@ const ChatScreen = () => {
   const { userInfo } = useUserInfo();
 
   const goToChat = (tawk_to, name) => {
-    console.log(tawk_to);
     router.push({
       params: {
         url: tawk_to,

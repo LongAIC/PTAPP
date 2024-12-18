@@ -71,7 +71,7 @@ const step1 = () => {
           "registerStoreData",
           JSON.stringify(formData)
         );
-        console.log("Data", formData);
+
         router.push("/stepRegisterStore/step2");
       } catch (error) {
         console.error("Lỗi khi lưu dữ liệu:", error);

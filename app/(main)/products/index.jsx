@@ -31,7 +31,7 @@ import {
   useGetProductscatQuery,
   useGetChildCategoryQuery,
 } from "@/serviceFTECH";
-
+import { store } from "@/store";
 export default function ProductsScreen() {
   const params = useLocalSearchParams();
   const MIN_DEFAULT = 0;
@@ -44,10 +44,9 @@ export default function ProductsScreen() {
   const [isOpenSheetRating, setIsOpenSheetRating] = useState(false);
 
   const id = params?.idCat?.toString() ?? "";
-  const limit = params?.limit?.toString() ?? 10;
-  const page = params?.page?.toString() ?? 0;
+  const limit = parseInt(params?.limit?.toString() ?? 10); // Chuyển limit thành số
+  const page = parseInt(params?.page?.toString() ?? 0); // Chuyển page thành số
   const provinceName = params?.provinceName?.toString();
-  const districtName = params?.districtName?.toString();
   const minPrice = params?.minPrice;
   const maxPrice = params?.maxPrice;
   const rating = params?.rating?.toString();
@@ -61,6 +60,8 @@ export default function ProductsScreen() {
   const [moiSort, setMoiSort] = useState(false);
   const [ratingSort, setRatingSort] = useState(false);
   const [giaSort, setGiaSort] = useState(false);
+
+  const [productData, setProductData] = useState([]);
 
   const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
 
@@ -91,42 +92,23 @@ export default function ProductsScreen() {
       id,
       limit,
       page,
-      provinceName,
-      minPrice,
-      maxPrice,
-      rating,
-      provinceName,
-      minPrice,
-      maxPrice,
-      rating,
     },
     {
-      selectFromResult: ({ data, ...args }) => ({
-        hasNextPage: data?.hasNextPage ?? false,
-        data: data?.data,
-        count: data?.data?.length ?? 0,
-        isFetchingProduct: data == undefined ? false : isFetchingProduct,
-        ...args,
-      }),
+      selectFromResult: (result) => {
+        const { data, ...args } = result;
+        return {
+          hasNextPage: true,
+          data: data?.data,
+          count: data?.count,
+          isFetchingProduct: data == undefined ? false : result.isFetching,
+          ...args,
+        };
+      },
     }
   );
 
-  console.log(
-    "ID:",
-    id,
-    "Limit:",
-    limit,
-    "Page:",
-    page,
-    "Province Name:",
-    provinceName,
-    "Min Price:",
-    minPrice,
-    "Max Price:",
-    maxPrice,
-    "Rating:",
-    rating
-  );
+  console.log("page", page);
+  console.log("id", id);
 
   const { data: dataChildCategories, isFetching: isFetchingChildCategories } =
     useGetChildCategoryQuery({
@@ -171,13 +153,6 @@ export default function ProductsScreen() {
   //? Handlers
   const changeRoute = useChangeRoute();
 
-  const onEndReachedThreshold = () => {
-    if (!hasNextPage) return;
-    changeRoute({
-      page: Number(page) + 1,
-    });
-  };
-
   const openSheet = () => {
     setIsBottomSheetVisible(true);
     bottomSheetRef.current?.expand();
@@ -212,25 +187,6 @@ export default function ProductsScreen() {
       maxPrice: maxValue,
     });
   }, [selectedProvince, selectedRating]);
-
-  //*    Get childCategories Data
-  // const {
-  //   isLoading: isLoadingCategories,
-  //   childCategories,
-  //   currentCategory,
-  // } = useGetCategoriesQuery(undefined, {
-  //   selectFromResult: ({ isLoading, data }) => {
-  //     const currentCategory = data?.data?.data.find(
-  //       (cat) => cat.slug === category
-  //     );
-  //     const childCategories = data?.data?.data.filter(
-  //       (cat) => cat.parent === currentCategory?._id
-  //     );
-  //     return { childCategories, isLoading, currentCategory };
-  //   },
-  // });
-
-  console.log("rate", selectedRating);
 
   // Thêm snapPoints cho Bottom Sheet
   const [snapPoints, setSnapPoints] = useState(["20%"]);
@@ -453,11 +409,6 @@ export default function ProductsScreen() {
             </View>
           </View>
 
-          {/* <SubCategories
-            childCategories={childCategories}
-            name={currentCategory?.name}
-            isLoading={isLoadingCategories}
-          /> */}
           <View className="py-3 bg-white mt-2">
             <Text className="text-base text-neutral-600 font-bold px-3 mb-2 ">
               Danh mục sản phẩm
@@ -528,15 +479,6 @@ export default function ProductsScreen() {
               {/* Products */}
               {isFetchingProduct && page == 0 && <ProductSkeleton />}
               {data && data?.length > 0 ? (
-                // <FlashList
-                //   data={data}
-                //   keyExtractor={(item) => item.ID.toString()}
-                //   renderItem={renderItem}
-                //   onEndReached={onEndReachedThreshold}
-                //   onEndReachedThreshold={0}
-                //   estimatedItemSize={200}
-                //   numColumns={1}
-                // />
                 <ListProducts
                   products={data}
                   nextpage={hasNextPage}

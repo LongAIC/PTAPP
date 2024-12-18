@@ -30,9 +30,7 @@ export default function RootLayout() {
     },
   });
 
-  const handleSheetChanges = useCallback((index) => {
-    console.log("handleSheetChanges", index);
-  }, []);
+  const handleSheetChanges = useCallback((index) => {}, []);
 
   return (
     <Provider store={store}>

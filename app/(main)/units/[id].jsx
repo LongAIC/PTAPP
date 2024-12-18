@@ -38,7 +38,6 @@ export default function SingleStallScreen() {
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
   };
-  console.log(selectedCategory)
 
   return (
     <>
@@ -52,10 +51,10 @@ export default function SingleStallScreen() {
           <CategorySelector
             categories={["Sản phẩm", "Giới thiệu", "Cửa hàng"]}
             selectedCategory={selectedCategory}
-            onSelectCategory={handleCategoryChange} 
+            onSelectCategory={handleCategoryChange}
           />
         </View>
-        
+
         <View className="flex-1 mt-2">
           {selectedCategory === "Sản phẩm" && (
             <ListProducts
@@ -68,7 +67,9 @@ export default function SingleStallScreen() {
           )}
           {selectedCategory === "Giới thiệu" && (
             <View className="p-4">
-              <Text className="text-lg font-semibold">Giới thiệu về gian hàng</Text>
+              <Text className="text-lg font-semibold">
+                Giới thiệu về gian hàng
+              </Text>
               <Text className="text-base mt-2">
                 {unit.description || "Không có thông tin giới thiệu."}
               </Text>

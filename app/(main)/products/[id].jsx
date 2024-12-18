@@ -86,7 +86,6 @@ export default function SingleProductScreen() {
         brand_id,
       });
     } else {
-      console.log("Thiếu mất tham số");
     }
     router.push({
       params: {

@@ -14,9 +14,7 @@ export default function FtechDiscountSlider(props) {
   const itemWidth2 = width / numColumns2; // Chiều rộng của mỗi item
   const gap2 = 11; // Khoảng cách giữa các item
   //? handlers
-  const handleJumptoMore = () => {
-    console.log("more");
-  };
+  const handleJumptoMore = () => {};
 
   //? Render(s)
   return (

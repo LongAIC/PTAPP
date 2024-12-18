@@ -38,8 +38,6 @@ const step4 = () => {
     fetchData();
   }, []);
 
-  console.log(registerStoreData);
-
   const pickImage = async (type) => {
     try {
       const result = await ImagePicker.launchImageLibraryAsync({

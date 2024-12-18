@@ -18,7 +18,6 @@ const gap = 2;
 export default function CategoriesProduct(props) {
   const { data } = props;
 
-  console.log(data);
   const router = useRouter();
 
   const renderItem = ({ item }) => (

@@ -10,7 +10,6 @@ export default function ProfileScreen() {
   const insets = useSafeAreaInsets();
   const { userInfo, isLoading } = useUserInfo();
 
-  console.log(userInfo);
   const profilePaths = [
     // {
     //   name: "Đơn hàng của tôi",

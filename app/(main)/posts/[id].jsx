@@ -14,7 +14,7 @@ export default function PostDetail() {
       skip: !id,
     }
   );
-  console.log(data);
+
   return (
     <>
       <Stack.Screen

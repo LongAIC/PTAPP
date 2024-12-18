@@ -1,12 +1,9 @@
-import SigninPromoRenderer from '../renderer/SigninPromoRenderer'
+import SigninPromoRenderer from "../renderer/SigninPromoRenderer";
 
-import { useUserInfo } from '@/hooks'
+import { useUserInfo } from "@/hooks";
 
 export default function AuthWrapper({ children }) {
-  const { userInfo } = useUserInfo()
-  console.log(userInfo)
+  const { userInfo } = useUserInfo();
 
-  return (
-    <>{ !userInfo ? <SigninPromoRenderer /> : <>{children}</>}</>
-  )
+  return <>{!userInfo ? <SigninPromoRenderer /> : <>{children}</>}</>;
 }

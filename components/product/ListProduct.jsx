@@ -21,10 +21,13 @@ export default function ListProducts(props) {
   };
 
   const changeRoute = useChangeRoute();
-  const onEndReachedThreshold = () => {
+
+  // Sửa lại hàm onEndReached để kiểm tra hasNextPage
+  const onEndReached = () => {
     changeRoute({
       page: Number(page) + 1,
     });
+    console.log("123");
   };
 
   //? Render item(s) dạng list
@@ -182,9 +185,12 @@ export default function ListProducts(props) {
           renderItem={renderItem}
           estimatedItemSize={200}
           contentContainerStyle={{ paddingHorizontal: 10 }}
-          onEndReached={onEndReachedThreshold}
-          onEndReachedThreshold={0}
+          onEndReached={onEndReached}
+          onEndReachedThreshold={0} // Thay đổi giá trị này để trigger sớm hơn
         />
+        <TouchableOpacity onPress={onEndReached}>
+          <Text>Load more</Text>
+        </TouchableOpacity>
       </FeedSectionContainer>
     </View>
   );

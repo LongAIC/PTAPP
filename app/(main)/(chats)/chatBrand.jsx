@@ -9,8 +9,6 @@ const ChatScreenBrand = () => {
   const url = params?.url;
   const brandName = params?.brandName;
 
-  console.log(brandName);
-
   // Hàm render component loading
   const LoadingIndicator = () => (
     <View style={styles.loadingContainer}>

@@ -44,14 +44,12 @@ export default function ForgetPasswordScreen() {
   const onSubmit = async ({ password }) => {
     try {
       setIsLoading(true);
-     
+
       const res = await changePassword({ email, password }).unwrap();
       if (res.code === "1235") {
         setModalVisible(true);
       }
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
     // setModalVisible(true)
   };
   const closeModal = () => {
