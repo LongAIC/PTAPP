@@ -9,11 +9,13 @@ import { Icons } from "@/components";
 
 export default function ListProducts(props) {
   //? Props
-  const { products, title, showMore = false, hasNextPage, page } = props;
+  const { products, title, showMore = false, page } = props;
   const { width } = Dimensions.get("window");
 
   // Chiều rộng của mỗi item khi hiển thị dạng list
   const itemWidth = width - 20;
+
+  console.log(products);
 
   //? handlers
   const handleJumptoMore = () => {
@@ -27,7 +29,6 @@ export default function ListProducts(props) {
     changeRoute({
       page: Number(page) + 1,
     });
-    console.log("123");
   };
 
   //? Render item(s) dạng list
@@ -78,7 +79,7 @@ export default function ListProducts(props) {
               <View>
                 <View className="flex-row items-center  mb-1 mt-1">
                   <Stars
-                    default={item?.rating} // Giá trị đánh giá mặc định
+                    default={item?.rating || 0} // Giá trị đánh giá mặc định
                     count={5} // Tổng số sao
                     half={true} // Hỗ trợ đánh giá một nửa
                     fullStar={
@@ -120,20 +121,24 @@ export default function ListProducts(props) {
                 <Text
                   style={{ color: "#FF4405", fontSize: 16, fontWeight: "bold" }}
                 >
-                  {item?.price != null
-                    ? item?.price
+                  {item?.price != "" && item?.price !== 0
+                    ? `${item?.price
                         ?.toString()
-                        ?.replace(/\B(?=(\d{3})+(?!\d))/g, ".")
-                    : item?.price}
-                  đ
+                        ?.replace(/\B(?=(\d{3})+(?!\d))/g, ".")}đ`
+                    : "Liên hệ"}
                 </Text>
               </View>
 
               <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <Text
-                  style={{ fontSize: 12, color: "#FF4405", fontWeight: "bold" }}
+                  style={{
+                    fontSize: 12,
+                    color: "#FF4405",
+                    fontWeight: "bold",
+                    textTransform: "capitalize",
+                  }}
                 >
-                  {item.donvicungcap !== "" ? item.donvicungcap : "Tên đơn vị"}
+                  {item.donvicungcap !== "" ? item.donvicungcap : "Gian hàng"}
                 </Text>
 
                 <Text
@@ -185,12 +190,7 @@ export default function ListProducts(props) {
           renderItem={renderItem}
           estimatedItemSize={200}
           contentContainerStyle={{ paddingHorizontal: 10 }}
-          onEndReached={onEndReached}
-          onEndReachedThreshold={0} // Thay đổi giá trị này để trigger sớm hơn
         />
-        <TouchableOpacity onPress={onEndReached}>
-          <Text>Load more</Text>
-        </TouchableOpacity>
       </FeedSectionContainer>
     </View>
   );

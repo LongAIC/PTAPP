@@ -7,6 +7,7 @@ import {
   ScrollView,
   Image,
   StyleSheet,
+  ActivityIndicator,
 } from "react-native";
 import { useEffect } from "react";
 import { FlashList } from "@shopify/flash-list";
@@ -97,7 +98,7 @@ export default function ProductsScreen() {
       selectFromResult: (result) => {
         const { data, ...args } = result;
         return {
-          hasNextPage: true,
+          hasNextPage: data?.hasNextPage,
           data: data?.data,
           count: data?.count,
           isFetchingProduct: data == undefined ? false : result.isFetching,
@@ -123,17 +124,6 @@ export default function ProductsScreen() {
     setMinValue(MIN_DEFAULT);
     setMaxValue(MAX_DEFAULT);
     setIsBottomSheetVisible(false);
-    bottomSheetRef.current?.close();
-  };
-
-  const handleApplyPrice = () => {
-    setIsBottomSheetVisible(false);
-    handleChangeRoute({
-      provinceName: selectedProvince ? selectedProvince : null,
-      rating: selectedRating ? selectedRating : null,
-      minPrice: minValue,
-      maxPrice: maxValue,
-    });
     bottomSheetRef.current?.close();
   };
 
@@ -210,6 +200,22 @@ export default function ProductsScreen() {
         <ScrollView
           className="bg-[#f4f4f4] h-full flex "
           style={{ opacity: isBottomSheetVisible ? 0.1 : 1 }}
+          onScroll={({ nativeEvent }) => {
+            const { layoutMeasurement, contentOffset, contentSize } =
+              nativeEvent;
+            const isEndReached =
+              layoutMeasurement.height + contentOffset.y >=
+              contentSize.height - 20;
+
+            if (isEndReached && !isFetchingProduct) {
+              if (hasNextPage) {
+                handleChangeRoute({
+                  page: Number(page) + 1,
+                });
+              }
+            }
+          }}
+          scrollEventThrottle={16}
         >
           <View className="px-3  bg-white blur-3xl">
             <View>
@@ -479,15 +485,18 @@ export default function ProductsScreen() {
               {/* Products */}
               {isFetchingProduct && page == 0 && <ProductSkeleton />}
               {data && data?.length > 0 ? (
-                <ListProducts
-                  products={data}
-                  nextpage={hasNextPage}
-                  page={page}
-                />
+                <ListProducts products={data} page={page} />
               ) : (
                 <Text className="text-center text-red-500 text-16 py-3">
                   Không tìm thấy sản phẩm
                 </Text>
+              )}
+
+              {/* Loading indicator when fetching more data */}
+              {isFetchingProduct && page > 0 && (
+                <View className="py-4 items-center">
+                  <ActivityIndicator size="large" color="#f80" />
+                </View>
               )}
             </View>
           </View>

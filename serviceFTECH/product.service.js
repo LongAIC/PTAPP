@@ -26,7 +26,7 @@ export const productApiSlice = apiFtechSlice.injectEndpoints({
         return {
           url: `/product_cat`,
           method: "GET",
-          params: { id, limit, page },
+          params: { id, limit, page, minPrice, maxPrice, provinceName, rating },
         };
       },
       serializeQueryArgs: ({ queryArgs, ...rest }) => {
@@ -53,7 +53,13 @@ export const productApiSlice = apiFtechSlice.injectEndpoints({
       // Refetch when the page arg changes
       forceRefetch({ currentArg, previousArg }) {
         if (currentArg?.page === 0) return false;
-        return currentArg?.page !== previousArg?.page;
+        return (
+          currentArg?.page !== previousArg?.page ||
+          currentArg?.minPrice !== previousArg?.minPrice ||
+          currentArg?.maxPrice !== previousArg?.maxPrice ||
+          currentArg?.provinceName !== previousArg?.provinceName ||
+          currentArg?.rating !== previousArg?.rating
+        );
       },
       providesTags: (result) => {
         const tags =
