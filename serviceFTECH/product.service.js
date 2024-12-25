@@ -22,11 +22,11 @@ export const productApiSlice = apiFtechSlice.injectEndpoints({
       }),
     }),
     getProductscat: builder.query({
-      query: ({ id, limit, page }) => {
+      query: (params) => {
         return {
           url: `/product_cat`,
           method: "GET",
-          params: { id, limit, page, minPrice, maxPrice, provinceName, rating },
+          params: params,
         };
       },
       serializeQueryArgs: ({ queryArgs, ...rest }) => {

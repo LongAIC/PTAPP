@@ -43,6 +43,7 @@ export default function ProductsScreen() {
   const [isOpenSheetLocation, setIsOpenSheetLocation] = useState(false);
   const [isOpenSheetPrice, setIsOpenSheetPrice] = useState(false);
   const [isOpenSheetRating, setIsOpenSheetRating] = useState(false);
+  const [sortType, setSortType] = useState(null);
 
   const id = params?.idCat?.toString() ?? "";
   const limit = parseInt(params?.limit?.toString() ?? 10); // Chuyển limit thành số
@@ -52,8 +53,10 @@ export default function ProductsScreen() {
   const maxPrice = params?.maxPrice;
   const rating = params?.rating?.toString();
 
-  const [selectedProvince, setSelectedProvince] = useState("null");
-  const [selectedRating, setSelectedRating] = useState("null");
+  const [dataProduct, setDataProduct] = useState([]);
+
+  const [selectedProvince, setSelectedProvince] = useState(null);
+  const [selectedRating, setSelectedRating] = useState(null);
   const [minValue, setMinValue] = useState(MIN_DEFAULT);
   const [maxValue, setMaxValue] = useState(MAX_DEFAULT);
 
@@ -67,6 +70,86 @@ export default function ProductsScreen() {
   const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
 
   const bottomSheetRef = useRef(null);
+
+  const sortByDate = (data) => {
+    if (!Array.isArray(data) || data.length === 0) return [];
+
+    return [...data].sort((a, b) => {
+      if (!a.date || !b.date) return 0;
+
+      try {
+        const [dayA, monthA, yearA] = a.date.split("/");
+        const [dayB, monthB, yearB] = b.date.split("/");
+
+        const dateA = new Date(yearA, monthA - 1, dayA);
+        const dateB = new Date(yearB, monthB - 1, dayB);
+
+        if (isNaN(dateA.getTime()) || isNaN(dateB.getTime())) return 0;
+
+        return dateB - dateA;
+      } catch (error) {
+        console.warn("Error sorting dates:", error);
+        return 0;
+      }
+    });
+  };
+
+  
+
+  const sortByRating = (data) => {
+    if (!Array.isArray(data) || data.length === 0) return [];
+
+    return [...data].sort((a, b) => {
+      const ratingA = parseFloat(a.rating) || 0;
+      const ratingB = parseFloat(b.rating) || 0;
+      return ratingB - ratingA;
+    });
+  };
+
+  const sortByPrice = (data) => {
+    if (!Array.isArray(data) || data.length === 0) return [];
+
+    return [...data].sort((a, b) => {
+      const priceA = a.price
+        ? parseFloat(a.price.replace(/[^0-9.-]+/g, ""))
+        : 0;
+      const priceB = b.price
+        ? parseFloat(b.price.replace(/[^0-9.-]+/g, ""))
+        : 0;
+      return priceB - priceA;
+    });
+  };
+
+  const handleSort = (type) => {
+    if (sortType === type) {
+      setSortType(null);
+      setDataProduct(data);
+      return;
+    }
+
+    setSortType(type);
+    switch (type) {
+      case "date":
+        setDataProduct(sortByDate(dataProduct));
+        break;
+      case "rating":
+        setDataProduct(sortByRating(dataProduct));
+        break;
+      case "price":
+        setDataProduct(sortByPrice(dataProduct));
+        break;
+      default:
+        setDataProduct(data);
+    }
+  };
+
+  useEffect(() => {
+    if (sortType) {
+      handleSort(sortType);
+    } else {
+      setDataProduct(data);
+    }
+  }, [data]);
 
   const handleSheetChanges = useCallback((index) => {
     setIsOpenSheet(index !== -1);
@@ -93,6 +176,10 @@ export default function ProductsScreen() {
       id,
       limit,
       page,
+      tinhthanh: selectedProvince,
+      thuhang: selectedRating,
+      minprice: minValue,
+      maxprice: maxValue,
     },
     {
       selectFromResult: (result) => {
@@ -100,7 +187,7 @@ export default function ProductsScreen() {
         return {
           hasNextPage: data?.hasNextPage,
           data: data?.data,
-          count: data?.count,
+          count: data?.data.length,
           isFetchingProduct: data == undefined ? false : result.isFetching,
           ...args,
         };
@@ -108,8 +195,11 @@ export default function ProductsScreen() {
     }
   );
 
-  console.log("page", page);
-  console.log("id", id);
+  console.log("hasNextPage", hasNextPage);
+  useEffect(() => {
+    setDataProduct(data);
+  }, [data]);
+
 
   const { data: dataChildCategories, isFetching: isFetchingChildCategories } =
     useGetChildCategoryQuery({
@@ -148,36 +238,6 @@ export default function ProductsScreen() {
     bottomSheetRef.current?.expand();
   };
 
-  const handleChangeRoute = (newQueries) => {
-    // Reset các bộ lọc khi áp dụng bộ lọc mới
-    const updatedQueries = {
-      ...params,
-      page: 0,
-      ...newQueries,
-      // Chỉ bao gồm provinceName nếu nó tồn tại
-      provinceName: newQueries.provinceName,
-      // Reset các bộ lọc khác khi không được bao gồm trong newQueries
-      rating: newQueries.rating,
-      minPrice: newQueries.minPrice,
-      maxPrice: newQueries.maxPrice,
-    };
-
-    changeRoute(updatedQueries);
-
-    // Đóng bottom sheet sau khi áp dụng bộ lọc
-    setIsBottomSheetVisible(false);
-    bottomSheetRef.current?.close();
-  };
-
-  useEffect(() => {
-    handleChangeRoute({
-      provinceName: selectedProvince ? selectedProvince : null,
-      rating: selectedRating ? selectedRating : null,
-      minPrice: minValue,
-      maxPrice: maxValue,
-    });
-  }, [selectedProvince, selectedRating]);
-
   // Thêm snapPoints cho Bottom Sheet
   const [snapPoints, setSnapPoints] = useState(["20%"]);
 
@@ -209,7 +269,7 @@ export default function ProductsScreen() {
 
             if (isEndReached && !isFetchingProduct) {
               if (hasNextPage) {
-                handleChangeRoute({
+                changeRoute({
                   page: Number(page) + 1,
                 });
               }
@@ -225,84 +285,58 @@ export default function ProductsScreen() {
                 className="flex-row gap-x-1 py-2"
               >
                 <TouchableOpacity
-                  className="flex-row justify-between items-center border bg-[#fff] border-[#f4f4f4] px-3 py-1 rounded-full mr-2"
-                  onPress={() => {
-                    setIsOpenSheetPrice(true);
-                    setIsOpenSheetLocation(false);
-                    setIsOpenSheetRating(false);
-                    openSheet();
-                  }}
-                >
-                  <Text
-                    className={`text-13 ${minValue == MIN_DEFAULT && maxValue == MAX_DEFAULT ? "text-[#000]" : " text-[#f80]"}`}
-                  >
-                    Bán chạy
-                  </Text>
-                </TouchableOpacity>
-                <View className="w-[1px] h-[14px] bg-[#e0e0e0] mx-3 mt-[7px]"></View>
-                <TouchableOpacity
                   className={`flex-row justify-between items-center border ${
-                    minValue == MIN_DEFAULT && maxValue == MAX_DEFAULT
-                      ? "bg-[#fff] border border-[#f4f4f4]"
-                      : "bg-[#fff4e0] border-[#f80]"
+                    sortType === "date"
+                      ? "bg-[#fff4e0] border-[#f80]"
+                      : "bg-[#fff] border border-[#f4f4f4]"
                   } px-3 py-1 rounded-full mr-2`}
-                  onPress={() => {
-                    setIsOpenSheetPrice(true);
-                    setIsOpenSheetLocation(false);
-                    setIsOpenSheetRating(false);
-                    openSheet();
-                  }}
+                  onPress={() => handleSort("date")}
                 >
                   <Text
-                    className={`text-13 ${minValue == MIN_DEFAULT && maxValue == MAX_DEFAULT ? "text-[#000]" : " text-[#f80]"}`}
+                    className={`text-13 ${
+                      sortType === "date" ? "text-[#f80]" : "text-[#000]"
+                    }`}
                   >
                     Mới nhất
                   </Text>
                 </TouchableOpacity>
                 <View className="w-[1px] h-[14px] bg-[#e0e0e0] mx-3 mt-[7px]"></View>
-                <View
-                  className={`flex-row justify-between items-center ${
-                    selectedRating !== "null"
-                      ? "bg-[#fff4e0] border-[#f80] border"
+
+                <TouchableOpacity
+                  className={`flex-row justify-between items-center border ${
+                    sortType === "rating"
+                      ? "bg-[#fff4e0] border-[#f80]"
                       : "bg-[#fff] border border-[#f4f4f4]"
                   } px-3 py-1 rounded-full mr-2`}
+                  onPress={() => handleSort("rating")}
                 >
                   <Text
                     className={`text-13 ${
-                      selectedRating !== "null" ? "text-[#f80]" : "text-[#000] "
+                      sortType === "rating" ? "text-[#f80]" : "text-[#000]"
                     }`}
-                    onPress={() => {
-                      setIsOpenSheetRating(true);
-                      setIsOpenSheetLocation(false);
-                      setIsOpenSheetPrice(false);
-                      openSheet();
-                    }}
                   >
                     Đánh giá cao
                   </Text>
-                </View>
+                </TouchableOpacity>
+
                 <View className="w-[1px] h-[14px] bg-[#e0e0e0] mx-3 mt-[7px]"></View>
-                <View
-                  className={`flex-row justify-between items-center ${
-                    selectedRating !== "null"
-                      ? "bg-[#fff4e0] border-[#f80] border"
+
+                <TouchableOpacity
+                  className={`flex-row justify-between items-center border ${
+                    sortType === "price"
+                      ? "bg-[#fff4e0] border-[#f80]"
                       : "bg-[#fff] border border-[#f4f4f4]"
                   } px-3 py-1 rounded-full mr-2`}
+                  onPress={() => handleSort("price")}
                 >
                   <Text
                     className={`text-13 ${
-                      selectedRating !== "null" ? "text-[#f80]" : "text-[#000] "
+                      sortType === "price" ? "text-[#f80]" : "text-[#000]"
                     }`}
-                    onPress={() => {
-                      setIsOpenSheetRating(true);
-                      setIsOpenSheetLocation(false);
-                      setIsOpenSheetPrice(false);
-                      openSheet();
-                    }}
                   >
                     Giá
                   </Text>
-                </View>
+                </TouchableOpacity>
               </ScrollView>
             </View>
           </View>
@@ -330,9 +364,7 @@ export default function ProductsScreen() {
                         }}
                         className="text-13 mr-1"
                       >
-                        {selectedProvince !== "null" || !selectedProvince
-                          ? selectedProvince
-                          : "Toàn Quốc"}
+                        {selectedProvince || "Toàn Quốc"}
                       </Text>
                       <Icons.Ionicons
                         name="chevron-down-sharp"
@@ -346,15 +378,6 @@ export default function ProductsScreen() {
             </View>
             <View>
               <View className="flex-row justify-start items-center h-[50px]">
-                <Filter
-                  province={selectedProvince}
-                  ratings={selectedRating}
-                  minPrices={minValue}
-                  maxPrices={maxValue}
-                  handleChangeRoute={handleChangeRoute}
-                />
-                {/* Đường phân cách */}
-                <View className="w-[1px] h-[20px] bg-[#e0e0e0] mx-3"></View>
                 <TouchableOpacity
                   className={`flex-row justify-between items-center border ${
                     minValue == MIN_DEFAULT && maxValue == MAX_DEFAULT
@@ -386,14 +409,14 @@ export default function ProductsScreen() {
                 </TouchableOpacity>
                 <View
                   className={`flex-row justify-between items-center ${
-                    selectedRating !== "null"
+                    selectedRating
                       ? "bg-[#fff4e0] border-[#f80] border"
                       : "bg-[#fff] border border-[#f4f4f4]"
                   } px-3 py-1 mr-2 rounded-full`}
                 >
                   <Text
                     className={`text-13 ${
-                      selectedRating !== "null" ? "text-[#f80]" : "text-[#000] "
+                      selectedRating ? "text-[#f80]" : "text-[#000] "
                     }`}
                     onPress={() => {
                       setIsOpenSheetRating(true);
@@ -407,7 +430,7 @@ export default function ProductsScreen() {
                   <Icons.Ionicons
                     name="chevron-down-sharp"
                     size={12}
-                    color={selectedRating !== "null" ? "#f80" : "#808080"}
+                    color={selectedRating ? "#f80" : "#808080"}
                     className="ml-1"
                   />
                 </View>
@@ -484,8 +507,8 @@ export default function ProductsScreen() {
               </View>
               {/* Products */}
               {isFetchingProduct && page == 0 && <ProductSkeleton />}
-              {data && data?.length > 0 ? (
-                <ListProducts products={data} page={page} />
+              {dataProduct && dataProduct?.length > 0 ? (
+                <ListProducts products={dataProduct} page={page} />
               ) : (
                 <Text className="text-center text-red-500 text-16 py-3">
                   Không tìm thấy sản phẩm
@@ -535,9 +558,7 @@ export default function ProductsScreen() {
                   }}
                 >
                   <Text className="text-gray-600">
-                    {selectedProvince == undefined
-                      ? selectedProvince
-                      : "Chọn tỉnh/thành phố"}
+                    {selectedProvince || "Chọn tỉnh/thành phố"}
                   </Text>
                   <Icons.AntDesign
                     name={showProvinces ? "up" : "down"}
@@ -555,6 +576,7 @@ export default function ProductsScreen() {
                           className="p-3 border-b border-gray-200"
                           onPress={() => {
                             setSelectedProvince(province.name);
+
                             setShowProvinces(false);
                             setIsBottomSheetVisible(false);
                             bottomSheetRef.current?.close();
@@ -581,7 +603,7 @@ export default function ProductsScreen() {
                       key={rating}
                       onPress={() => {
                         if (selectedRating === rating) {
-                          setSelectedRating("null");
+                          setSelectedRating(null);
                         } else {
                           setSelectedRating(rating);
                         }
@@ -655,7 +677,10 @@ export default function ProductsScreen() {
                     </Text>
                   </TouchableOpacity>
                   <TouchableOpacity
-                    onPress={handleApplyPrice}
+                    onPress={() => {
+                      setIsBottomSheetVisible(false);
+                      bottomSheetRef.current?.close();
+                    }}
                     className="flex-1 py-3 bg-black rounded-lg"
                   >
                     <Text className="text-center text-white font-medium">
