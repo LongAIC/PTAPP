@@ -1,0 +1,24 @@
+{
+    "cli": {
+      "version": ">= 14.0.0"
+    },
+    "build": {
+      "development": {
+        "developmentClient": true,
+        "distribution": "internal"
+      },
+      "preview": {
+        "distribution": "internal"
+      },
+      "production": {}
+    },
+    "submit": {
+      "production": {
+        "ios": {
+          "appleId": "lelong24072306@gmail.com",
+          "ascAppId": "6739830564",
+          "appleTeamId": "AJ4R8GWM7A"
+        }
+      }
+    }
+  }

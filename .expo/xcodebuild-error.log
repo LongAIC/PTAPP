@@ -1,0 +1,9 @@
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:iOS Simulator, id:0FF9F20D-9FF5-4045-9870-0CE3B80F2214, OS:18.2, name:iPhone 16 Pro Max }
+{ platform:iOS Simulator, id:0FF9F20D-9FF5-4045-9870-0CE3B80F2214, OS:18.2, name:iPhone 16 Pro Max }
+** BUILD FAILED **
+
+
+The following build commands failed:
+	Building project PTCOCO with scheme PTCOCO and configuration Debug
+(1 failure)

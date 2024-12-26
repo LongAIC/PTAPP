@@ -1,16 +1,22 @@
 {
   "expo": {
-    "name": "c-shopping-rn",
+    "name": "PTCOCO",
     "slug": "c-shopping-rn",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/app_images/logo.png",
     "userInterfaceStyle": "light",
     "android": {
-      "newArchEnabled": true
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/app_images/logo_image.png",
+        "backgroundColor": "#ffffff"
+      },
+      "runtimeVersion": "1.0.0"
     },
     "ios": {
-      "newArchEnabled": true
+      "supportsTablet": true,
+      "runtimeVersion": "1.0.0",
+      "bundleIdentifier": "com.ftechapp.ptcoco"
     },
     "experiments": {
       "tsconfigPaths": true
@@ -23,19 +29,6 @@
     "assetBundlePatterns": [
       "**/*"
     ],
-    "ios": {
-      "supportsTablet": true,
-      "runtimeVersion": {
-        "policy": "appVersion"
-      }
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
-      "runtimeVersion": "1.0.0"
-    },
     "web": {
       "favicon": "./assets/favicon.png"
     },
@@ -54,6 +47,7 @@
     },
     "updates": {
       "url": "https://u.expo.dev/c5c0a35d-b598-4320-b326-cf8cc208ac08"
-    }
+    },
+    "owner": "giants8ck"
   }
 }
