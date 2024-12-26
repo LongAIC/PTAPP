@@ -15,7 +15,7 @@ export default function ListProducts(props) {
   // Chiều rộng của mỗi item khi hiển thị dạng list
   const itemWidth = width - 20;
 
-  console.log(products);
+
 
   //? handlers
   const handleJumptoMore = () => {
