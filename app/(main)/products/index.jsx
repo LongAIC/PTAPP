@@ -8,6 +8,9 @@ import {
   Image,
   StyleSheet,
   ActivityIndicator,
+  Platform,
+  StatusBar,
+  SafeAreaView,
 } from "react-native";
 import { useEffect } from "react";
 import { FlashList } from "@shopify/flash-list";
@@ -44,14 +47,16 @@ export default function ProductsScreen() {
   const [isOpenSheetPrice, setIsOpenSheetPrice] = useState(false);
   const [isOpenSheetRating, setIsOpenSheetRating] = useState(false);
   const [sortType, setSortType] = useState(null);
+  const [isParamsChanging, setIsParamsChanging] = useState(false);
 
   const id = params?.idCat?.toString() ?? "";
-  const limit = parseInt(params?.limit?.toString() ?? 10); // Chuyển limit thành số
-  const page = parseInt(params?.page?.toString() ?? 0); // Chuyển page thành số
+  const limit = parseInt(params?.limit?.toString() ?? 10);
+
   const provinceName = params?.provinceName?.toString();
   const minPrice = params?.minPrice;
   const maxPrice = params?.maxPrice;
   const rating = params?.rating?.toString();
+  const [page, setPage] = useState(0);
 
   const [dataProduct, setDataProduct] = useState([]);
 
@@ -70,6 +75,10 @@ export default function ProductsScreen() {
   const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
 
   const bottomSheetRef = useRef(null);
+
+  useEffect(() => {
+    setIsParamsChanging(true);
+  }, [selectedProvince, selectedRating, minValue, maxValue]);
 
   const sortByDate = (data) => {
     if (!Array.isArray(data) || data.length === 0) return [];
@@ -93,8 +102,6 @@ export default function ProductsScreen() {
       }
     });
   };
-
-  
 
   const sortByRating = (data) => {
     if (!Array.isArray(data) || data.length === 0) return [];
@@ -175,7 +182,7 @@ export default function ProductsScreen() {
     {
       id,
       limit,
-      page,
+      page: page,
       tinhthanh: selectedProvince,
       thuhang: selectedRating,
       minprice: minValue,
@@ -194,12 +201,12 @@ export default function ProductsScreen() {
       },
     }
   );
+  console.log("selectedProvince", selectedProvince);
 
   console.log("hasNextPage", hasNextPage);
   useEffect(() => {
     setDataProduct(data);
   }, [data]);
-
 
   const { data: dataChildCategories, isFetching: isFetchingChildCategories } =
     useGetChildCategoryQuery({
@@ -242,7 +249,11 @@ export default function ProductsScreen() {
   const [snapPoints, setSnapPoints] = useState(["20%"]);
 
   return (
-    <>
+    <SafeAreaView
+      style={{
+        flex: 1,
+      }}
+    >
       <Stack.Screen
         options={{
           header: (props) => (
@@ -269,15 +280,13 @@ export default function ProductsScreen() {
 
             if (isEndReached && !isFetchingProduct) {
               if (hasNextPage) {
-                changeRoute({
-                  page: Number(page) + 1,
-                });
+                setPage(page + 1);
               }
             }
           }}
           scrollEventThrottle={16}
         >
-          <View className="px-3  bg-white blur-3xl">
+          <View className="px-3  bg-white blur-3xl mb-3">
             <View>
               <ScrollView
                 horizontal
@@ -341,100 +350,93 @@ export default function ProductsScreen() {
             </View>
           </View>
 
-          <View className="px-6 py-1 bg-white blur-3xl mt-2">
-            <View>
-              <TouchableOpacity>
-                <View className="w-full items-center flex-row items-center justify-center">
-                  <Icons.Ionicons
-                    name="location-outline"
-                    size={24}
-                    color="black"
-                  />
-                  <View className="w-[100%] flex-row justify-start items-center ml-1">
-                    <Text className="text-13 text-[#808080] mr-2">
-                      Khu vực:
+          <View className=" py-1 bg-white blur-3xl mt-2 flex-row items-center flex-wrap gap-3 px-3">
+            <TouchableOpacity>
+              <View className="flex-row items-center justify-center">
+                <Icons.Ionicons
+                  name="location-outline"
+                  size={24}
+                  color="black"
+                />
+                <View className=" flex-row justify-start items-center ml-1">
+                  <Text className="text-13 text-[#808080] mr-2">Khu vực:</Text>
+                  <View className="flex-row items-center">
+                    <Text
+                      onPress={() => {
+                        setIsOpenSheetLocation(true);
+                        setIsOpenSheetRating(false);
+                        setIsOpenSheetPrice(false);
+                        openSheet();
+                      }}
+                      className="text-13 mr-1"
+                    >
+                      {selectedProvince || "Toàn Quốc"}
                     </Text>
-                    <View className="flex-row items-center">
-                      <Text
-                        onPress={() => {
-                          setIsOpenSheetLocation(true);
-                          setIsOpenSheetRating(false);
-                          setIsOpenSheetPrice(false);
-                          openSheet();
-                        }}
-                        className="text-13 mr-1"
-                      >
-                        {selectedProvince || "Toàn Quốc"}
-                      </Text>
-                      <Icons.Ionicons
-                        name="chevron-down-sharp"
-                        size={12}
-                        color="black"
-                      />
-                    </View>
+                    <Icons.Ionicons
+                      name="chevron-down-sharp"
+                      size={12}
+                      color="black"
+                    />
                   </View>
                 </View>
-              </TouchableOpacity>
-            </View>
-            <View>
-              <View className="flex-row justify-start items-center h-[50px]">
-                <TouchableOpacity
-                  className={`flex-row justify-between items-center border ${
-                    minValue == MIN_DEFAULT && maxValue == MAX_DEFAULT
-                      ? "bg-[#fff] border border-[#f4f4f4]"
-                      : "bg-[#fff4e0] border-[#f80]"
-                  } px-3 py-1 mr-2 rounded-full`}
-                  onPress={() => {
-                    setIsOpenSheetPrice(true);
-                    setIsOpenSheetLocation(false);
-                    setIsOpenSheetRating(false);
-                    openSheet();
-                  }}
-                >
-                  <Text
-                    className={`text-13 ${minValue == MIN_DEFAULT && maxValue == MAX_DEFAULT ? "text-[#000]" : " text-[#f80]"}`}
-                  >
-                    Giá
-                  </Text>
-                  <Icons.Ionicons
-                    name="chevron-down-sharp"
-                    size={12}
-                    color={
-                      minValue == MIN_DEFAULT && maxValue == MAX_DEFAULT
-                        ? "#808080"
-                        : "#f80"
-                    }
-                    className="ml-1"
-                  />
-                </TouchableOpacity>
-                <View
-                  className={`flex-row justify-between items-center ${
-                    selectedRating
-                      ? "bg-[#fff4e0] border-[#f80] border"
-                      : "bg-[#fff] border border-[#f4f4f4]"
-                  } px-3 py-1 mr-2 rounded-full`}
-                >
-                  <Text
-                    className={`text-13 ${
-                      selectedRating ? "text-[#f80]" : "text-[#000] "
-                    }`}
-                    onPress={() => {
-                      setIsOpenSheetRating(true);
-                      setIsOpenSheetLocation(false);
-                      setIsOpenSheetPrice(false);
-                      openSheet();
-                    }}
-                  >
-                    Theo hạng
-                  </Text>
-                  <Icons.Ionicons
-                    name="chevron-down-sharp"
-                    size={12}
-                    color={selectedRating ? "#f80" : "#808080"}
-                    className="ml-1"
-                  />
-                </View>
               </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              className={`flex-row justify-between items-center border ${
+                minValue == MIN_DEFAULT && maxValue == MAX_DEFAULT
+                  ? "bg-[#fff] border border-[#f4f4f4]"
+                  : "bg-[#fff4e0] border-[#f80]"
+              } px-3 py-1 mr-2 rounded-full`}
+              onPress={() => {
+                setIsOpenSheetPrice(true);
+                setIsOpenSheetLocation(false);
+                setIsOpenSheetRating(false);
+                openSheet();
+              }}
+            >
+              <Text
+                className={`text-13 ${minValue == MIN_DEFAULT && maxValue == MAX_DEFAULT ? "text-[#000]" : " text-[#f80]"}`}
+              >
+                Giá
+              </Text>
+              <Icons.Ionicons
+                name="chevron-down-sharp"
+                size={12}
+                color={
+                  minValue == MIN_DEFAULT && maxValue == MAX_DEFAULT
+                    ? "#808080"
+                    : "#f80"
+                }
+                className="ml-1"
+              />
+            </TouchableOpacity>
+            <View
+              className={`flex-row justify-between items-center ${
+                selectedRating
+                  ? "bg-[#fff4e0] border-[#f80] border"
+                  : "bg-[#fff] border border-[#f4f4f4]"
+              } px-3 py-1 mr-2 rounded-full`}
+            >
+              <Text
+                className={`text-13 ${
+                  selectedRating ? "text-[#f80]" : "text-[#000] "
+                }`}
+                onPress={() => {
+                  setIsOpenSheetRating(true);
+                  setIsOpenSheetLocation(false);
+                  setIsOpenSheetPrice(false);
+                  openSheet();
+                }}
+              >
+                Theo hạng
+              </Text>
+              <Icons.Ionicons
+                name="chevron-down-sharp"
+                size={12}
+                color={selectedRating ? "#f80" : "#808080"}
+                className="ml-1"
+              />
             </View>
           </View>
 
@@ -570,6 +572,18 @@ export default function ProductsScreen() {
                 {showProvinces && (
                   <View className="border border-gray-300 rounded-lg mt-1 max-h-60">
                     <ScrollView>
+                      <TouchableOpacity
+                        className="p-3 border-b border-gray-200"
+                        onPress={() => {
+                          setSelectedProvince(undefined);
+                          setShowProvinces(false);
+                          setIsBottomSheetVisible(false);
+                          bottomSheetRef.current?.close();
+                          setSnapPoints(["25%"]);
+                        }}
+                      >
+                        <Text className="">Toàn Quốc</Text>
+                      </TouchableOpacity>
                       {provinces.map((province) => (
                         <TouchableOpacity
                           key={province.code}
@@ -603,7 +617,7 @@ export default function ProductsScreen() {
                       key={rating}
                       onPress={() => {
                         if (selectedRating === rating) {
-                          setSelectedRating(null);
+                          setSelectedRating(undefined);
                         } else {
                           setSelectedRating(rating);
                         }
@@ -693,6 +707,6 @@ export default function ProductsScreen() {
           </BottomSheetView>
         </BottomSheet>
       </GestureHandlerRootView>
-    </>
+    </SafeAreaView>
   );
 }

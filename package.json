@@ -38,6 +38,7 @@
     "expo-status-bar": "~2.0.0",
     "expo-updates": "~0.26.9",
     "firebase": "^11.0.1",
+    "lucide-react-native": "^0.469.0",
     "moment-jalaali": "^0.10.0",
     "nativewind": "^2.0.11",
     "react": "18.3.1",

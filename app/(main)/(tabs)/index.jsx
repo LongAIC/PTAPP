@@ -1,4 +1,11 @@
-import { ScrollView, View, Text, Image, RefreshControl } from "react-native";
+import {
+  ScrollView,
+  View,
+  Text,
+  Image,
+  RefreshControl,
+  TouchableOpacity,
+} from "react-native";
 import {
   BannerTwoFtech,
   Slider as MainSlider,
@@ -135,7 +142,10 @@ export default function FeedScreen() {
                         contentContainerStyle={{ paddingBottom: 13 }}
                       >
                         <View className="flex flex-row px-4 space-x-8">
-                          <View className="items-center">
+                          <TouchableOpacity
+                            className="items-center"
+                            onPress={() => router.push("discounts")}
+                          >
                             <View className="w-12 h-12 bg-gray-100 rounded-full items-center justify-center">
                               <Image
                                 source={require("@/assets/images/live2.png")}
@@ -143,9 +153,12 @@ export default function FeedScreen() {
                               />
                             </View>
                             <Text className="text-xs mt-1">Khuyến mãi</Text>
-                          </View>
+                          </TouchableOpacity>
 
-                          <View className="items-center">
+                          <TouchableOpacity
+                            className="items-center"
+                            onPress={() => router.push("discounts")}
+                          >
                             <View className="w-12 h-12 bg-gray-100 rounded-full items-center justify-center">
                               <Image
                                 source={require("@/assets/images/live.png")}
@@ -153,9 +166,12 @@ export default function FeedScreen() {
                               />
                             </View>
                             <Text className="text-xs mt-1">Mã giảm giá</Text>
-                          </View>
+                          </TouchableOpacity>
 
-                          <View className="items-center">
+                          <TouchableOpacity
+                            className="items-center"
+                            onPress={() => router.push("discounts")}
+                          >
                             <View className="w-12 h-12 bg-gray-100 rounded-full items-center justify-center">
                               <Image
                                 source={require("@/assets/images/banhang.png")}
@@ -163,9 +179,12 @@ export default function FeedScreen() {
                               />
                             </View>
                             <Text className="text-xs mt-1">Freeship</Text>
-                          </View>
+                          </TouchableOpacity>
 
-                          <View className="items-center">
+                          <TouchableOpacity
+                            className="items-center"
+                            onPress={() => router.push("/discounts")}
+                          >
                             <View className="w-12 h-12 bg-gray-100 rounded-full items-center justify-center">
                               <Image
                                 source={require("@/assets/images/pro.png")}
@@ -173,8 +192,11 @@ export default function FeedScreen() {
                               />
                             </View>
                             <Text className="text-xs mt-1">Ưu đãi</Text>
-                          </View>
-                          <View className="items-center">
+                          </TouchableOpacity>
+                          <TouchableOpacity
+                            className="items-center"
+                            onPress={() => router.push("/discounts")}
+                          >
                             <View className="w-12 h-12 bg-gray-100 rounded-full items-center justify-center">
                               <Image
                                 source={require("@/assets/images/live2.png")}
@@ -182,9 +204,12 @@ export default function FeedScreen() {
                               />
                             </View>
                             <Text className="text-xs mt-1">Khuyến mãi</Text>
-                          </View>
+                          </TouchableOpacity>
 
-                          <View className="items-center">
+                          <TouchableOpacity
+                            className="items-center"
+                            onPress={() => router.push("/discounts")}
+                          >
                             <View className="w-12 h-12 bg-gray-100 rounded-full items-center justify-center">
                               <Image
                                 source={require("@/assets/images/live.png")}
@@ -192,9 +217,12 @@ export default function FeedScreen() {
                               />
                             </View>
                             <Text className="text-xs mt-1">Mã giảm giá</Text>
-                          </View>
+                          </TouchableOpacity>
 
-                          <View className="items-center">
+                          <TouchableOpacity
+                            className="items-center"
+                            onPress={() => router.push("/discounts")}
+                          >
                             <View className="w-12 h-12 bg-gray-100 rounded-full items-center justify-center">
                               <Image
                                 source={require("@/assets/images/banhang.png")}
@@ -202,9 +230,12 @@ export default function FeedScreen() {
                               />
                             </View>
                             <Text className="text-xs mt-1">Freeship</Text>
-                          </View>
+                          </TouchableOpacity>
 
-                          <View className="items-center">
+                          <TouchableOpacity
+                            className="items-center"
+                            onPress={() => router.push("/discounts")}
+                          >
                             <View className="w-12 h-12 bg-gray-100 rounded-full items-center justify-center">
                               <Image
                                 source={require("@/assets/images/pro.png")}
@@ -212,7 +243,7 @@ export default function FeedScreen() {
                               />
                             </View>
                             <Text className="text-xs mt-1">Ưu đãi</Text>
-                          </View>
+                          </TouchableOpacity>
                         </View>
                       </ScrollView>
                     </View>

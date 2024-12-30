@@ -1,201 +1,135 @@
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import {
   View,
-  ActivityIndicator,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity,
-  TextInput,
-  Image,
   Text,
+  Image,
+  TouchableOpacity,
+  SafeAreaView,
+  ScrollView,
 } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-
-import { WebView } from "react-native-webview";
 import {
-  Stack,
-  useLocalSearchParams,
-  useRouter,
-  router,
-  Link,
-} from "expo-router";
-import {
-  FontAwesome,
-  Entypo,
-  MaterialIcons,
-  Feather,
-  AntDesign,
-} from "@expo/vector-icons";
-import { AuthWrapper } from "@/components";
-import Icons from "@/components/common/Icons";
-import { useChatlistboxQuery } from "@/serviceFTECH";
+  Bell,
+  Search,
+  MessageSquare,
+  Home,
+  User,
+  Menu,
+  PenSquare,
+  ShoppingBag,
+} from "lucide-react-native";
 import { useUserInfo } from "@/hooks";
+import { Person, AuthWrapper } from "@/components";
 
-import { useFocusEffect } from "@react-navigation/native";
+const QuanLyTinDangScreen = () => {
+  const { userInfo, isLoading } = useUserInfo();
+  const [activeTab, setActiveTab] = useState("showing");
 
-const ChatScreen = () => {
-  const [loading, setLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState("");
-  const { userInfo } = useUserInfo();
-
-  const goToChat = (tawk_to, name) => {
-    router.push({
-      params: {
-        url: tawk_to,
-        brandName: name,
-      },
-      pathname: "/(chats)/chatBrand",
-    });
+  const renderContent = () => {
+    switch (activeTab) {
+      case "showing":
+        return (
+          <View className="flex-1 items-center justify-center p-4">
+            <Image
+              source={{ uri: "/api/placeholder/120/120" }}
+              className="w-32 h-32 mb-4"
+            />
+            <Text className="text-xl font-bold mb-2">
+              Không tìm thấy tin đăng
+            </Text>
+            <Text className="text-gray-500 text-center">
+              Bạn hiện tại không có tin đăng nào đang hiển thị
+            </Text>
+          </View>
+        );
+      case "expired":
+        return (
+          <View className="flex-1 items-center justify-center p-4">
+            <Image
+              source={{ uri: "/api/placeholder/120/120" }}
+              className="w-32 h-32 mb-4"
+            />
+            <Text className="text-xl font-bold mb-2">Tin đã hết hạn</Text>
+            <Text className="text-gray-500 text-center">
+              Không có tin đăng nào đã hết hạn
+            </Text>
+          </View>
+        );
+      case "rejected":
+        return (
+          <View className="flex-1 items-center justify-center p-4">
+            <Image
+              source={{ uri: "/api/placeholder/120/120" }}
+              className="w-32 h-32 mb-4"
+            />
+            <Text className="text-xl font-bold mb-2">Tin bị từ chối</Text>
+            <Text className="text-gray-500 text-center">
+              Không có tin đăng nào bị từ chối
+            </Text>
+          </View>
+        );
+    }
   };
 
-  const {
-    data: stores,
-    isLoading,
-    refetch,
-  } = useChatlistboxQuery(
-    { user_id: userInfo?.id },
-    {
-      skip: !userInfo?.id, // Bỏ qua query nếu user_id không tồn tại
-      selectFromResult: ({ data, ...args }) => ({
-        data: data?.data || {}, // Trả về data cụ thể
-        ...args, // Bao gồm các trạng thái khác
-      }),
-    }
-  );
-
-  const filteredStores = Array.isArray(stores)
-    ? stores.filter((store) =>
-        store.name.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-    : [];
-
-  const params = useLocalSearchParams();
-  const url = params?.url;
-  const insets = useSafeAreaInsets();
-
-  useFocusEffect(
-    useCallback(() => {
-      if (userInfo?.id) {
-        refetch();
-      }
-    }, [userInfo?.id])
-  );
-
   return (
-    <AuthWrapper>
-      <View style={{ flex: 1 }}>
-        {isLoading ? (
-          <View style={styles.loadingContainer}>
-            <ActivityIndicator size="small" color="#000" />
+    <SafeAreaView className="flex-1 bg-white">
+      <AuthWrapper>
+        <View className="bg-yellow-400 px-4 py-2 flex-row justify-between items-center">
+          <Text className="text-xl font-bold">Quản lý tin đăng</Text>
+          <View className="flex-row space-x-4">
+            <Search className="w-6 h-6" />
+            <Bell className="w-6 h-6" />
+            <MessageSquare className="w-6 h-6" />
           </View>
-        ) : (
-          <>
-            {filteredStores.length > 0 ? (
-              <View>
-                <View
-                  style={{ paddingTop: insets.top }}
-                  className="p-3 bg-yellow-500  "
-                >
-                  <View className="flex flex-row items-center justify-between gap-2 pt-2">
-                    <Link href="/">
-                      <View className="flex flex-row items-center">
-                        <Icons.Ionicons
-                          name="arrow-back"
-                          size={24}
-                          color="white"
-                        />
-                        <Text className="text-white text-[16px] font-bold ml-2">
-                          Nhà Cung Cấp
-                        </Text>
-                      </View>
-                    </Link>
-                  </View>
-                </View>
-                <View className="bg-white  rounded-xl shadow-lg max-w-lg mx-auto w-[100%] h-[100%]">
-                  <View className="p-4 bg-gradient-to-r from-blue-500 to-purple-500">
-                    <View className="relative">
-                      <FontAwesome
-                        name="search"
-                        size={18}
-                        color="gray"
-                        style={{ position: "absolute", top: 7, left: 10 }}
-                      />
-                      <TextInput
-                        placeholder="Tìm kiếm nhà cung cấp"
-                        className="w-full pl-10 pr-4 py-2 rounded-lg bg-white/90 backdrop-blur focus:ring-2 focus:ring-purple-300"
-                        value={searchQuery}
-                        onChangeText={setSearchQuery}
-                      />
-                    </View>
-                  </View>
-                  <FlatList
-                    data={filteredStores}
-                    keyExtractor={(item) => item.id.toString()}
-                    ItemSeparatorComponent={() => (
-                      <View className="h-px bg-gray-100" />
-                    )}
-                    renderItem={({ item: store }) => (
-                      <TouchableOpacity
-                        onPress={() => goToChat(store.tawk_to, store.name)}
-                        className="flex-row items-center p-4 hover:bg-gray-50"
-                      >
-                        <View className="relative">
-                          <Image
-                            source={{ uri: store.image }}
-                            className="w-16 h-16 rounded-full object-cover shadow-md"
-                            onError={({ nativeEvent: { currentTarget } }) => {
-                              currentTarget.source = {
-                                uri: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3",
-                              };
-                            }}
-                          />
-                          {store.unread > 0 && (
-                            <View className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center animate-pulse">
-                              <Text className="text-white text-xs font-bold">
-                                {store.unread}
-                              </Text>
-                            </View>
-                          )}
-                        </View>
-                        <View className="ml-4 flex-1">
-                          <View className="flex-row items-center justify-between">
-                            <Text className="text-lg font-semibold text-gray-900">
-                              {store.name}
-                            </Text>
-                            <Text className="text-sm text-gray-500">
-                              {store.time}
-                            </Text>
-                          </View>
-                          <Text className="text-gray-600 text-sm truncate">
-                            {store.lastMessage}
-                          </Text>
-                        </View>
-                      </TouchableOpacity>
-                    )}
-                  />
-                </View>
-              </View>
-            ) : (
-              <View className="mt-4">
-                <Text className="text-center text-black-30">
-                  Không có tin nhắn
-                </Text>
-              </View>
-            )}
-          </>
-        )}
-      </View>
-    </AuthWrapper>
+        </View>
+
+        {/* Thông tin người dùng */}
+        <View className="flex-row items-center justify-between p-4">
+          <View className="flex-row items-center">
+            <Person className="w-12 h-12 mr-5" />
+            <View className="ml-2">
+              <Text className="font-medium">{userInfo?.displayName}</Text>
+              <Text className="text-blue-500">+ Tạo cửa hàng</Text>
+            </View>
+          </View>
+        </View>
+
+        <View className="flex-row border-b border-gray-200">
+          <TouchableOpacity
+            className={`flex-1 py-2 border-b-2 ${activeTab === "showing" ? "border-yellow-400" : "border-transparent"}`}
+            onPress={() => setActiveTab("showing")}
+          >
+            <Text
+              className={`text-center ${activeTab === "showing" ? "text-black" : "text-gray-500"}`}
+            >
+              ĐANG HIỂN THỊ (0)
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            className={`flex-1 py-2 border-b-2 ${activeTab === "expired" ? "border-yellow-400" : "border-transparent"}`}
+            onPress={() => setActiveTab("expired")}
+          >
+            <Text
+              className={`text-center ${activeTab === "expired" ? "text-black" : "text-gray-500"}`}
+            >
+              HẾT HẠN (0)
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            className={`flex-1 py-2 border-b-2 ${activeTab === "rejected" ? "border-yellow-400" : "border-transparent"}`}
+            onPress={() => setActiveTab("rejected")}
+          >
+            <Text
+              className={`text-center ${activeTab === "rejected" ? "text-black" : "text-gray-500"}`}
+            >
+              BỊ TỪ CHỐI (0)
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+        {renderContent()}
+      </AuthWrapper>
+    </SafeAreaView>
   );
 };
 
-const styles = StyleSheet.create({
-  loadingContainer: {
-    ...StyleSheet.absoluteFillObject,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#ffffff",
-  },
-});
-
-export default ChatScreen;
+export default QuanLyTinDangScreen;

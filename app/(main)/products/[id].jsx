@@ -100,16 +100,6 @@ export default function SingleProductScreen() {
     <>
       <Stack.Screen
         options={{
-          headerRight: () => (
-            <>
-              <Icons.Feather
-                name="heart"
-                size={20}
-                color="#1F2937"
-                className="px-2 py-1"
-              />
-            </>
-          ),
           title: "Chi tiết sản phẩm",
           headerBackTitleVisible: false,
         }}
