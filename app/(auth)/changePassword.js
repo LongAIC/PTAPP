@@ -26,6 +26,8 @@ export default function ForgetPasswordScreen() {
   const router = useRouter();
   const [modalVisible, setModalVisible] = useState(false);
   const [changePassword] = useChangePasswordMutation();
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isPasswordConfirmVisible, setIsPasswordConfirmVisible] = useState(false);
   const { email } = useLocalSearchParams();
   const {
     handleSubmit,
@@ -79,29 +81,85 @@ export default function ForgetPasswordScreen() {
           </View>
 
           <View className=" w-[100%] pt-20 ">
-            <TextField
-              errors={formErrors.password}
-              placeholder="Nhập mật khẩu mới"
-              control={control}
-              name="password"
-              secureTextEntry
-              styleInput="w-[100%] bg-white border-slate-200 border rounded p-4 text-sm "
-              autoCapitalize="none"
-              label={"Mật khẩu mới"}
-              styleLabel="text-lg"
-            />
+            <View>
+              <TextField
+                errors={formErrors.password}
+                secureTextEntry={isPasswordVisible}
+                placeholder="Nhập mật khẩu mới"
+                control={control}
+                name="password"
+                styleInput="w-[100%] bg-white border-slate-200 border rounded p-4 text-sm "
+                autoCapitalize="none"
+                label={"Mật khẩu mới"}
+                styleLabel="text-lg"
+              />
+              <TouchableOpacity
+                onPress={() => setIsPasswordVisible(!isPasswordVisible)}
+                className="absolute right-3 top-[50%]"
+              >
+                {isPasswordVisible ? (
+                  <Icons.Feather
+                    name={"eye-off"}
+                    style={{
+                      fontSize: 20,
+                      color: "#808080",
+                      textAlign: "left",
+                      alignSelf: "center",
+                    }}
+                  />
+                ) : (
+                  <Icons.Feather
+                    name="eye"
+                    style={{
+                      fontSize: 20,
+                      color: "#808080",
+                      textAlign: "left",
+                      alignSelf: "center",
+                    }}
+                  />
+                )}
+              </TouchableOpacity>
+            </View>
 
-            <TextField
-              errors={formErrors.confirmPassword}
-              placeholder="Nhập lại mật khẩu"
-              control={control}
-              name="confirmPassword"
-              secureTextEntry
-              styleInput="w-[100%] bg-white border-slate-200 border rounded p-4 text-sm "
-              autoCapitalize="none"
-              label={"Nhập lại mật khẩu"}
-              styleLabel="text-lg"
-            />
+            <View>
+              <TextField
+                errors={formErrors.confirmPassword}
+                secureTextEntry={isPasswordConfirmVisible}
+                placeholder="Nhập lại mật khẩu"
+                control={control}
+                name="passwordConfirm                 "
+                styleInput="w-[100%] bg-white border-slate-200 border rounded p-4 text-sm "
+                autoCapitalize="none"
+                label={"Nhập lại mật khẩu"}
+                styleLabel="text-lg"
+              />
+              <TouchableOpacity
+                onPress={() => setIsPasswordConfirmVisible(!isPasswordConfirmVisible)}
+                className="absolute right-3 top-[50%]"
+              >
+                {isPasswordVisible ? (
+                  <Icons.Feather
+                    name={"eye-off"}
+                    style={{
+                      fontSize: 20,
+                      color: "#808080",
+                      textAlign: "left",
+                      alignSelf: "center",
+                    }}
+                  />
+                ) : (
+                  <Icons.Feather
+                    name="eye"
+                    style={{
+                      fontSize: 20,
+                      color: "#808080",
+                      textAlign: "left",
+                      alignSelf: "center",
+                    }}
+                  />
+                )}
+              </TouchableOpacity>
+            </View>
           </View>
 
           <View className="">
