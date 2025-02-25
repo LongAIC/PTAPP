@@ -1,24 +1,31 @@
 {
-    "cli": {
-      "version": ">= 14.0.0"
+  "cli": {
+    "version": ">= 14.0.0",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "channel": "development"
     },
-    "build": {
-      "development": {
-        "developmentClient": true,
-        "distribution": "internal"
-      },
-      "preview": {
-        "distribution": "internal"
-      },
-      "production": {}
+    "preview": {
+      "distribution": "internal",
+      "channel": "preview"
     },
-    "submit": {
-      "production": {
-        "ios": {
-          "appleId": "lelong24072306@gmail.com",
-          "ascAppId": "6739830564",
-          "appleTeamId": "AJ4R8GWM7A"
-        }
+    "production": {
+      "distribution": "store",
+      "channel": "production",
+      "autoIncrement": true
+    }
+  },
+  "submit": {
+    "production": {
+      "ios": {
+        "appleId": "lelong24072306@gmail.com",
+        "ascAppId": "6739830564",
+        "appleTeamId": "AJ4R8GWM7A"
       }
     }
   }
+}

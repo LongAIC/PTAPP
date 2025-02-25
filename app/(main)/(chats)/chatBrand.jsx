@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, ActivityIndicator, StyleSheet } from "react-native";
+import { View, ActivityIndicator, StyleSheet, Text } from "react-native";
 import { WebView } from "react-native-webview";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 
@@ -33,7 +33,13 @@ const ChatScreenBrand = () => {
           renderLoading={LoadingIndicator} // Render component loading
           startInLoadingState={true} // Bắt đầu ở trạng thái loading
         />
-        {loading && <LoadingIndicator />} {/* Hiển thị loading nếu đang tải */}
+        {loading && (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="small" color="#000" />
+          </View>
+        )}
+        {<Text>Loading...</Text>}
+        {/* Hiển thị loading nếu đang tải */}
       </View>
     </>
   );

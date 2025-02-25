@@ -61,6 +61,13 @@ export const userApiSlice = apiFtechSlice.injectEndpoints({
         params: { phone, id },
       }),
     }),
+    deleteUser: builder.mutation({
+      query: ({ id }) => ({
+        url: "deleteUser",
+        method: "POST",
+        params: { id },
+      }),
+    }),
   }),
 });
 
@@ -73,4 +80,5 @@ export const {
   useEditUserMutation,
   useRestorePasswordMutation,
   useChangePasswordMutation,
+  useDeleteUserMutation,
 } = userApiSlice;

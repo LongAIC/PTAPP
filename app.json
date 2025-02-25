@@ -2,27 +2,28 @@
   "expo": {
     "name": "PTCOCO",
     "slug": "c-shopping-rn",
-    "version": "1.0.0",
+    "version": "1.0.3",
     "orientation": "portrait",
-    "icon": "./assets/app_images/logo.png",
+    "icon": "./assets/app_images/logo_image.png",
     "userInterfaceStyle": "light",
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/app_images/logo_image.png",
         "backgroundColor": "#ffffff"
       },
-      "runtimeVersion": "1.0.0"
+      "runtimeVersion": "1.0.3"
     },
     "ios": {
       "supportsTablet": true,
-      "runtimeVersion": "1.0.0",
-      "bundleIdentifier": "com.ftechapp.ptcoco"
+      "runtimeVersion": "1.0.3",
+      "bundleIdentifier": "com.ftechapp.ptcoco",
+      "buildNumber": "4"
     },
     "experiments": {
       "tsconfigPaths": true
     },
     "splash": {
-      "image": "./assets/app_images/logo.png",
+      "image": "./assets/app_images/logo_image.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

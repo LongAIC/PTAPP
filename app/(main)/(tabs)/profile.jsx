@@ -4,12 +4,16 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { AuthWrapper, BoxLink, Icons, Logout, Person } from "@/components";
 import { useUserInfo } from "@/hooks";
+import { TouchableOpacity } from "react-native";
+import { useAppDispatch } from "@/hooks";
+import { userLogout } from "@/store";
+import { useDeleteUserMutation } from "@/serviceFTECH/user.service";
 
 export default function ProfileScreen() {
   //? Assets
   const insets = useSafeAreaInsets();
   const { userInfo, isLoading } = useUserInfo();
-
+  const dispatch = useAppDispatch();
   const profilePaths = [
     // {
     //   name: "Đơn hàng của tôi",
@@ -54,6 +58,12 @@ export default function ProfileScreen() {
       path: "/profile/personal-info",
     },
   ];
+  const [deleteUser] = useDeleteUserMutation();
+
+  const handleLogout = async () => {
+    dispatch(userLogout());
+    await deleteUser({ id: userInfo?.id });
+  };
 
   //？Render(s)
   return (
@@ -112,6 +122,21 @@ export default function ProfileScreen() {
                   />
                 </BoxLink>
               ))}
+              <View>
+                <TouchableOpacity
+                  className="flex flex-row justify-between items-center transition-colors py-4 text-xs text-gray-700 w-full"
+                  onPress={() => handleLogout()}
+                >
+                  <Text className="text font-bold text-[15px]">
+                    Xóa tài khoản
+                  </Text>
+                  <Icons.MaterialIcons
+                    name="delete"
+                    size={24}
+                    className="text-gray-700"
+                  />
+                </TouchableOpacity>
+              </View>
               <Logout />
             </View>
           </View>
