@@ -176,10 +176,15 @@ const ChatScreen = () => {
                 </View>
               </View>
             ) : (
-              <View className="mt-4">
-                <Text className="text-center text-black-30">
-                  Không có tin nhắn
-                </Text>
+              <View className="flex h-[110%] flex-col items-center justify-center py-8 gap-y-6 bg-white">
+                <Image
+                  style={{
+                    width: "100%",
+                    resizeMode: "contain",
+                  }}
+                  source={require("@/assets/page-not-found.png")}
+                  alt="404"
+                />
               </View>
             )}
           </>
